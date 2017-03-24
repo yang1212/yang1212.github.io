@@ -1,11 +1,92 @@
 *{
     padding:0;
     margin:0;
+    list-style-type: none;
 }
-.logo{
-    margin-top: 15px;
+/*头部导航样式*/
+.header{
+    background: #21201e;
+
 }
-.nav-a{
-    font-size: 20px;
-    margin-top: 36px;
+p{
+    font-size: 30px;
+    color: gold;
+    padding:25px 90px;
+}
+.nav{
+    margin-left: 7.1%;
+}
+.nav li {
+    float: left;
+    width: 15%;
+    text-align: center;
+    margin-left: 1px;
+    border-top-right-radius: 18px;
+
+}
+.nav li a{
+    font-size: 16px;
+    color:#fff;
+}
+.nav1{
+    background: #0ab4ae;
+}
+.nav1 :hover{
+    border-top-right-radius: 18px;
+}
+.nav2{
+    background: #ff8c28;
+}
+.nav2 :hover{
+    border-top-right-radius: 18px;
+}
+.nav3{
+    background: #e6bf00;
+}
+.nav3 :hover{
+    border-top-right-radius: 18px;
+}
+.nav li a:hover{
+    color: red;
+}
+/*中心内容样式*/
+.content{
+    background:#fefa99;
+    width: 100%;          /*设置样式100%后，宽度将和头部等宽*/
+    margin: 0 auto;
+}
+.welcome{
+    position: absolute;
+    z-index: 1;
+    width: 70%;
+    border-bottom: 1px solid #987d00;
+    background:#fefa99;
+    opacity: .7;
+}
+.welcome p{
+    color: #182c31;
+    font-size: 18px;
+}
+.welcome span{
+    color: #e1ef05;
+    margin: 0 44px 0 10px;
+    font-weight: bold;
+    font-size:25px;
+}
+.Lside{
+    background: #fff;
+    padding-top: 95px;
+    border:1px dotted #a4a4a4;
+}
+.Lside p{
+    font-size: 19px;
+    color: #080808;
+}
+.top{
+    background: #fff;
+    padding: 10px;
+}
+.Rside{
+    background: #fafeba;
+    margin-top: 95px;
 }
