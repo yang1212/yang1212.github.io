@@ -82,11 +82,25 @@ p{
     font-size: 19px;
     color: #080808;
 }
-.top{
-    background: #fff;
-    padding: 10px;
-}
 .Rside{
     background: #fafeba;
     margin-top: 95px;
+}
+.top{
+    background: #fff;
+    padding: 10px;
+    text-align: center;
+}
+.top  > img{
+    margin-bottom: 10px;
+}
+.bottom h3{
+    background: #e6bf00;
+    border-top-right-radius: 18px;
+    color:#fff;
+    padding:3px 4px;
+}
+.bottom-ifo{
+    background: #fff;
+    padding:3px 4px;
 }
