@@ -104,3 +104,18 @@ p{
     background: #fff;
     padding:3px 4px;
 }
+.photo img{
+    padding: 10px;
+    background:#ccc;
+    border:1px solid #fff;
+    box-shadow:2px 2px 3px rgba(50, 50, 50, 0.4);
+    -webkit-transition:all 0.3s ease-in;
+    -moz-transition:all 0.3s ease-in;
+    transition:all 0.3s ease-in;
+    z-index:1;
+}
+.photo img:hover{
+    box-shadow:15px 15px 20px rgba(50, 50, 50, 0.4);
+    transform:rotate(0deg) scale(1.10);
+    z-index:2;
+}
