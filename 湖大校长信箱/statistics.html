@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <title>统计</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel="stylesheet" href="css/angular-material.css"/>
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script src="js/angular-animate.js"></script>
+    <script src="js/angular-aria.js"></script>
+    <script src="js/angular-material.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+<div layout="row" flex>
+    <md-toolbar class="md-primary" layout="row" flex>
+        <div layout="row" flex layout-align="start center">
+            <a href="index.html">
+                <img src="img/logo.png"/>
+            </a>
+        </div>
+        <div hide-xs layout="row" flex layout-align="end center">
+            <md-button href="commissioner.html">待办事项</md-button>
+            <md-button href="commissioner.html">未办结</md-button>
+            <md-button href="commissioner.html">已办结</md-button>
+            <md-button href="statistics.html">统计</md-button>
+            <md-button href="#">修改密码</md-button>
+            <md-button href="login.html">退出</md-button>
+        </div>
+        <md-menu hide-gt-xs layout="row" flex layout-align="end center" md-offset="0 54">
+            <md-button ng-click="$mdOpenMenu($event)">
+                <md-icon md-svg-icon="headline"></md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item>
+                    <md-button href="index.html">待办事项</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="write.html">未办结</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="myMail.html">已办结</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="statistics.html">统计</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="#">修改密码</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="login.html">退出</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </md-toolbar>
+</div>
+
+<!--中心内容区-->
+<div class="md-padding md-margin" layout="row" layout-align="center center">
+    <div flex="75" flex-xs="95">
+        <md-content class="md-whiteframe-1dp">
+            <md-list class="md-subhead">
+                <md-list-item>
+                    <span flex-gt-md="20" flex-xs="20">编号</span>
+                    <span flex-gt-md="20" flex-xs="25" flex-offset-xs="5">123456</span>
+                    <span flex-gt-md="20" flex-xs="25" flex-offset-gt-md="20" flex-offset-xs="5">部门</span>
+                    <span flex-gt-md="20" flex-xs="20" flex-offset-xs="5">办公室</span>
+                    <md-divider></md-divider>
+                </md-list-item>
+                <md-list-item>
+                    <span flex-gt-md="20" flex-xs="20">留言数</span>
+                    <span flex-gt-md="20" flex-xs="25" flex-offset-xs="5">40次</span>
+                    <span flex-gt-md="20" flex-xs="25" flex-offset-gt-md="20" flex-offset-xs="5">回复数</span>
+                    <span flex-gt-md="20" flex-xs="20" flex-offset-xs="5">40次</span>
+                    <md-divider></md-divider>
+                </md-list-item>
+                <md-list-item>
+                    <span flex-gt-md="20" flex-xs="20">本月回复数</span>
+                    <span flex-gt-md="20" flex-xs="25" flex-offset-xs="5">20次</span>
+                    <span flex-gt-md="20" flex-xs="25" flex-offset-gt-md="20" flex-offset-xs="5">平均回复时间</span>
+                    <span flex-gt-md="20" flex-xs="20" flex-offset-xs="5">15小时</span>
+                    <md-divider></md-divider>
+                </md-list-item>
+                <md-list-item>
+                    <span flex-gt-md="20" flex-xs="30">回复率</span>
+                    <span flex-gt-md="80" flex-xs="60" flex-offset-xs="5">100%</span>
+                    <md-divider></md-divider>
+                </md-list-item>
+                <md-list-item>
+                    <span flex-gt-md="20" flex-xs="30">满意度</span>
+                    <span flex-gt-md="80" flex-xs="60" flex-offset-xs="5">
+                          <md-icon  md-svg-icon="star"></md-icon>
+                          <md-icon  md-svg-icon="star"></md-icon>
+                          <md-icon  md-svg-icon="star"></md-icon>
+                          <md-icon  md-svg-icon="star"></md-icon>
+                          <md-icon  md-svg-icon="star"></md-icon>
+                    </span>
+                    <md-divider></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-content>
+        <div layout="row" layout-align="end center" ng-controller="dialogController">
+            <md-menu md-offset="0 -200">
+                <md-button class="md-raised md-primary" ng-click="$mdOpenMenu($event)">部门</md-button>
+                <md-menu-content>
+                    <md-menu-item>
+                        <md-button>办公室</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button>保安部</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button>教务处</md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button>后勤部</md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+    </div>
+</div>
+<div class="footer" layout="row" layout-align="center center" flex style="text-align:center;margin:0 0 10px;">
+    <p>Skight 版权所有 | 技术支持:Skight | 邮箱:<a style="color:#c13432;" href="http://supports@skight.com">supports@skight.com</a></p>
+</div>
+</body>
+</html>

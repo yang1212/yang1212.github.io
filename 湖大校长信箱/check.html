@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <title>详情</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel="stylesheet" href="css/angular-material.css"/>
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script src="js/angular-animate.js"></script>
+    <script src="js/angular-aria.js"></script>
+    <script src="js/angular-material.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+<div layout="row" flex>
+    <md-toolbar class="md-primary" layout="row" flex>
+        <div layout="row" flex layout-align="start center">
+            <a href="index.html">
+                <img src="img/logo.png"/>
+            </a>
+        </div>
+        <div hide-xs layout="row" flex layout-align="end center">
+            <md-button href="index.html">首页</md-button>
+            <md-button href="write.html">我要写信</md-button>
+            <md-button href="myMail.html">我的信箱</md-button>
+            <md-button href="#">修改密码</md-button>
+            <md-button href="login.html">退出</md-button>
+        </div>
+        <md-menu hide-gt-xs layout="row" flex layout-align="end center" md-offset="0 54">
+            <md-button ng-click="$mdOpenMenu($event)">
+                <md-icon md-svg-icon="headline"></md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item>
+                    <md-button href="index.html">首页</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="write.html">我要写信</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="myMail.html">我的信箱</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="#">修改密码</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="login.html">退出</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </md-toolbar>
+</div>
+
+<!--中心内容区-->
+<div class="md-padding md-margin" layout="row" layout-align="center center">
+    <div flex="75" flex-xs="95">
+        <md-content class="md-whiteframe-1dp">
+            <md-list class="md-subhead">
+                <md-list-item>
+                    <span flex-gt-md="20" flex-xs="15">编号</span>
+                    <span flex-gt-md="20" flex-xs="30" flex-offset-xs="5">123456</span>
+                    <span flex-gt-md="20" flex-xs="25" flex-offset-gt-md="20" flex-offset-xs="5">来信人</span>
+                    <span flex-gt-md="20" flex-xs="20" flex-offset-xs="5">太阳</span>
+                    <md-divider></md-divider>
+                </md-list-item>
+                <md-list-item>
+                    <span flex-gt-md="20" flex-xs="15">来信时间</span>
+                    <span flex-gt-md="20" flex-xs="30" flex-offset-xs="5">2017-03-22</span>
+                    <span flex-gt-md="20" flex-xs="25" flex-offset-gt-md="20" flex-offset-xs="5">服务类型</span>
+                    <span flex-gt-md="20" flex-xs="20" flex-offset-xs="5">投诉受理</span>
+                    <md-divider></md-divider>
+                </md-list-item>
+                <md-list-item>
+                    <span flex-gt-md="20" flex-xs="15">受理单位</span>
+                    <span flex-gt-md="20" flex-xs="30" flex-offset-xs="5">办公室</span>
+                    <span flex-gt-md="20" flex-xs="25" flex-offset-gt-md="20" flex-offset-xs="5">办理状态</span>
+                    <span flex-gt-md="20" flex-xs="20" flex-offset-xs="5">已办结</span>
+                    <md-divider></md-divider>
+                </md-list-item>
+                <md-list-item>
+                    <span flex-gt-md="20" flex-xs="15">来信主题</span>
+                    <span flex-gt-md="80" flex-xs="75" flex-offset-xs="5">无故断电，电工态度极差还骂人</span>
+                    <md-divider></md-divider>
+                </md-list-item>
+                <md-list-item>
+                    <span flex-gt-md="20" flex-xs="15">来信内容</span>
+                    <span flex-gt-md="80" flex-xs="75" flex-offset-xs="5">无故断电，电工态度极差还骂人无故断电，电工态度极差还骂人无故断电，电工态度极差还骂人无故断电，电工态度极差还骂人</span>
+                    <md-divider></md-divider>
+                </md-list-item>
+            </md-list>
+            <md-list class="md-subhead">
+                <md-divider></md-divider>
+                <md-list-item>
+                    <span flex-gt-md="20" flex-xs="15">回复单位</span>
+                    <span flex-gt-md="20" flex-xs="20" flex-offset-xs="5">后勤处</span>
+                    <span flex-gt-md="20" flex-offset-gt-md="20" flex-xs="15" flex-offset-xs="10">办理时间</span>
+                    <span flex-gt-md="20" flex-xs="30" flex-offset-xs="5">2017-03-23</span>
+                    <md-divider></md-divider>
+                </md-list-item>
+                <md-list-item>
+                    <span flex-gt-md="20" flex-xs="15">处理结果</span>
+                    <span flex-gt-md="80" flex-xs="75" flex-offset-xs="5">无故断电，电工态度极差还骂人无故断电，电工态度极差还骂人无故断电，电工态度极差还骂人无故断电，电工态度极差还骂人电工态度极差还骂人无故断电，电工态度极差还骂人</span>
+                    <md-divider></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-content>
+        <div layout="row" layout-align="end center" ng-controller="dialogController">
+            <md-button class="md-raised md-primary" id="check_dreply" ng-click="check_drely()" id="rejection">评价</md-button>
+        </div>
+    </div>
+</div>
+<div class="footer" layout="row" layout-align="center center" flex style="text-align:center;margin:0 0 10px;">
+    <p>Skight 版权所有 | 技术支持:Skight | 邮箱:<a style="color:#c13432;" href="http://supports@skight.com">supports@skight.com</a></p>
+</div>
+<script type="text/ng-template" id="checkDreply.html">
+    <md-dialog flex="50" flex-xs="80">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>评价</h2>
+            </div>
+        </md-toolbar>
+        <md-dialog-content class="md-margin md-padding">
+            <div layout="column">
+                <p>
+                    处理态度
+                    <span>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star"></md-icon>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star"></md-icon>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star"></md-icon>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star"></md-icon>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star-white"></md-icon>
+                    </span>
+                </p>
+                <p>
+                    处理效率
+                    <span>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star"></md-icon>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star"></md-icon>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star"></md-icon>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star"></md-icon>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star"></md-icon>
+                    </span>
+                </p>
+                <p>
+                    处理结果
+                    <span>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star"></md-icon>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star"></md-icon>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star-white"></md-icon>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star-white"></md-icon>
+                         <md-icon style="margin-right:-12px;" md-svg-icon="star-white"></md-icon>
+                    </span>
+                </p>
+            </div>
+        </md-dialog-content>
+        <md-divider style="width:80%;margin:0 auto;"></md-divider>
+        <md-dialog-actions layout="row" flex layout="end center">
+            <md-button class="md-primary md-raised" ng-click="cancel()">确认</md-button>
+            <md-button class="md-primary md-raised" ng-click="cancel()">取消</md-button>
+        </md-dialog-actions>
+    </md-dialog>
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <title>写信</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel="stylesheet" href="css/angular-material.css"/>
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script src="js/angular-animate.js"></script>
+    <script src="js/angular-aria.js"></script>
+    <script src="js/angular-material.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</head>
+<body>
+<div layout="row" flex>
+    <md-toolbar class="md-primary" layout="row" flex>
+        <div layout="row" flex layout-align="start center">
+            <a href="index.html">
+                <img src="img/logo.png"/>
+            </a>
+        </div>
+        <div hide-xs layout="row" flex layout-align="end center">
+            <md-button href="index.html">首页</md-button>
+            <md-button href="write.html">我要写信</md-button>
+            <md-button href="myMail.html">我的信箱</md-button>
+            <md-button>修改密码</md-button>
+            <md-button href="login.html">退出</md-button>
+        </div>
+        <md-menu hide-gt-xs layout="row" flex layout-align="end center" md-offset="0 54">
+            <md-button ng-click="$mdOpenMenu($event)">
+                <md-icon md-svg-icon="headline"></md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item>
+                    <md-button href="index.html">首页</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="write.html">我要写信</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="myMail.html">我的信箱</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button>修改密码</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="login.html">退出</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </md-toolbar>
+</div>
+
+<!--中心内容区-->
+<div class="md-padding md-margin" layout="row" layout-align="center center">
+    <md-whiteframe flex="75" flex-xs="95"  class="md-whiteframe-1dp">
+        <div layout="column" flex>
+            <div style="background: #f5f5f5;padding-left: 10px;">
+                <h2>我要写信</h2>
+            </div>
+            <form flex-offset="5">
+                <div class="md-padding" layout="row" layout-xs="column">
+                    <label class="md-title">标题</label>
+                    <input flex-offset="5" flex-xs="60" type="text" style="padding:4px 0;width: 90%;border-radius:3px;border:1px solid #ccc;">
+                </div>
+                <div class="md-padding" layout="row" layout-xs="column">
+                    <label class="md-title">分类</label>
+                    <select flex-offset="5" class="md-subhead" style="width: 60%;padding:5px 0">
+                        <option>建议类</option>
+                        <option>咨询类</option>
+                        <option>问题类</option>
+                        <option>感谢类</option>
+                    </select>
+                </div>
+                <div class="md-padding" layout="row" layout-xs="column">
+                    <label class="md-title">事务</label>
+                    <select flex-offset="5" style="width: 60%;padding:5px 0">
+                        <option>本科生事务</option>
+                        <option>研究生事务</option>
+                        <option>后勤保障</option>
+                        <option>安全保卫</option>
+                        <option>人事师资</option>
+                        <option>招生就业</option>
+                        <option>外事交流</option>
+                        <option>离退休事务</option>
+                        <option>其他事务</option>
+                    </select>
+                </div>
+                <div class="md-padding" layout="row" layout-xs="column">
+                    <label class="md-title">内容</label>
+                    <textarea flex-offset="5" flex-xs="3" rows="5" style="padding:4px 0;width: 90%;border-radius: 3px;"></textarea>
+                </div>
+                <div class="md-padding">
+                    <md-checkbox class="md-primary">公开</md-checkbox>
+                </div>
+                <div class="md-padding" layout="row" layout-align="end end">
+                    <md-button  class="md-raised md-primary">返回</md-button>
+                    <md-button  class="md-raised md-primary">提交</md-button>
+                </div>
+            </form>
+        </div>
+    </md-whiteframe>
+</div>
+<div class="footer" layout="row" layout-align="center center" flex style="text-align:center;margin:0 0 10px;">
+    <p>Skight 版权所有 | 技术支持:Skight | 邮箱:<a style="color:#c13432;" href="http://supports@skight.com">supports@skight.com</a></p>
+</div>
+</body>
+</html>
