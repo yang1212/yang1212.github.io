@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="device-width,initial-scale=1.0,chrome=1.0"/>
+    <title>我的信箱</title>
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel="stylesheet" href="css/angular-material.css"/>
+    <script type="text/javascript" src="js/angular.js"></script>
+    <script src="js/angular-animate.js"></script>
+    <script src="js/angular-aria.js"></script>
+    <script src="js/angular-material.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</head>
+<body ng-cloak>
+<div layout="row" flex>
+    <md-toolbar class="md-primary" layout="row" flex>
+        <div layout="row" flex layout-align="start center">
+            <a href="index.html">
+                <img src="img/logo.png"/>
+            </a>
+        </div>
+        <div hide-xs layout="row" flex layout-align="end center">
+            <md-button href="index.html">首页</md-button>
+            <md-button href="write.html">我要写信</md-button>
+            <md-button href="myMail.html">我的信箱</md-button>
+            <md-button href="#">修改密码</md-button>
+            <md-button href="login.html">退出</md-button>
+        </div>
+        <md-menu hide-gt-xs layout="row" flex layout-align="end center" md-offset="0 54">
+            <md-button ng-click="$mdOpenMenu($event)">
+                <md-icon md-svg-icon="headline"></md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item>
+                    <md-button href="index.html">首页</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="write.html">我要写信</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="myMail.html">我的信箱</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="#">修改密码</md-button>
+                </md-menu-item>
+                <md-menu-item>
+                    <md-button href="login.html">退出</md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </md-toolbar>
+</div>
+<div layout="row" flex layout-align="center center" style="margin-top:30px;">
+    <md-whiteframe class="md-whiteframe-1dp" flex-xs="90" flex-gt-xs="80" layout layout-align="center center">
+        <div layout="column" flex>
+            <div layout="column" flex style="background:#f5f5f5;padding:0 10px;">
+                <h3 style="font-weight:200;" class="md-headline">我的信箱</h3>
+            </div>
+            <div layout="column" flex>
+                <md-list>
+                    <md-list-item href="check.html" class="md-2-line">
+                        <div layout="column" class="md-list-item-text">
+                            <span class="md-title"><md-icon md-svg-icon="note-yellow"></md-icon>
+                                    周日难道不是学校的公休日吗?[2012/01/04]</span>
+                            <p class="md-subhead" style="background:#d9edf7;color:#31708f;">周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？
+                                <span>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star-white"></md-icon>
+                                </span>
+                            </p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item href="check.html" class="md-2-line">
+                        <div layout="column" class="md-list-item-text">
+                            <span class="md-title"><md-icon md-svg-icon="note"></md-icon>
+                                    周日难道不是学校的公休日吗?[2012/01/04]</span>
+                            <p class="md-subhead" style="background:#d9edf7;color:#31708f;">周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？
+                                <span>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star-white"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star-white"></md-icon>
+                                </span>
+                            </p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item href="check.html" class="md-2-line">
+                        <div layout="column" class="md-list-item-text">
+                            <span class="md-title"><md-icon md-svg-icon="note"></md-icon>
+                                    周日难道不是学校的公休日吗?[2012/01/04]</span>
+                            <p class="md-subhead" style="background:#d9edf7;color:#31708f;">周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？
+                                <span>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star-white"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star-white"></md-icon>
+                                </span>
+                            </p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item href="check.html" class="md-2-line">
+                        <div layout="column" class="md-list-item-text">
+                            <span class="md-title"><md-icon md-svg-icon="note"></md-icon>
+                                    周日难道不是学校的公休日吗?[2012/01/04]</span>
+                            <p class="md-subhead" style="background:#d9edf7;color:#31708f;">周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？
+                                <span>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star-white"></md-icon>
+                                </span>
+                            </p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item href="check.html" class="md-2-line">
+                        <div layout="column" class="md-list-item-text">
+                            <span class="md-title"><md-icon md-svg-icon="note"></md-icon>
+                                    周日难道不是学校的公休日吗?[2012/01/04]</span>
+                            <p class="md-subhead" style="background:#d9edf7;color:#31708f;">周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？
+                                <span>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                </span>
+                            </p>
+                        </div>
+                    </md-list-item>
+                    <md-list-item href="check.html" class="md-2-line">
+                        <div layout="column" class="md-list-item-text">
+                            <span class="md-title"><md-icon md-svg-icon="note-yellow"></md-icon>
+                                    周日难道不是学校的公休日吗?[2012/01/04]</span>
+                            <p class="md-subhead" style="background:#d9edf7;color:#31708f;">周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？周日难道不是学校的公休日吗？
+                                <span>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star-white"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star-white"></md-icon>
+                                    <md-icon style="width:18px;height:18px;margin-right:-12px;" md-svg-icon="star-white"></md-icon>
+                                </span>
+                            </p>
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </div>
+    </md-whiteframe>
+</div>
+<div class="footer" layout="row" layout-align="center center" flex style="text-align:center;margin:0 0 10px;">
+    <p>Skight 版权所有 | 技术支持:Skight | 邮箱:<a style="color:#c13432;" href="http://supports@skight.com">supports@skight.com</a></p>
+</div>
+</body>
+</html>
