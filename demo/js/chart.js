@@ -1,7 +1,7 @@
 var myChart = echarts.init(document.getElementById('main'));
 var  colors=['#d53a35','#2f4455','#639fa9'];
 var i = 0;
-option = {
+var option = {
     baseOption: {
         tooltip: {
             trigger: 'item',
@@ -14,10 +14,9 @@ option = {
         orient: 'horizontal',
         x: 'left',
         y: 'bottom',
-        data: ['已回复', '正在处理', '未回复'],
-
+        data: ['已回复', '正在处理', '未回复']
     },
-    series: [
+    series:[
         {
             name: '访问来源',
             type: 'pie',
@@ -78,7 +77,7 @@ option = {
             },
             series: [
             {
-                radius: ['40%', '40%']
+                radius: [20, '50%']
             }
         ]
         },
@@ -95,7 +94,7 @@ option = {
             },
             series: [
                 {
-                    radius: ['50%', '50%']
+                    radius: [20, '50%']
                 }
             ]
         }
