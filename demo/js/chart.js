@@ -12,7 +12,7 @@ option = {
         bottom:'1%'
     },
     legend: {
-        orient: 'horizontal',
+        orient: 'vertical',
         x: 'left',
         y:'top',
         data:['已回复','正在处理','未回复']
