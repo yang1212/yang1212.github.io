@@ -14,6 +14,13 @@
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <script src="js/echarts.min.js"></script>
+    <style>
+        @media screen and (max-width:800px) {
+             .Hidden{
+                 display: none;
+             }
+        }
+    </style>
 </head>
 <body >
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -28,7 +35,7 @@
     </div>
 </nav>
 <div style="padding-top:50px;">
-    <!--<div  style="position: absolute;top:0;left:0" id="cas"></div>-->
+    <div class="Hidden" style="position: absolute;top:0;left:0" id="cas"></div>
     <div class="container-fluid jumbotron" style="background: #041539">
         <div class="row text-center"  style="z-index: 2;position: relative">
             <div class="col-md-12" style="color: #fff">
