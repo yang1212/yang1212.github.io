@@ -15,10 +15,14 @@
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <script src="js/echarts.min.js"></script>
     <style>
-        @media screen and (max-width:800px) {
+        @media screen and (max-width:600px) {
              .Hidden{
                  display: none;
              }
+        }
+        .headline-bg{
+            height:380px;
+            width: 60%;
         }
     </style>
 </head>
@@ -35,8 +39,10 @@
     </div>
 </nav>
 <div style="padding-top:50px;">
-    <div class="Hidden" style="position: absolute;top:0;left:0" id="cas"></div>
-    <div class="container-fluid jumbotron" style="background: #041539">
+    <div class="headline-bg" style="position: absolute;top: 0;left: 0">
+        <canvas id="waves" class="waves"></canvas>
+    </div>
+    <div class="container-fluid jumbotron" style="background: #041539;">
         <div class="row text-center"  style="z-index: 2;position: relative">
             <div class="col-md-12" style="color: #fff">
                 <h1 class="animated bounceInDown">书记校长信箱</h1>
@@ -199,9 +205,9 @@
 </footer>
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="js/echarts.min.js"></script>
-<script src="js/three.min.js"></script>
-<script src="js/canvas.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="js/echarts.js"></script>
+<script src="js/vendors.js"></script>
+<script src="js/index.js"></script>
 </body>
 </html>
