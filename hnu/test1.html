@@ -14,6 +14,18 @@
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <script src="js/echarts.min.js"></script>
+    <style>
+        .headline-bg{
+            height:210px;
+            overflow:hidden;
+            background: #041539;
+        }
+        @media screen and (max-width:800px) {
+            #canv{
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body >
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -27,14 +39,16 @@
         </div>
     </div>
 </nav>
-<div style="padding-top:50px;background: #041539;overflow:hidden;">
-    <canvas height="211" width="1366" style="opacity: 0.5;" id="canv"></canvas>
+<div style="padding-top:50px; background: #041539;">
+    <div class="headline-bg">
+        <canvas width="1366" style="opacity: 0.5;" id="canv"></canvas>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6 col-xs-12 col-md-offset-3 text-center " style="color: #fff;z-index: 2;position: absolute;top:60px;">
-                <h1 class="animated bounceInDown" style="font-size: 45px;">书记校长信箱</h1>
+                <h1 class="animated bounceInDown" style="font-size: 47px;">书记校长信箱</h1>
                 <h4>博学、睿思、勤勉、致知</h4>
-                <p style="padding:10px;"><a class="btn btn-primary btn-lg animated tada" href="test1.html" role="button">我的信箱</a></p>
+                <p style="padding:10px;"><a class="btn btn-primary btn-lg animated tada" href="logo.html" role="button">我的信箱</a></p>
             </div>
         </div>
     </div>
@@ -211,12 +225,13 @@
 
     var anim = function() {
         $.globalCompositeOperation = 'multiply';
-        $.fillStyle = 'hsla(258,20%,50%,1)';
+
         $.fillRect(0, 0, w, h);
         $.globalCompositeOperation = 'lighter';
         for (var i = 0; i < .5; i++) {
             x = 0;
-            _u = (u) + i * 2, col = u + (_u * 8);
+            _u = (u) + i * 2;
+             col = u + (_u * 8);
             $.beginPath();
             for (var j = 0; j < num; j++) {
                 x -= .312 * Math.sin(15);
