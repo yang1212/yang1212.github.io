@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>校长书记信箱</title>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -13,25 +13,13 @@
     <!--[if lt IE 9]>-->
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <script src="js/echarts.min.js"></script>
-    <style>
-        .headline-bg{
-            height:210px;
-            overflow:hidden;
-            background: #041539;
-        }
-        @media screen and (max-width:800px) {
-            #canv{
-                display: none;
-            }
-        }
-    </style>
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body >
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
         <div class="row">
-            <div class="navbar-header col-md-3 col-xs-6">
+            <div class="navbar-header col-md-3 col-xs-9">
                 <a class="navbar-brand" href="#">
                     <img class="img-responsive"  src="img/logo2016.png">
                 </a>
@@ -39,16 +27,14 @@
         </div>
     </div>
 </nav>
-<div style="padding-top:50px; background: #041539;">
-    <div class="headline-bg">
-        <canvas width="1366" style="opacity: 0.5;" id="canv"></canvas>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6 col-xs-12 col-md-offset-3 text-center " style="color: #fff;z-index: 2;position: absolute;top:60px;">
-                <h1 class="animated bounceInDown" style="font-size: 47px;">书记校长信箱</h1>
-                <h4>博学、睿思、勤勉、致知</h4>
-                <p style="padding:10px;"><a class="btn btn-primary btn-lg animated tada" href="logo.html" role="button">我的信箱</a></p>
+<div style="padding-top:50px;">
+    <h2  style="position: absolute;top:0;left:0" id="cas"></h2>
+    <div class="container-fluid jumbotron" style="background: #041539">
+        <div class="row text-center"  style="z-index: 2;position: relative">
+            <div class="col-md-12" style="color: #fff">
+                <h1 class="animated bounceInDown">书记校长信箱</h1>
+                <p>博学、睿思、勤勉、致知</p>
+                <p style="padding:10px;"><a class="btn btn-primary btn-lg animated tada" href="login.html" role="button">我的信箱</a></p>
             </div>
         </div>
     </div>
@@ -203,64 +189,20 @@
     <div class="container_footer center-block text-center">
         <p> Skight 版权所有 | 技术支持:Skight | 邮箱:<a href="http://supports@skight.com">supports@skight.com</a></p>
     </div>
-</footer>
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<script src="js/echarts.min.js"></script>
-<script src="js/echarts.js"></script>
-<script type="text/javascript">
-    var c = document.getElementById('canv'),
-            $ = c.getContext('2d'),
-            w = c.width = window.innerWidth,
-            h = c.height = window.innerHeight*.31,
-            t = 0,
-            num = 950,
-            s, a, b, u = 0,
-            x, y, _x, _y,
-            _t = 1 / 16;
-
-    function random(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
-    var anim = function() {
-        $.globalCompositeOperation = 'multiply';
-
-        $.fillRect(0, 0, w, h);
-        $.globalCompositeOperation = 'lighter';
-        for (var i = 0; i < .5; i++) {
-            x = 0;
-            _u = (u) + i * 2;
-             col = u + (_u * 8);
-            $.beginPath();
-            for (var j = 0; j < num; j++) {
-                x -= .312 * Math.sin(15);
-                y = x * Math.sin(i + 3.05 * t + x / 7) / 12;
-                _x = x * Math.cos(b) + y * Math.sin(b);
-                _y = x * Math.sin(b) - y * Math.cos(b);
-                b = (j * 2.1102) * Math.PI / -.1008;
-                $.arc(w / 2 - _x, h / 2 - _y, random(.001, .6), 300, Math.PI * 2 + .1);
-                $.lineWidth = .2;
-            }
-            var g = $.createLinearGradient(w / 2 + _x, h / 2 + _y,
-                    1, w / 2 + _x, h / 2 + _y);
-            g.addColorStop(0.2, 'hsla(' + col + ',90%,50%,.2)');
-            g.addColorStop(0.9, 'hsla(' + _u + ',95%,50%,.3)');
-            g.addColorStop(1, 'hsla(0,0%,100%,.4)');
-            $.strokeStyle = g;
-            $.stroke();
+</footer> <script>
+    $(document).ready(function(){
+        var width = $(window).width();
+        if( width < 800){
+            $("h2").remove("h2[id = cas]");
+            $("script[src='js/three.min.js']").remove();
+            $("script[src='js/canvas.js']").remove();
         }
-        t += _t / 2;
-        u -= .2;
-        window.requestAnimationFrame(anim);
-    };
-    anim();
-
-    window.addEventListener('resize', function() {
-        c.width = w = window.innerWidth;
-        c.height = h = window.innerHeight*.31;
-    }, false);
-
+    });
 </script>
+<script src="js/echarts.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="js/echarts.js"></script>
+<script src="js/three.min.js"></script>
+<script src="js/canvas.js"></script>
 </body>
 </html>
