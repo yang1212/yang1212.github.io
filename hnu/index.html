@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>校长书记信箱</title>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -13,14 +13,17 @@
     <!--[if lt IE 9]>-->
     <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <script src="js/echarts.min.js"></script>
-    <style type="text/css">
-        .headline-bg{
-            height:210px;
-            overflow:hidden;
-            background: #041539;
-        }
-    </style>
+    <script>
+        $(document).ready(function(){
+            var width = $(window).width();
+            if( width < 800){
+                $("h2").remove("h2[id = cas]");
+                $("script[src='js/three.min.js']").remove();
+                $("script[src='js/canvas.js']").remove();
+
+            }
+        });
+    </script>
 </head>
 <body >
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -35,13 +38,11 @@
     </div>
 </nav>
 <div style="padding-top:50px;">
-    <div class="headline-bg" >
-        <canvas id="waves" class="waves"></canvas>
-    </div>
-    <div class="container-fluid jumbotron">
-        <div class="row">
-            <div class="col-md-6 col-xs-12 col-md-offset-3 text-center " style="color: #fff;z-index: 2;position: absolute;top:50px;">
-                <h1 class="animated bounceInDown" style="margin-top: 30px;">书记校长信箱</h1>
+    <div  style="position: absolute;top:0;left:0" id="cas"></div>
+    <div class="container-fluid jumbotron" style="background: #041539">
+        <div class="row text-center"  style="z-index: 2;position: relative">
+            <div class="col-md-12" style="color: #fff">
+                <h1 class="animated bounceInDown">书记校长信箱</h1>
                 <p>博学、睿思、勤勉、致知</p>
                 <p style="padding:10px;"><a class="btn btn-primary btn-lg animated tada" href="login.html" role="button">我的信箱</a></p>
             </div>
@@ -200,10 +201,10 @@
     </div>
 </footer>
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
 <script src="js/echarts.min.js"></script>
 <script src="js/echarts.js"></script>
-<script src="js/vendors.js"></script>
-<script src="js/index.js"></script>
+<script src="js/three.min.js"></script>
+<script src="js/canvas.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
