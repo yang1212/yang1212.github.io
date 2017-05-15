@@ -8,6 +8,7 @@
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/animate.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <body >
 <nav class="navbar navbar-default navbar-fixed-top">
@@ -171,20 +172,20 @@
 
 <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script src="bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript">
-       $(document).ready(function(){
-           var width = $(window).width();
-           if( width < 800){
-             $("h2[title=test]")
-                     .css("display","none");
+    $(document).ready(function(){
+        var width = $(window).width();
+        if( width < 400){
+//            $(".h2").attr("id","cas");
 //               $("<h2>").attr("id",cas);
 //               $("<td>").attr("id",param).text("hi").append(tr);
+            $("h2:eq(0)").remove();
 
-           }
-       });
+        }
+    });
 </script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
 <script src="js/echarts.min.js"></script>
 <script src="js/echarts.js"></script>
 <script src="js/three.min.js"></script>
