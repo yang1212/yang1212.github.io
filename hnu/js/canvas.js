@@ -8,7 +8,7 @@ init();
 animate();
 function init() {
     var container = document.getElementById( 'cas' );
-    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / 280, 1, 10000 );
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / 200, 1, 10000 ); //粒子大小
     camera.position.z = 1000;
     scene = new THREE.Scene();
     particles = new Array();
@@ -31,7 +31,7 @@ function init() {
         }
     }
     renderer = new THREE.CanvasRenderer();
-    renderer.setSize( window.innerWidth, 290 );
+    renderer.setSize( window.innerWidth *.95, 290 ); //粒子宽度
     container.appendChild( renderer.domElement );
     document.addEventListener( 'mousemove', onDocumentMouseMove, false );
     document.addEventListener( 'touchstart', onDocumentTouchStart, false );
