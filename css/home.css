@@ -55,29 +55,6 @@ p{
     width: 100%;          /*设置样式100%后，宽度将和头部等宽*/
     margin: 0 auto;
 }
-.welcome{
-    position: absolute;
-    z-index: 1;
-    width: 70%;
-    border-bottom: 1px solid #987d00;
-    background:#fefa99;
-    opacity: .7;
-}
-.welcome p{
-    color: #182c31;
-    font-size: 18px;
-}
-.welcome span{
-    color: #e1ef05;
-    margin: 0 44px 0 10px;
-    font-weight: bold;
-    font-size:25px;
-}
-.Lside{
-    background: #fff;
-    padding-top: 95px;
-    border:1px dotted #a4a4a4;
-}
 .Lside p{
     font-size: 19px;
     color: #080808;
