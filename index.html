@@ -1,72 +1,265 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="zh-CN">
+  <head>
     <meta charset="UTF-8">
-    <meta http-equiv="x-ua-compatible" content="IE-edge,chrome=1">
-    <meta name="viewPort" content="width=device-width,initial-scale=1">
-    <title>个人网</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
-    <link rel="stylesheet" href="css/home.css" type="text/css"/>
-</head>
-<body>
-<div>
-  <div class="header">
-    2
-  </div>
-  <div class="content">
-    <div class="row">
-      <div class="col-md-4 left1">
-        <table class="table table-bordered" style="background: #fff;">
-          <tr>
-            <th class="active">active</th>
-            <th class="success">success</th>
-            <th class="warning">warning</th>
-            <th class="danger">danger</th>
-            <th class="info">info</th>
-          </tr>
-          <tr>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-          </tr>
-          <tr>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-          </tr>
-        </table>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>parcel</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./home.css" type="text/css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="header">
+        <el-form :inline="true" :model="formData" class="demo-form-inline" style="padding: 10px 0 0 10px">
+          <el-form-item label="工艺路径">
+            <el-select v-model="formData.processPath">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="工序">
+            <el-select v-model="formData.process">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="轮播间隔(秒)">
+            <el-input v-model="formData.carouselInterval"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">开始轮播</el-button>
+          </el-form-item>
+        </el-form>
       </div>
-      <div class="col-md-8 right1">
-        <table class="table table-bordered" style="background: #fff;">
-          <tr>
-            <th class="active">active</th>
-            <th class="success">success</th>
-            <th class="warning">warning</th>
-            <th class="danger">danger</th>
-            <th class="info">info</th>
-          </tr>
-          <tr>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-          </tr>
-          <tr>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-          </tr>
-        </table>
+      <div class="content">
+        <div class="panel-top">
+          <div class="left1">
+            <h3 class="text-center common-text">生产进度</h3>
+            <el-progress type="circle" :percentage="25" :width='180' class="progress-box"></el-progress>
+            <div class="progress-detail">
+              <p class="box1">
+                <span>今日计划平方</span>
+                <span style="color: #e87f8d;font-size: 30px;">182.2方</span>
+              </p>
+              <p class="box1">
+                <span>今日完成平方</span>
+                <span style="color: #fefe00;font-size: 30px;">98方</span>
+              </p>
+            </div>
+          </div>
+          <div class="right1">
+            <h3 class="text-center common-text">今日未完成任务</h3>
+            <el-table
+              class="tableForm"
+              :data="tableData"
+              height="324"
+              border
+             >
+              <el-table-column type="index" label="序号" width="50"></el-table-column>
+              <el-table-column 
+                v-for="(item, index) in column1" 
+                show-overflow-tooltip
+                :key="index"
+                :prop="item.prop" 
+                :label="item.label" 
+                :width="item.width"
+              >
+                <template slot-scope="scope">
+                  <span v-if="item.prop === 'propDeac1'" :class="{'status-1': scope.row.prop1 === 'ing', 'status-2': scope.row.prop1 === 'no'}">{{scope.row.propDeac1}}</span>
+                  <span v-else-if="item.prop === 'emergec'" :class="{'status-3': scope.row.prop1 === 'ing'}">{{scope.row.value}}</span>
+                  <span v-else>{{scope.row[item.prop]}}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+            <p class="plan-num"><span class="common-text">任务数：</span><span class="red-color-text">4</span></p>
+          </div>
+        </div>
+        <div class="panel-bottom">
+          <div class="left1">
+            <h3 class="text-center common-text">排行榜</h3>
+            <el-table
+              class="tableForm"
+              :data="tableData"
+              height="289"
+              border
+             >
+              <el-table-column 
+                v-for="(item, index) in column2" 
+                show-overflow-tooltip
+                :key="index"
+                :prop="item.prop" 
+                :label="item.label" 
+                :width="item.width"
+              >
+              </el-table-column>
+            </el-table>
+          </div>
+          <div class="right1">
+            <h3 class="text-center common-text">今日完成任务</h3>
+            <el-table
+              class="tableForm"
+              :data="tableData"
+              height="304"
+              border
+             >
+              <el-table-column type="index" label="序号" width="50"></el-table-column>
+              <el-table-column 
+                v-for="(item, index) in column1" 
+                show-overflow-tooltip
+                :key="index"
+                :prop="item.prop" 
+                :label="item.label" 
+                :width="item.width"
+              >
+                <template slot-scope="scope">
+                  <span v-if="item.prop === 'propDeac1'" :class="{'status-4': scope.row.prop1 === 'ing'}">{{scope.row.propDeac1}}</span>
+                  <span v-else>{{scope.row[item.prop]}}</span>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>  
+        </div>
       </div>
     </div>
-  </div>
-</div>
-</body>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      //创建根实例
+      new Vue({
+        el: "#app",
+        data: {
+          formData: {
+            processPath: '', // 工艺路径
+            process: '', // 工序
+            carouselInterval: '' // 轮播间隔
+          },
+          column1: [
+            {
+              'label': '状态',
+              'width': '120',
+              'prop': 'propDeac1'
+            },
+            {
+              'label': '任务号',
+              'width': '150',
+              'prop': 'value'
+            },
+            {
+              'label': '工艺',
+              'width': '120',
+              'prop': 'value'
+            },
+            {
+              'label': '负责人',
+              'width': '120',
+              'prop': 'value'
+            },
+            {
+              'label': '开始时间',
+              'width': '150',
+              'prop': 'value'
+            },
+            {
+              'label': '平方数',
+              'width': '120',
+              'prop': 'value'
+            },
+            {
+              'label': '收货人',
+              'width': '120',
+              'prop': 'value'
+            },
+            {
+              'label': '板件数',
+              'width': '120',
+              'prop': 'value'
+            },
+            {
+              'label': '二次加工部件',
+              'width': '150',
+              'prop': 'value'
+            },
+            {
+              'label': '紧急情况',
+              'width': '',
+              'prop': 'emergec'
+            }
+          ],
+          column2: [
+            {
+              'label': '排名',
+              'width': '60',
+              'prop': 'index'
+            },
+            {
+              'label': '姓名',
+              'width': '120',
+              'prop': 'value'
+            },
+            {
+              'label': '完成方数',
+              'width': '120',
+              'prop': 'value'
+            },
+            {
+              'label': '每平方耗时(分钟)',
+              'width': '140',
+              'prop': 'value'
+            }
+          ], 
+          // Mock
+          tableData: [{
+              propDeac1: '加工中',
+              prop1: 'ing', 
+              value: '昨日未完成',
+              index: 1
+            },
+            {
+              propDeac1: '加工中',
+              prop1: 'ing', 
+              value: 'orange',
+              index: 2
+            },
+            {
+              propDeac1: '未开始',
+              prop1: 'no', 
+              value: 'apple',
+              index: 3
+            },
+            {
+              propDeac1: '未开始',
+              prop1: 'no',
+              value: 'orange',
+              index: 4
+            },
+            {
+              propDeac1: 'yangfu',
+              prop1: 'no',
+              value: 'apple',
+              index: 5
+            }
+          ],
+        },
+        mounted() {
+        },
+        methods: {
+          onSubmit() {
+            this.tableData = []
+            axios.get('https://api.github.com/users/liuwenzhuang/repos')
+            .then(function (response) {
+              console.log(response);
+              this.tableData = []
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          }
+        }
+      })
+    </script>
+  </body>
 </html>
