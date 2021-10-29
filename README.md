@@ -1,2 +1,1 @@
-# yang1212.github.io
-blog
+https://yang1212.github.io/
