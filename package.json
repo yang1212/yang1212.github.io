@@ -16,6 +16,11 @@
     "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
     "jszip": "^3.10.1",
+    "markdown-it": "^13.0.1",
+    "markdown-it-anchor": "^8.6.7",
+    "markdown-it-prism": "^2.3.1",
+    "markdown-it-toc-done-right": "^4.2.0",
+    "prismjs": "^1.30.0",
     "vue": "^2.6.14",
     "vue-router": "^3.6.5",
     "vue2-editor": "^2.10.3"

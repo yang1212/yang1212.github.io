@@ -7,8 +7,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
-
+dist
 # src
 node_modules
 env/*.local
 /.idea/
+.env

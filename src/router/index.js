@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HomePage from '../components/home.vue'
-import AboutPage from '../components/about.vue'
+import HomePage from '../views/Home.vue'
+import ArticleList from '../views/ArticleList.vue'
+import ArticleDetail from '../views/ArticleDetail.vue'
+import FileViewer from '../views/FileViewer.vue'
 
 Vue.use(Router)
 
@@ -10,13 +12,26 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HomePage',
+      name: 'Home',
       component: HomePage
     },
     {
-      path: '/about',
-      name: 'AboutPage',
-      component: AboutPage
+      path: '/category/:categoryId*',
+      name: 'ArticleList',
+      component: ArticleList,
+      props: true
+    },
+    {
+      path: '/article/:id*',
+      name: 'ArticleDetail',
+      component: ArticleDetail,
+      props: true
+    },
+    {
+      path: '/file/:path*',
+      name: 'FileViewer',
+      component: FileViewer,
+      props: true
     }
   ]
 })
