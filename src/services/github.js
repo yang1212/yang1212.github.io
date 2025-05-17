@@ -30,63 +30,70 @@ const DIRECTORY_MAP = {
 
 // 将路由参数转换为实际的目录名
 function getActualDirectoryName(routePath) {
-  // First try exact match in directory map
   if (DIRECTORY_MAP[routePath]) {
     return DIRECTORY_MAP[routePath];
   }
-  
-  // If no match, return the path as is (for subdirectories)
   return routePath;
 }
 
-// 获取仓库中的 markdown 文件列表
+// 获取仓库中的文件列表
 export async function getMarkdownFiles(path = '') {
   try {
     // 转换目录名称，处理子目录
     const pathParts = path.split('/').map((part, index) => {
-      // 只对第一级目录使用映射
       return index === 0 ? getActualDirectoryName(part) : part;
     });
     const actualPath = pathParts.join('/');
-
-    console.log('【调试信息】');
-    console.log('输入的路径:', path);
-    console.log('转换后的实际路径:', actualPath);
     
     // 对路径的每个部分单独进行编码
     const encodedPath = pathParts
       .map(part => encodeURIComponent(part))
       .join('/');
-    
-    console.log('编码后的路径:', encodedPath);
-    console.log('认证信息是否存在:', !!GITHUB_TOKEN);
-    
-    const apiUrl = `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${encodedPath}`;
-    console.log('完整请求地址:', apiUrl);
 
-    const response = await fetch(apiUrl, { 
-      headers: {
-        'Accept': 'application/vnd.github.v3+json',
-        'Authorization': `Bearer ${GITHUB_TOKEN}`,
-      }
+    console.log('【调试信息】尝试获取目录内容:', {
+      原始路径: path,
+      实际路径: actualPath,
+      编码路径: encodedPath
     });
 
+    // 首先尝试使用 API 获取
+    const apiUrl = `${GITHUB_API_BASE}/repos/${GITHUB_USERNAME}/${REPO_NAME}/contents/${encodedPath}`;
+    const headers = {
+      'Accept': 'application/vnd.github.v3+json'
+    };
+    
+    if (GITHUB_TOKEN) {
+      headers['Authorization'] = `Bearer ${GITHUB_TOKEN}`;
+    }
+
+    const response = await fetch(apiUrl, { headers });
+
     if (!response.ok) {
-      console.log('请求失败信息:', {
-        状态码: response.status,
-        状态文本: response.statusText,
-        响应头: Object.fromEntries(response.headers.entries())
-      });
+      console.log('API 请求失败，尝试使用备用方案');
       
-      if (response.status === 404) {
-        console.warn(`Path ${actualPath} not found in repository`);
-        return [];
+      // 如果 API 请求失败，尝试直接从 raw.githubusercontent.com 获取
+      const rawUrl = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${REPO_NAME}/master/${encodedPath}`;
+      const rawResponse = await fetch(rawUrl);
+      
+      if (!rawResponse.ok) {
+        console.error('备用方案也失败了:', rawResponse.status);
+        throw new Error(`Failed to fetch content: ${rawResponse.status}`);
       }
-      if (response.status === 401 || response.status === 403) {
-        console.error('GitHub API authentication failed. Please check your token.');
-        return [];
-      }
-      throw new Error(`GitHub API returned ${response.status}: ${await response.text()}`);
+
+      // 解析目录内容
+      const content = await rawResponse.text();
+      const files = content.split('\n')
+        .filter(line => line.trim())
+        .map(line => {
+          const name = line.trim();
+          return {
+            name,
+            path: encodedPath ? `${encodedPath}/${name}` : name,
+            type: name.includes('.') ? 'file' : 'dir'
+          };
+        });
+
+      return files;
     }
 
     const data = await response.json();
@@ -101,7 +108,7 @@ export async function getMarkdownFiles(path = '') {
       ))
     );
   } catch (error) {
-    console.error('Error fetching markdown files:', error);
+    console.error('Error fetching files:', error);
     return [];
   }
 }
@@ -111,37 +118,26 @@ export async function getFileContent(path) {
   try {
     // 处理路径中的目录部分
     const pathParts = path.split('/');
-    // 只对第一级目录使用映射
     if (pathParts.length > 1) {
       pathParts[0] = getActualDirectoryName(pathParts[0]);
     }
     
-    // 将路径部分分别编码后重新组合
     const encodedPath = pathParts
       .map(part => encodeURIComponent(part))
       .join('/');
 
-    console.log('【获取文件内容】请求信息：', {
-      原始路径: path,
-      处理后路径: pathParts.join('/'),
-      编码后路径: encodedPath
-    });
-
     // 直接从 raw.githubusercontent.com 获取内容
-    const response = await fetch(
-      `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${REPO_NAME}/master/${encodedPath}`
-    );
+    const rawUrl = `https://raw.githubusercontent.com/${GITHUB_USERNAME}/${REPO_NAME}/master/${encodedPath}`;
+    console.log('【获取文件内容】请求地址:', rawUrl);
+
+    const response = await fetch(rawUrl);
 
     if (!response.ok) {
-      console.error('【获取文件内容】请求失败：', {
-        状态码: response.status,
-        状态文本: response.statusText
-      });
+      console.error('【获取文件内容】请求失败:', response.status);
       return null;
     }
 
     const content = await response.text();
-    
     return {
       content,
       lastUpdated: new Date()
