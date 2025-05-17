@@ -16,14 +16,12 @@ const GITHUB_TOKEN = process.env.VUE_APP_GITHUB_TOKEN;
 
 // 目录映射关系
 const DIRECTORY_MAP = {
-  'frontend': '1-语言',
-  'backend': '2-框架',
-  'mobile': '3-样式',
-  'database': '4-工程化',
-  'architecture': '5-浏览器 I 网络安全',
-  'dev-tools': '6-工具',
-  'productivity': '7-混合',
-  'english': '8-英语',
+  'language': '1-语言',
+  'framework': '2-框架',
+  'engineering': '3-工程化',
+  'dev-tools': '4-工具',
+  'mix': '5-混合',
+  'english': '6-英语',
   'ai': 'AI 素材',
   'ppt': 'PPT'
 };

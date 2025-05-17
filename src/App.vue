@@ -15,11 +15,10 @@ export default {
           name: '编程开发',
           isOpen: false,
           categories: [
-            { id: 'frontend', name: '前端开发', description: '前端框架、工具和最佳实践' },
-            { id: 'backend', name: '后端开发', description: '服务端技术和架构设计' },
-            { id: 'mobile', name: '移动开发', description: '移动应用开发技术和经验' },
-            { id: 'database', name: '数据库', description: '数据库设计和优化' },
-            { id: 'architecture', name: '架构设计', description: '系统架构设计和最佳实践' }
+            { id: 'language', name: '前端｜语言', description: '前端框架、工具和最佳实践' },
+            { id: 'framework', name: '前端｜框架', description: '服务端技术和架构设计' },
+            { id: 'engineering', name: '前端｜工程化', description: '移动应用开发技术和经验' },
+            { id: 'mix', name: '前端｜混合', description: '数据库设计和优化' },
           ]
         },
         {
@@ -28,7 +27,6 @@ export default {
           isOpen: false,
           categories: [
             { id: 'dev-tools', name: '开发工具', description: '提升开发效率的各类工具' },
-            { id: 'productivity', name: '效率工具', description: '让工作更高效的软件和方法' }
           ]
         },
         {
