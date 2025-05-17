@@ -10,6 +10,5 @@ pnpm-debug.log*
 
 # src
 node_modules
-dist
 env/*.local
 /.idea/
