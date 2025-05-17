@@ -28,7 +28,7 @@
     </header>
 
     <main class="main-content">
-      <section v-for="group in categoryGroups" :key="group.id" class="category-section">
+      <section v-for="group in $root.$data.categoryGroups" :key="group.id" class="category-section">
         <h2 class="section-title">{{ group.name }}</h2>
         <div class="category-grid">
           <router-link
@@ -60,104 +60,7 @@ export default {
       searchQuery: '',
       totalArticles: 42,
       totalCategories: 13,
-      daysCount: 365,
-      categoryGroups: [
-        {
-          id: 'programming',
-          name: '编程开发',
-          categories: [
-            {
-              id: 'frontend',
-              name: '前端开发/语言',
-              description: '前端框架、工具和最佳实践',
-              icon: 'fas fa-code',
-              count: 15
-            },
-            {
-              id: 'backend',
-              name: '前端开发/框架',
-              description: '服务端技术和架构设计',
-              icon: 'fas fa-server',
-              count: 12
-            },
-            {
-              id: 'mobile',
-              name: '前端开发/样式',
-              description: '移动应用开发技术和经验',
-              icon: 'fas fa-mobile-alt',
-              count: 8
-            },
-            {
-              id: 'database',
-              name: '前端开发/工程化',
-              description: '数据库设计和优化',
-              icon: 'fas fa-database',
-              count: 6
-            },
-            {
-              id: 'architecture',
-              name: '前端开发/性能',
-              description: '数据库设计和优化',
-              icon: 'fas fa-database',
-              count: 6
-            }
-          ]
-        },
-        {
-          id: 'tools',
-          name: '工具效率',
-          categories: [
-            {
-              id: 'dev-tools',
-              name: '开发工具',
-              description: '提升开发效率的各类工具',
-              icon: 'fas fa-tools',
-              count: 10
-            },
-            {
-              id: 'productivity',
-              name: '效率工具',
-              description: '让工作更高效的软件和方法',
-              icon: 'fas fa-clock',
-              count: 8
-            },
-            {
-              id: 'cli-tools',
-              name: '命令行工具',
-              description: '常用命令行工具使用技巧',
-              icon: 'fas fa-terminal',
-              count: 5
-            }
-          ]
-        },
-        {
-          id: 'learning',
-          name: '学习成长',
-          categories: [
-            {
-              id: 'english',
-              name: '英语学习',
-              description: '提升英语水平的方法和资源',
-              icon: 'fas fa-language',
-              count: 7
-            },
-            {
-              id: 'reading',
-              name: '读书笔记',
-              description: '技术书籍和经典著作笔记',
-              icon: 'fas fa-book-reader',
-              count: 9
-            },
-            {
-              id: 'ai',
-              name: 'AI 素材',
-              description: '职业规划和成长经验',
-              icon: 'fas fa-chart-line',
-              count: 6
-            }
-          ]
-        }
-      ]
+      daysCount: 365
     }
   }
 }
