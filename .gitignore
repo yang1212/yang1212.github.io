@@ -12,3 +12,4 @@ dist
 node_modules
 env/*.local
 /.idea/
+.env
