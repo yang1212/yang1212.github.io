@@ -4,22 +4,6 @@
       <div class="hero-content">
         <h1>个人知识库</h1>
         <p class="subtitle">记录学习，分享经验，持续成长</p>
-        <div class="time-display" @click="handleTimeClick">
-          <div class="time-unit">
-            <span class="time-number">{{ currentTime.hours }}</span>
-            <span class="time-label">时</span>
-          </div>
-          <div class="time-separator">:</div>
-          <div class="time-unit">
-            <span class="time-number">{{ currentTime.minutes }}</span>
-            <span class="time-label">分</span>
-          </div>
-          <div class="time-separator">:</div>
-          <div class="time-unit">
-            <span class="time-number">{{ currentTime.seconds }}</span>
-            <span class="time-label">秒</span>
-          </div>
-        </div>
         <div class="search-box">
           <input type="text" placeholder="搜索文章..." v-model="searchQuery">
           <button class="search-btn">
@@ -103,28 +87,6 @@ export default {
         minutes: String(now.getMinutes()).padStart(2, '0'),
         seconds: String(now.getSeconds()).padStart(2, '0')
       };
-    },
-    handleTimeClick() {
-      this.clickCount++;
-      
-      // 清除之前的定时器
-      if (this.clickTimer) {
-        clearTimeout(this.clickTimer);
-      }
-      
-      // 设置新的定时器，1.5秒后重置点击计数
-      this.clickTimer = setTimeout(() => {
-        this.clickCount = 0;
-      }, 1500);
-      
-      // 如果连续点击5次，切换统计面板显示状态
-      if (this.clickCount === 5) {
-        this.showStats = !this.showStats;
-        this.clickCount = 0;
-        if (this.showStats) {
-          this.updateStats();
-        }
-      }
     },
     handleKeyPress(event) {
       this.keySequence += event.key;

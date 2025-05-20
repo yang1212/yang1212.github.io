@@ -32,10 +32,16 @@
         </div>
         <div class="file-meta">
           <span class="file-type">{{ fileType }}</span>
-          <button @click="handlePrint" class="print-btn">
-            <i class="fas fa-print"></i>
-            打印
-          </button>
+          <div class="print-buttons">
+            <button @click="handleBatchPrint" class="print-btn batch-print-btn" v-if="batchFiles.length > 0">
+              <i class="fas fa-print"></i>
+              批量打印 ({{ batchFiles.length }})
+            </button>
+            <button @click="handlePrint" class="print-btn">
+              <i class="fas fa-print"></i>
+              打印
+            </button>
+          </div>
         </div>
       </div>
 
@@ -80,7 +86,9 @@ export default {
       loading: true,
       error: null,
       fileUrl: null,
-      fileContent: null
+      fileContent: null,
+      batchFiles: [], // 用于存储批量打印的文件
+      isBatchPrinting: false
     }
   },
   computed: {
@@ -146,6 +154,9 @@ export default {
       }
       
       return crumbs;
+    },
+    isInBatchQueue() {
+      return this.batchFiles.some(file => file.url === this.fileUrl);
     }
   },
   methods: {
@@ -154,88 +165,251 @@ export default {
       this.error = null;
       
       try {
-        // 构建 GitHub raw 文件 URL
         const encodedPath = this.path
           .split('/')
           .map(part => encodeURIComponent(part))
           .join('/');
           
-        this.fileUrl = `https://raw.githubusercontent.com/yang1212/collection-about/master/${encodedPath}`;
+        const apiUrl = `/api/content/${encodedPath}`;
         
-        // 如果是 Markdown 文件，获取内容
-        if (this.isMarkdown) {
-          const response = await fetch(this.fileUrl);
-          if (!response.ok) {
-            throw new Error('Failed to fetch file content');
+        const response = await fetch(apiUrl);
+        
+        // 添加详细的错误处理
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => null);
+          console.error('GitHub API Response:', {
+            status: response.status,
+            statusText: response.statusText,
+            headers: Object.fromEntries(response.headers.entries()),
+            error: errorData
+          });
+          
+          // 检查是否是 rate limit 问题
+          const rateLimit = response.headers.get('x-ratelimit-remaining');
+          if (rateLimit === '0') {
+            throw new Error('GitHub API 请求次数已达上限，请稍后再试');
           }
-          this.fileContent = await response.text();
+          
+          throw new Error(`请求失败: ${response.status} ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        if (this.isMarkdown || this.isImage) {
+          this.fileUrl = data.download_url;
+          
+          if (this.isMarkdown) {
+            const contentResponse = await fetch(this.fileUrl);
+            if (!contentResponse.ok) {
+              throw new Error('无法获取 Markdown 内容');
+            }
+            this.fileContent = await contentResponse.text();
+          }
         }
         
         this.loading = false;
       } catch (error) {
-        console.error('Error loading file:', error);
-        this.error = '加载文件时发生错误';
+        console.error('文件加载错误:', error);
+        this.error = error.message || '加载文件时发生错误';
         this.loading = false;
       }
     },
     handlePrint() {
       if (this.isImage) {
-        // 如果是图片，创建一个新窗口来打印图片
+        // 对于图片，创建新窗口
         const printWindow = window.open('', '_blank');
         printWindow.document.write(`
+          <!DOCTYPE html>
           <html>
             <head>
               <title>${this.displayName}</title>
               <style>
                 @media print {
-                  * {
-                    color: #000000 !important;
-                    -webkit-print-color-adjust: exact !important;
-                    print-color-adjust: exact !important;
-                    color-adjust: exact !important;
-                  }
-                  body {
-                    margin: 0;
-                    padding: 20px;
-                  }
+                  body { margin: 0; padding: 0; }
                   .print-title {
                     text-align: center;
                     font-size: 18pt;
                     font-weight: 900;
-                    margin-bottom: 20px;
-                    color: #000000 !important;
-                    -webkit-text-fill-color: #000000 !important;
-                  }
-                  .print-image {
-                    display: flex;
-                    justify-content: center;
+                    margin: 0 0 20px 0;
                   }
                   img {
                     max-width: 100%;
                     height: auto;
+                    display: block;
+                    margin: 0 auto;
                   }
                 }
               </style>
             </head>
             <body>
               <div class="print-title">${this.displayName}</div>
-              <div class="print-image">
-                <img src="${this.fileUrl}" alt="${this.displayName}">
-              </div>
+              <img src="${this.fileUrl}" alt="${this.displayName}" onload="window.print(); setTimeout(() => window.close(), 1000);">
             </body>
           </html>
         `);
         printWindow.document.close();
-        printWindow.onload = function() {
-          printWindow.focus();
-          printWindow.print();
-          setTimeout(() => printWindow.close(), 1000);
-        };
       } else {
-        // 如果是 Markdown 文件，直接打印当前页面
+        // 对于 Markdown，直接打印当前页面
         window.print();
       }
-    }
+    },
+    async handleBatchPrint() {
+      this.isBatchPrinting = true;
+      const printWindow = window.open('', '_blank');
+      
+      // 写入HTML头部
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>批量打印</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
+            <style>
+              @media print {
+                * {
+                  color: #000000 !important;
+                  -webkit-print-color-adjust: exact !important;
+                  print-color-adjust: exact !important;
+                  color-adjust: exact !important;
+                }
+                body {
+                  margin: 0;
+                  padding: 0;
+                }
+                .print-page {
+                  page-break-after: always;
+                  padding: 0;
+                }
+                .print-title {
+                  text-align: center;
+                  font-size: 18pt;
+                  font-weight: 900;
+                  margin: 0 0 20px 0;
+                  padding: 0;
+                  color: #000000 !important;
+                  -webkit-text-fill-color: #000000 !important;
+                }
+                .print-content {
+                  width: 100%;
+                  max-width: 100%;
+                  padding: 0 20px;
+                }
+                img {
+                  max-width: 100%;
+                  height: auto;
+                  display: block;
+                  margin: 0 auto;
+                }
+                .markdown-content {
+                  font-family: 'Times New Roman', serif;
+                  line-height: 1.6;
+                }
+                .markdown-body {
+                  border: none !important;
+                  margin: 0 !important;
+                  padding: 0 !important;
+                  background: none !important;
+                }
+                .markdown-body pre,
+                .markdown-body code {
+                  white-space: pre-wrap !important;
+                  word-wrap: break-word !important;
+                }
+              }
+            </style>
+          </head>
+          <body>
+      `);
+
+      // 处理每个文件
+      for (const file of this.batchFiles) {
+        try {
+          let content = '';
+          if (file.type === 'markdown') {
+            const response = await fetch(file.url);
+            if (!response.ok) throw new Error('Failed to fetch markdown content');
+            content = await response.text();
+            // 使用 marked 库渲染 Markdown
+            const renderedContent = this.$marked(content);
+            printWindow.document.write(`
+              <div class="print-page">
+                <div class="print-title">${file.name}</div>
+                <div class="print-content">
+                  <div class="markdown-body">${renderedContent}</div>
+                </div>
+              </div>
+            `);
+          } else if (file.type === 'image') {
+            printWindow.document.write(`
+              <div class="print-page">
+                <div class="print-title">${file.name}</div>
+                <div class="print-content">
+                  <img src="${file.url}" alt="${file.name}">
+                </div>
+              </div>
+            `);
+          }
+        } catch (error) {
+          console.error(`Error processing file ${file.name}:`, error);
+        }
+      }
+
+      // 关闭HTML文档
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+
+      // 等待所有图片加载完成后打印
+      const images = printWindow.document.getElementsByTagName('img');
+      let loadedImages = 0;
+      const totalImages = images.length;
+
+      if (totalImages === 0) {
+        printWindow.print();
+        setTimeout(() => printWindow.close(), 1000);
+      } else {
+        for (const img of images) {
+          if (img.complete) {
+            loadedImages++;
+            if (loadedImages === totalImages) {
+              printWindow.print();
+              setTimeout(() => printWindow.close(), 1000);
+            }
+          } else {
+            img.onload = () => {
+              loadedImages++;
+              if (loadedImages === totalImages) {
+                printWindow.print();
+                setTimeout(() => printWindow.close(), 1000);
+              }
+            };
+          }
+        }
+      }
+
+      this.isBatchPrinting = false;
+    },
+
+    // 添加文件到批量打印队列
+    addToBatchPrint() {
+      const fileInfo = {
+        name: this.displayName,
+        url: this.fileUrl,
+        type: this.isMarkdown ? 'markdown' : this.isImage ? 'image' : 'unsupported'
+      };
+      
+      // 检查文件是否已在队列中
+      const exists = this.batchFiles.some(file => file.url === fileInfo.url);
+      if (!exists && (fileInfo.type === 'markdown' || fileInfo.type === 'image')) {
+        this.batchFiles.push(fileInfo);
+      }
+    },
+
+    // 从批量打印队列中移除文件
+    removeFromBatchPrint() {
+      const index = this.batchFiles.findIndex(file => file.url === this.fileUrl);
+      if (index !== -1) {
+        this.batchFiles.splice(index, 1);
+      }
+    },
   },
   created() {
     this.loadFile();
@@ -245,6 +419,56 @@ export default {
       handler: 'loadFile',
       immediate: true
     }
+  },
+  mounted() {
+    // 添加打印样式
+    const style = document.createElement('style');
+    style.textContent = `
+      @media print {
+        .navbar, .breadcrumb, .file-meta, .print-buttons {
+          display: none !important;
+        }
+        body {
+          margin: 0;
+          padding: 0;
+        }
+        .file-body {
+          padding: 20px !important;
+        }
+        .file-body::before {
+          content: attr(data-filename);
+          display: block;
+          text-align: center;
+          font-size: 18pt;
+          font-weight: 900;
+          margin-bottom: 20px;
+          font-family: 'Times New Roman', serif;
+        }
+        .markdown-body {
+          border: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          background: none !important;
+        }
+        .markdown-body pre,
+        .markdown-body code {
+          white-space: pre-wrap !important;
+          word-wrap: break-word !important;
+        }
+        img {
+          max-width: 100% !important;
+          height: auto !important;
+          display: block !important;
+          margin: 0 auto !important;
+        }
+        * {
+          color: #000 !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
   }
 }
 </script>
@@ -333,6 +557,12 @@ export default {
   font-size: 0.9em;
 }
 
+.print-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
 .print-btn {
   display: flex;
   align-items: center;
@@ -344,15 +574,35 @@ export default {
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.9em;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
 }
 
 .print-btn:hover {
   background-color: #3aa876;
 }
 
-.print-btn i {
-  font-size: 1em;
+.toggle-batch-btn {
+  background-color: #606c76;
+}
+
+.toggle-batch-btn:hover {
+  background-color: #4a545c;
+}
+
+.toggle-batch-btn.selected {
+  background-color: #42b983;
+}
+
+.toggle-batch-btn.selected:hover {
+  background-color: #3aa876;
+}
+
+.batch-print-btn {
+  background-color: #2c3e50;
+}
+
+.batch-print-btn:hover {
+  background-color: #1a2634;
 }
 
 .file-body {
@@ -409,6 +659,16 @@ export default {
     align-items: flex-start;
     gap: 10px;
   }
+
+  .print-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .print-btn {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 @media print {
@@ -418,7 +678,8 @@ export default {
   .file-meta,
   .file-header,
   .file-title i,
-  .unsupported-file i {
+  .unsupported-file i,
+  .print-buttons {
     display: none !important;
   }
 
@@ -427,25 +688,52 @@ export default {
     background: none !important;
     box-shadow: none !important;
     border: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
 
   /* 只显示文件名和内容 */
   .file-body {
-    padding: 20px !important;
+    padding: 0 20px !important;
   }
 
   .file-body::before {
     content: attr(data-filename);
     display: block;
     text-align: center;
-    font-size: 24pt !important;
+    font-size: 18pt !important;
     font-weight: 900 !important;
     color: rgb(0, 0, 0) !important;
     -webkit-text-fill-color: rgb(0, 0, 0) !important;
-    margin-bottom: 30px !important;
+    margin: 0 0 20px 0 !important;
+    padding: 0 !important;
     font-family: 'Times New Roman', serif !important;
+  }
+
+  /* Markdown 内容样式 */
+  .markdown-viewer {
+    line-height: 1.6 !important;
+    font-family: 'Times New Roman', serif !important;
+  }
+
+  .markdown-viewer pre,
+  .markdown-viewer code {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+  }
+
+  /* 图片样式 */
+  .image-viewer {
+    padding: 0 !important;
+  }
+
+  .image-viewer img {
+    max-width: 100% !important;
+    height: auto !important;
+    display: block !important;
+    margin: 0 auto !important;
   }
 }
 </style> 
