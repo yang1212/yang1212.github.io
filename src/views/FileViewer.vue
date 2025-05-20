@@ -440,7 +440,12 @@ export default {
     content: attr(data-filename);
     display: block;
     text-align: center;
-    margin-bottom: 20px !important;
+    font-size: 24pt !important;
+    font-weight: 900 !important;
+    color: rgb(0, 0, 0) !important;
+    -webkit-text-fill-color: rgb(0, 0, 0) !important;
+    margin-bottom: 30px !important;
+    font-family: 'Times New Roman', serif !important;
   }
 }
 </style> 
