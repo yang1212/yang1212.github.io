@@ -52,21 +52,35 @@
 
       <!-- 显示文章和其他文件 -->
       <div class="articles-grid" v-if="files.length > 0">
-        <router-link 
+        <div class="batch-actions" v-if="selectedFiles.length > 0">
+          <button @click="handleBatchPrint" class="batch-print-btn">
+            <i class="fas fa-print"></i>
+            批量打印 ({{ selectedFiles.length }})
+          </button>
+        </div>
+        <div 
           v-for="file in files" 
           :key="file.path"
-          :to="getFileRoute(file)"
           class="file-card"
+          :class="{ 'selected': isFileSelected(file) }"
+          @click="handleFileClick($event, file)"
         >
-          <div class="file-content">
+          <div class="file-selection" @click.stop="toggleFileSelection(file)">
+            <i class="fas" :class="isFileSelected(file) ? 'fa-check-square' : 'fa-square'"></i>
+          </div>
+          <router-link 
+            :to="getFileRoute(file)"
+            class="file-content"
+            @click.native.stop
+          >
             <i :class="getFileIcon(file)"></i>
             <h2>{{ getDisplayName(file.name) }}</h2>
             <p class="file-meta">
               <span class="date">{{ formatDate(file.lastModified) }}</span>
               <span class="file-type">{{ getFileType(file) }}</span>
             </p>
-          </div>
-        </router-link>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -88,7 +102,8 @@ export default {
       files: [],
       folders: [],
       loading: false,
-      error: null
+      error: null,
+      selectedFiles: [], // 用于存储选中的文件
     }
   },
   computed: {
@@ -247,7 +262,236 @@ export default {
       } finally {
         this.loading = false;
       }
-    }
+    },
+
+    // 检查文件是否可以打印
+    isPrintable(file) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      return ['md', 'jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext);
+    },
+
+    // 检查文件是否被选中
+    isFileSelected(file) {
+      return this.selectedFiles.some(f => f.path === file.path);
+    },
+
+    // 切换文件选择状态
+    toggleFileSelection(file) {
+      if (!this.isPrintable(file)) {
+        this.$message.warning('只能选择 Markdown 文档和图片文件进行打印');
+        return;
+      }
+      
+      const index = this.selectedFiles.findIndex(f => f.path === file.path);
+      if (index === -1) {
+        this.selectedFiles.push(file);
+      } else {
+        this.selectedFiles.splice(index, 1);
+      }
+    },
+
+    // 处理文件卡片点击
+    handleFileClick(event, file) {
+      // 如果点击的是选择框区域，不做任何处理
+      if (event.target.closest('.file-selection')) {
+        return;
+      }
+      // 如果已经有选中的文件，则切换选择状态
+      if (this.selectedFiles.length > 0) {
+        this.toggleFileSelection(file);
+      }
+    },
+
+    // 批量打印处理
+    async handleBatchPrint() {
+      if (this.selectedFiles.length === 0) {
+        this.$message.warning('请先选择要打印的文件');
+        return;
+      }
+
+      const printWindow = window.open('', '_blank');
+      
+      // 写入HTML头部
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>批量打印</title>
+            <style>
+              @media print {
+                * {
+                  color: #000000 !important;
+                  -webkit-print-color-adjust: exact !important;
+                  print-color-adjust: exact !important;
+                  color-adjust: exact !important;
+                }
+                body {
+                  margin: 0;
+                  padding: 20px;
+                }
+                .print-page {
+                  page-break-after: always;
+                  margin-bottom: 30px;
+                }
+                .print-title {
+                  text-align: center;
+                  font-size: 24pt !important;
+                  font-weight: 900 !important;
+                  margin-bottom: 0 !important;
+                  color: rgb(0, 0, 0) !important;
+                  -webkit-text-fill-color: rgb(0, 0, 0) !important;
+                  font-family: 'Times New Roman', serif !important;
+                }
+                .print-content {
+                  width: 100%;
+                  max-width: 100%;
+                  padding: 0 20px !important;
+                }
+                img {
+                  max-width: 100%;
+                  height: auto;
+                  display: block;
+                  margin: 0 auto;
+                }
+                .markdown-content {
+                  font-family: 'Times New Roman', serif !important;
+                  line-height: 1.6;
+                  font-size: 12pt;
+                  white-space: pre-wrap;
+                  word-wrap: break-word;
+                }
+                .markdown-content p {
+                  margin: 1em 0;
+                  line-height: 1.6;
+                }
+                .markdown-content h1,
+                .markdown-content h2,
+                .markdown-content h3,
+                .markdown-content h4,
+                .markdown-content h5,
+                .markdown-content h6 {
+                  margin: 1.5em 0 1em;
+                  line-height: 1.4;
+                  color: #000000 !important;
+                }
+                .markdown-content pre,
+                .markdown-content code {
+                  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+                  background-color: #f5f5f5 !important;
+                  padding: 0.2em 0.4em;
+                  border-radius: 3px;
+                  font-size: 0.9em;
+                  color: #000000 !important;
+                }
+                .markdown-content pre {
+                  padding: 1em;
+                  overflow-x: auto;
+                  line-height: 1.5;
+                  margin: 1em 0;
+                }
+                .markdown-content blockquote {
+                  margin: 1em 0;
+                  padding-left: 1em;
+                  border-left: 4px solid #ddd;
+                  color: #666 !important;
+                }
+                .markdown-content ul,
+                .markdown-content ol {
+                  margin: 1em 0;
+                  padding-left: 2em;
+                }
+                .markdown-content li {
+                  margin: 0.5em 0;
+                }
+                .markdown-content table {
+                  border-collapse: collapse;
+                  width: 100%;
+                  margin: 1em 0;
+                }
+                .markdown-content th,
+                .markdown-content td {
+                  border: 1px solid #ddd;
+                  padding: 8px;
+                  text-align: left;
+                }
+                .markdown-content th {
+                  background-color: #f5f5f5 !important;
+                }
+                @page {
+                  margin: 1cm;
+                }
+              }
+            </style>
+          </head>
+          <body>
+      `);
+
+      // 处理每个文件
+      for (const file of this.selectedFiles) {
+        try {
+          const fileName = this.getDisplayName(file.name);
+          const fileExt = file.name.split('.').pop().toLowerCase();
+          const fileUrl = `https://raw.githubusercontent.com/yang1212/collection-about/master/${file.path}`;
+
+          if (fileExt === 'md') {
+            const response = await fetch(fileUrl);
+            if (!response.ok) throw new Error('Failed to fetch markdown content');
+            const content = await response.text();
+            printWindow.document.write(`
+              <div class="print-page">
+                <div class="print-title">${fileName}</div>
+                <div class="print-content">
+                  <div class="markdown-content">${content}</div>
+                </div>
+              </div>
+            `);
+          } else if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(fileExt)) {
+            printWindow.document.write(`
+              <div class="print-page">
+                <div class="print-title">${fileName}</div>
+                <div class="print-content">
+                  <img src="${fileUrl}" alt="${fileName}">
+                </div>
+              </div>
+            `);
+          }
+        } catch (error) {
+          console.error(`Error processing file ${file.name}:`, error);
+          this.$message.error(`处理文件 ${file.name} 时发生错误`);
+        }
+      }
+
+      // 关闭HTML文档
+      printWindow.document.write('</body></html>');
+      printWindow.document.close();
+
+      // 等待所有图片加载完成后打印
+      const images = printWindow.document.getElementsByTagName('img');
+      let loadedImages = 0;
+      const totalImages = images.length;
+
+      if (totalImages === 0) {
+        printWindow.print();
+        setTimeout(() => printWindow.close(), 1000);
+      } else {
+        for (const img of images) {
+          if (img.complete) {
+            loadedImages++;
+            if (loadedImages === totalImages) {
+              printWindow.print();
+              setTimeout(() => printWindow.close(), 1000);
+            }
+          } else {
+            img.onload = () => {
+              loadedImages++;
+              if (loadedImages === totalImages) {
+                printWindow.print();
+                setTimeout(() => printWindow.close(), 1000);
+              }
+            };
+          }
+        }
+      }
+    },
   },
   created() {
     this.loadContent();
@@ -448,13 +692,14 @@ export default {
 }
 
 .file-card {
+  position: relative;
+  display: flex;
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
-  text-decoration: none;
-  color: inherit;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .file-card:hover {
@@ -462,8 +707,33 @@ export default {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+.file-card.selected {
+  border: 2px solid #42b983;
+}
+
+.file-selection {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  padding: 5px;
+  color: #666;
+  transition: color 0.2s;
+}
+
+.file-selection:hover {
+  color: #42b983;
+}
+
+.file-card.selected .file-selection {
+  color: #42b983;
+}
+
 .file-content {
+  flex: 1;
   padding: 20px;
+  text-decoration: none;
+  color: inherit;
 }
 
 .file-content i {
@@ -495,5 +765,32 @@ export default {
   .articles-grid {
     grid-template-columns: 1fr;
   }
+}
+
+.batch-actions {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  display: flex;
+  gap: 10px;
+}
+
+.batch-print-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #42b983;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s;
+}
+
+.batch-print-btn:hover {
+  background-color: #3aa876;
 }
 </style> 
