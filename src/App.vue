@@ -1,12 +1,18 @@
 <template>
   <div id="app">
+    <nav-bar />
     <router-view/>
   </div>
 </template>
 
 <script>
+import NavBar from './components/NavBar.vue'
+
 export default {
   name: 'App',
+  components: {
+    NavBar
+  },
   data() {
     return {
       categoryGroups: [
@@ -15,10 +21,10 @@ export default {
           name: '编程开发',
           isOpen: false,
           categories: [
-            { id: 'language', name: '前端｜语言', description: '前端框架、工具和最佳实践' },
-            { id: 'framework', name: '前端｜框架', description: '服务端技术和架构设计' },
-            { id: 'engineering', name: '前端｜工程化', description: '移动应用开发技术和经验' },
-            { id: 'mix', name: '前端｜混合', description: '数据库设计和优化' },
+            { id: 'language', name: '前端｜语言', description: '' },
+            { id: 'framework', name: '前端｜框架', description: '' },
+            { id: 'engineering', name: '前端｜工程化', description: '' },
+            { id: 'mix', name: '前端｜混合', description: '' },
           ]
         },
         {
@@ -26,7 +32,7 @@ export default {
           name: '工具效率',
           isOpen: false,
           categories: [
-            { id: 'dev-tools', name: '开发工具', description: '提升开发效率的各类工具' },
+            { id: 'dev-tools', name: '开发工具', description: '' },
           ]
         },
         {
@@ -34,8 +40,8 @@ export default {
           name: '学习成长',
           isOpen: false,
           categories: [
-            { id: 'english', name: '英语学习', description: '提升英语水平的方法和资源' },
-            { id: 'ai', name: 'AI 素材', description: '人工智能相关资源' }
+            { id: 'english', name: '英语学习', description: '' },
+            { id: 'ai', name: 'AI 素材', description: '' }
           ]
         }
       ]

@@ -10,6 +10,7 @@
   "dependencies": {
     "@tiptap/starter-kit": "^2.4.0",
     "@tiptap/vue-2": "^2.4.0",
+    "axios": "^1.9.0",
     "core-js": "^3.8.3",
     "dom-to-image": "^2.6.0",
     "element-ui": "^2.15.4",
@@ -22,6 +23,7 @@
     "markdown-it-toc-done-right": "^4.2.0",
     "prismjs": "^1.30.0",
     "vue": "^2.6.14",
+    "vue-i18n": "^8.28.2",
     "vue-router": "^3.6.5",
     "vue2-editor": "^2.10.3"
   },
