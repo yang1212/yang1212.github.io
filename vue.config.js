@@ -10,7 +10,7 @@ module.exports = defineConfig({
         target: 'https://api.github.com/repos/yang1212/collection-about/contents',
         changeOrigin: true,
         pathRewrite: {
-          '^/api/content': ''
+          '^/api/content/': ''
         },
         headers: {
           'Accept': 'application/vnd.github.v3+json'
