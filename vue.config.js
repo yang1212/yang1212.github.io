@@ -6,7 +6,7 @@ module.exports = defineConfig({
     port: 8080,
     allowedHosts: 'all', // 允许所有主机名访问
     proxy: {
-      '/api/content': {
+      '/api/content/': {
         target: 'https://api.github.com/repos/yang1212/collection-about/contents',
         changeOrigin: true,
         pathRewrite: {
