@@ -1,7 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
-  outputDir: 'docs',
-  publicPath: '/docs/', // 如果你部署目录是 /docs/
+  outputDir: 'dist',
+  publicPath: './',
   devServer: {
     host: '0.0.0.0', // 或者设置为你的服务器的实际 IP 地址
     port: 8080,
