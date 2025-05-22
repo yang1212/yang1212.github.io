@@ -23,7 +23,7 @@
     "markdown-it-prism": "^2.3.1",
     "markdown-it-toc-done-right": "^4.2.0",
     "prismjs": "^1.30.0",
-    "vue": "^2.6.14",
+    "vue": "^3.0.0",
     "vue-i18n": "^8.28.2",
     "vue-router": "^3.6.5",
     "vue2-editor": "^2.10.3"
