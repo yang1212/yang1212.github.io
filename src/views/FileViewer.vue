@@ -170,10 +170,10 @@ export default {
           .map(part => encodeURIComponent(part))
           .join('/');
           
-        // const apiUrl = `/api/content/${encodedPath}`;
+        const apiUrl = `/api/content/${encodedPath}`;
 
-        const rawBaseUrl = 'https://raw.githubusercontent.com/yang1212/collection-about/master/';
-        const apiUrl = `${rawBaseUrl}${encodedPath}`; // 注意：用 decodedPath，而不是 encodedPath
+        // const rawBaseUrl = 'https://raw.githubusercontent.com/yang1212/collection-about/master/';
+        // const apiUrl = `${rawBaseUrl}${encodedPath}`; // 注意：用 decodedPath，而不是 encodedPath
 
         
         const response = await fetch(apiUrl);
