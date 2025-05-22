@@ -448,7 +448,10 @@ export default {
         try {
           const fileName = this.getDisplayName(file.name);
           const fileExt = file.name.split('.').pop().toLowerCase();
-          const fileUrl = `/api/content/${file.path}`;
+          // const fileUrl = `/api/content/${file.path}`;
+
+          const rawBaseUrl = 'https://raw.githubusercontent.com/yang1212/collection-about/master/';
+          const fileUrl = `${rawBaseUrl}${file.path}`; // 注意：用 decodedPath，而不是 encodedPath
 
           if (fileExt === 'md') {
             const response = await fetch(fileUrl);
