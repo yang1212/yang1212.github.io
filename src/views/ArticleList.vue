@@ -448,7 +448,7 @@ export default {
         try {
           const fileName = this.getDisplayName(file.name);
           const fileExt = file.name.split('.').pop().toLowerCase();
-          const fileUrl = `https://raw.githubusercontent.com/yang1212/collection-about/master/${file.path}`;
+          const fileUrl = `/api/content/${file.path}`;
 
           if (fileExt === 'md') {
             const response = await fetch(fileUrl);
