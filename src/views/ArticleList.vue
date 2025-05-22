@@ -88,6 +88,7 @@
 
 <script>
 import { getMarkdownFiles } from '@/services/github';
+import MarkdownIt from 'markdown-it';
 
 export default {
   name: 'ArticleList',
@@ -103,7 +104,13 @@ export default {
       folders: [],
       loading: false,
       error: null,
-      selectedFiles: [], // 用于存储选中的文件
+      selectedFiles: [],
+      md: new MarkdownIt({
+        html: true,
+        linkify: true,
+        typographer: true,
+        breaks: true
+      })
     }
   },
   computed: {
@@ -316,6 +323,7 @@ export default {
         <html>
           <head>
             <title>批量打印</title>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown.min.css">
             <style>
               @media print {
                 * {
@@ -327,6 +335,7 @@ export default {
                 body {
                   margin: 0;
                   padding: 20px;
+                  font-family: 'Times New Roman', serif !important;
                 }
                 .print-page {
                   page-break-after: always;
@@ -336,7 +345,7 @@ export default {
                   text-align: center;
                   font-size: 24pt !important;
                   font-weight: 900 !important;
-                  margin-bottom: 0 !important;
+                  margin-bottom: 15px !important;
                   color: rgb(0, 0, 0) !important;
                   -webkit-text-fill-color: rgb(0, 0, 0) !important;
                   font-family: 'Times New Roman', serif !important;
@@ -346,78 +355,87 @@ export default {
                   max-width: 100%;
                   padding: 0 20px !important;
                 }
-                img {
-                  max-width: 100%;
-                  height: auto;
-                  display: block;
-                  margin: 0 auto;
-                }
                 .markdown-content {
                   font-family: 'Times New Roman', serif !important;
                   line-height: 1.6;
-                  font-size: 12pt;
-                  white-space: pre-wrap;
-                  word-wrap: break-word;
+                  font-size: 18px !important;
                 }
                 .markdown-content p {
                   margin: 1em 0;
                   line-height: 1.6;
+                  font-size: 18px !important;
                 }
-                .markdown-content h1,
-                .markdown-content h2,
-                .markdown-content h3,
-                .markdown-content h4,
-                .markdown-content h5,
-                .markdown-content h6 {
-                  margin: 1.5em 0 1em;
-                  line-height: 1.4;
-                  color: #000000 !important;
-                }
-                .markdown-content pre,
-                .markdown-content code {
-                  font-family: Consolas, Monaco, 'Andale Mono', monospace;
-                  background-color: #f5f5f5 !important;
-                  padding: 0.2em 0.4em;
-                  border-radius: 3px;
-                  font-size: 0.9em;
-                  color: #000000 !important;
-                }
-                .markdown-content pre {
-                  padding: 1em;
-                  overflow-x: auto;
-                  line-height: 1.5;
-                  margin: 1em 0;
-                }
-                .markdown-content blockquote {
-                  margin: 1em 0;
-                  padding-left: 1em;
-                  border-left: 4px solid #ddd;
-                  color: #666 !important;
-                }
+                .markdown-content h1 { font-size: 28px !important; }
+                .markdown-content h2 { font-size: 24px !important; }
+                .markdown-content h3 { font-size: 22px !important; }
+                .markdown-content h4 { font-size: 20px !important; }
+                .markdown-content h5 { font-size: 19px !important; }
+                .markdown-content h6 { font-size: 18px !important; }
+                
                 .markdown-content ul,
                 .markdown-content ol {
                   margin: 1em 0;
                   padding-left: 2em;
+                  font-size: 18px !important;
                 }
+                
                 .markdown-content li {
                   margin: 0.5em 0;
+                  font-size: 18px !important;
                 }
+                
+                .markdown-content pre,
+                .markdown-content code {
+                  font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', monospace !important;
+                  background-color: #f5f5f5 !important;
+                  padding: 0.2em 0.4em;
+                  border-radius: 3px;
+                  font-size: 16px !important;
+                  line-height: 1.8 !important;
+                  color: #000000 !important;
+                }
+                
+                .markdown-content pre {
+                  padding: 1em;
+                  overflow-x: auto;
+                  margin: 1em 0;
+                }
+                
+                .markdown-content blockquote {
+                  margin: 1em 0;
+                  padding-left: 1em;
+                  border-left: 4px solid #ddd !important;
+                  color: #000000 !important;
+                  font-size: 18px !important;
+                }
+                
                 .markdown-content table {
                   border-collapse: collapse;
                   width: 100%;
                   margin: 1em 0;
                 }
+                
                 .markdown-content th,
                 .markdown-content td {
-                  border: 1px solid #ddd;
+                  border: 1px solid #000 !important;
                   padding: 8px;
                   text-align: left;
+                  font-size: 18px !important;
                 }
+                
                 .markdown-content th {
                   background-color: #f5f5f5 !important;
+                  font-weight: bold;
+                }
+                
+                img {
+                  max-width: 100%;
+                  height: auto;
+                  display: block;
+                  margin: 1em auto !important;
                 }
                 @page {
-                  margin: 1cm;
+                  margin: 1.5cm !important;
                 }
               }
             </style>
@@ -436,11 +454,13 @@ export default {
             const response = await fetch(fileUrl);
             if (!response.ok) throw new Error('Failed to fetch markdown content');
             const content = await response.text();
+            // 使用 markdown-it 渲染 Markdown
+            const renderedContent = this.md.render(content);
             printWindow.document.write(`
               <div class="print-page">
                 <div class="print-title">${fileName}</div>
                 <div class="print-content">
-                  <div class="markdown-content">${content}</div>
+                  <div class="markdown-content">${renderedContent}</div>
                 </div>
               </div>
             `);
@@ -460,37 +480,50 @@ export default {
         }
       }
 
-      // 关闭HTML文档
+      // 关闭文档并等待所有内容加载完成
       printWindow.document.write('</body></html>');
       printWindow.document.close();
 
-      // 等待所有图片加载完成后打印
-      const images = printWindow.document.getElementsByTagName('img');
-      let loadedImages = 0;
-      const totalImages = images.length;
+      // 等待内容和样式加载完成
+      const checkReadyState = () => {
+        if (printWindow.document.readyState === 'complete') {
+          // 确保所有图片都加载完成
+          const images = printWindow.document.getElementsByTagName('img');
+          let loadedImages = 0;
+          const totalImages = images.length;
 
-      if (totalImages === 0) {
-        printWindow.print();
-        setTimeout(() => printWindow.close(), 1000);
-      } else {
-        for (const img of images) {
-          if (img.complete) {
-            loadedImages++;
-            if (loadedImages === totalImages) {
-              printWindow.print();
-              setTimeout(() => printWindow.close(), 1000);
-            }
+          if (totalImages === 0) {
+            printWindow.print();
           } else {
-            img.onload = () => {
-              loadedImages++;
-              if (loadedImages === totalImages) {
-                printWindow.print();
-                setTimeout(() => printWindow.close(), 1000);
+            for (const img of images) {
+              if (img.complete) {
+                loadedImages++;
+                if (loadedImages === totalImages) {
+                  printWindow.print();
+                }
+              } else {
+                img.onload = () => {
+                  loadedImages++;
+                  if (loadedImages === totalImages) {
+                    printWindow.print();
+                  }
+                };
+                img.onerror = () => {
+                  loadedImages++;
+                  if (loadedImages === totalImages) {
+                    printWindow.print();
+                  }
+                };
               }
-            };
+            }
           }
+        } else {
+          setTimeout(checkReadyState, 100);
         }
-      }
+      };
+
+      // 开始检查加载状态
+      setTimeout(checkReadyState, 100);
     },
   },
   created() {

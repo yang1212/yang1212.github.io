@@ -66,6 +66,7 @@ export default {
 .markdown-content {
   line-height: 1.8;
   color: #2c3e50;
+  font-size: 16px; /* 三号字体 */
 }
 
 .markdown-content h1,
@@ -79,15 +80,16 @@ export default {
   position: relative;
 }
 
-.markdown-content h1 { font-size: 2em; }
-.markdown-content h2 { font-size: 1.8em; }
-.markdown-content h3 { font-size: 1.6em; }
-.markdown-content h4 { font-size: 1.4em; }
-.markdown-content h5 { font-size: 1.2em; }
-.markdown-content h6 { font-size: 1em; }
+.markdown-content h1 { font-size: 32px; }
+.markdown-content h2 { font-size: 28px; }
+.markdown-content h3 { font-size: 24px; }
+.markdown-content h4 { font-size: 20px; }
+.markdown-content h5 { font-size: 18px; }
+.markdown-content h6 { font-size: 16px; }
 
 .markdown-content p {
   margin: 1em 0;
+  font-size: 16px; /* 三号字体 */
 }
 
 .markdown-content a {
@@ -104,7 +106,7 @@ export default {
   padding: 0.2em 0.4em;
   border-radius: 3px;
   font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', monospace;
-  font-size: 0.9em;
+  font-size: 14px;
 }
 
 .markdown-content pre {
@@ -118,7 +120,7 @@ export default {
 .markdown-content pre code {
   background-color: transparent;
   padding: 0;
-  font-size: 0.9em;
+  font-size: 14px;
   line-height: 1.5;
 }
 
@@ -127,12 +129,14 @@ export default {
   margin: 1em 0;
   padding: 0.5em 1em;
   background-color: #f8fafc;
+  font-size: 16px;
 }
 
 .markdown-content ul,
 .markdown-content ol {
   padding-left: 2em;
   margin: 1em 0;
+  font-size: 16px;
 }
 
 .markdown-content img {
@@ -154,6 +158,7 @@ export default {
   border: 1px solid #e2e8f0;
   padding: 0.5em 1em;
   text-align: left;
+  font-size: 16px;
 }
 
 .markdown-content th {
@@ -309,5 +314,63 @@ export default {
 
 .token.entity {
   cursor: help;
+}
+
+/* 打印样式 */
+@media print {
+  .markdown-content {
+    font-size: 16px !important;
+    line-height: 1.8 !important;
+    color: #000 !important;
+  }
+
+  .markdown-content h1 { font-size: 32px !important; }
+  .markdown-content h2 { font-size: 28px !important; }
+  .markdown-content h3 { font-size: 24px !important; }
+  .markdown-content h4 { font-size: 20px !important; }
+  .markdown-content h5 { font-size: 18px !important; }
+  .markdown-content h6 { font-size: 16px !important; }
+
+  .markdown-content p,
+  .markdown-content ul,
+  .markdown-content ol,
+  .markdown-content blockquote,
+  .markdown-content th,
+  .markdown-content td {
+    font-size: 16px !important;
+  }
+
+  .markdown-content code,
+  .markdown-content pre code {
+    font-size: 14px !important;
+    font-family: 'Fira Code', Consolas, Monaco, 'Andale Mono', monospace !important;
+  }
+
+  /* 确保打印时背景色和边框可见 */
+  .markdown-content pre,
+  .markdown-content code,
+  .markdown-content blockquote {
+    background-color: #f5f7fa !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 确保表格边框可见 */
+  .markdown-content table,
+  .markdown-content th,
+  .markdown-content td {
+    border: 1px solid #000 !important;
+  }
+
+  /* 优化打印时的链接显示 */
+  .markdown-content a {
+    color: #000 !important;
+    text-decoration: underline !important;
+  }
+
+  /* 隐藏不必要的打印元素 */
+  .header-anchor {
+    display: none !important;
+  }
 }
 </style> 

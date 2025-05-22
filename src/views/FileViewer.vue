@@ -425,46 +425,99 @@ export default {
     const style = document.createElement('style');
     style.textContent = `
       @media print {
-        .navbar, .breadcrumb, .file-meta, .print-buttons {
+        /* 隐藏所有不必要的元素 */
+        .navbar,
+        .breadcrumb,
+        .file-meta,
+        .file-header,
+        .file-title i,
+        .unsupported-file i,
+        .print-buttons {
           display: none !important;
         }
-        body {
-          margin: 0;
-          padding: 0;
+
+        /* 移除所有装饰性样式 */
+        * {
+          background: none !important;
+          box-shadow: none !important;
+          border: none !important;
+          color: #000000 !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          color-adjust: exact !important;
         }
+
+        /* 只显示文件名和内容 */
         .file-body {
-          padding: 20px !important;
+          padding: 0 20px !important;
         }
+
         .file-body::before {
           content: attr(data-filename);
           display: block;
           text-align: center;
-          font-size: 18pt;
-          font-weight: 900;
-          margin-bottom: 20px;
-          font-family: 'Times New Roman', serif;
-        }
-        .markdown-body {
-          border: none !important;
-          margin: 0 !important;
+          font-size: 24pt !important;
+          font-weight: 900 !important;
+          color: rgb(0, 0, 0) !important;
+          -webkit-text-fill-color: rgb(0, 0, 0) !important;
+          margin: 0 0 15px 0 !important;
           padding: 0 !important;
-          background: none !important;
+          font-family: 'Times New Roman', serif !important;
         }
-        .markdown-body pre,
-        .markdown-body code {
-          white-space: pre-wrap !important;
-          word-wrap: break-word !important;
+
+        /* Markdown 内容样式 */
+        .markdown-content {
+          line-height: 1.4 !important;
+          font-family: 'Times New Roman', serif !important;
+          font-size: 21px !important;
         }
-        img {
-          max-width: 100% !important;
-          height: auto !important;
-          display: block !important;
-          margin: 0 auto !important;
+
+        .markdown-content h1,
+        .markdown-content h2,
+        .markdown-content h3,
+        .markdown-content h4,
+        .markdown-content h5,
+        .markdown-content h6 {
+          margin: 0.8em 0 0.5em !important;
+          font-weight: 600;
+          position: relative;
         }
-        * {
-          color: #000 !important;
-          -webkit-print-color-adjust: exact !important;
-          print-color-adjust: exact !important;
+
+        .markdown-content p,
+        .markdown-content ul,
+        .markdown-content ol,
+        .markdown-content blockquote,
+        .markdown-content th,
+        .markdown-content td {
+          margin: 0.5em 0 !important;
+          font-size: 21px !important;
+        }
+
+        .markdown-content pre {
+          margin: 0.8em 0 !important;
+        }
+
+        /* 图片样式 */
+        .image-viewer {
+          padding: 0 !important;
+          margin: 1em 0 !important;
+        }
+
+        /* 确保表格边框可见且间距合适 */
+        .markdown-content table {
+          margin: 0.8em 0 !important;
+          border-collapse: collapse !important;
+        }
+
+        .markdown-content th,
+        .markdown-content td {
+          border: 1px solid #000 !important;
+          padding: 4px 8px !important;
+        }
+
+        /* 设置页边距 */
+        @page {
+          margin: 1.5cm !important;
         }
       }
     `;
@@ -703,30 +756,51 @@ export default {
     content: attr(data-filename);
     display: block;
     text-align: center;
-    font-size: 18pt !important;
+    font-size: 24pt !important;
     font-weight: 900 !important;
     color: rgb(0, 0, 0) !important;
     -webkit-text-fill-color: rgb(0, 0, 0) !important;
-    margin: 0 0 20px 0 !important;
+    margin: 0 0 15px 0 !important;
     padding: 0 !important;
     font-family: 'Times New Roman', serif !important;
   }
 
   /* Markdown 内容样式 */
-  .markdown-viewer {
-    line-height: 1.6 !important;
+  .markdown-content {
+    line-height: 1.4 !important;
     font-family: 'Times New Roman', serif !important;
+    font-size: 21px !important;
   }
 
-  .markdown-viewer pre,
-  .markdown-viewer code {
-    white-space: pre-wrap !important;
-    word-wrap: break-word !important;
+  .markdown-content h1,
+  .markdown-content h2,
+  .markdown-content h3,
+  .markdown-content h4,
+  .markdown-content h5,
+  .markdown-content h6 {
+    margin: 0.8em 0 0.5em !important;
+    font-weight: 600;
+    position: relative;
+  }
+
+  .markdown-content p,
+  .markdown-content ul,
+  .markdown-content ol,
+  .markdown-content blockquote,
+  .markdown-content th,
+  .markdown-content td {
+    margin: 0.5em 0 !important;
+    font-size: 21px !important;
+  }
+
+  .markdown-content pre {
+    margin: 0.8em 0 !important;
   }
 
   /* 图片样式 */
   .image-viewer {
     padding: 0 !important;
+    margin: 1em 0 !important;
   }
 
   .image-viewer img {
@@ -734,6 +808,35 @@ export default {
     height: auto !important;
     display: block !important;
     margin: 0 auto !important;
+  }
+
+  /* 确保表格边框可见且间距合适 */
+  .markdown-content table {
+    margin: 0.8em 0 !important;
+    border-collapse: collapse !important;
+  }
+
+  .markdown-content th,
+  .markdown-content td {
+    border: 1px solid #000 !important;
+    padding: 4px 8px !important;
+  }
+
+  /* 优化打印时的链接显示 */
+  .markdown-content a {
+    color: #000 !important;
+    text-decoration: underline !important;
+    word-break: break-all !important; /* 允许链接在任意字符处换行 */
+  }
+
+  /* 隐藏不必要的打印元素 */
+  .header-anchor {
+    display: none !important;
+  }
+
+  /* 设置页边距 */
+  @page {
+    margin: 1.5cm !important;
   }
 }
 </style> 
