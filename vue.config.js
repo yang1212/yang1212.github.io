@@ -1,5 +1,6 @@
 const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
+  base: '/yang1212.github.io',
   publicPath: './',
   outputDir: 'docs',
   devServer: {
