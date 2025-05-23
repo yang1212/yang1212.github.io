@@ -169,7 +169,6 @@ export default {
           .split('/')
           .map(part => encodeURIComponent(part))
           .join('/');
-
         const token = process.env.VUE_APP_GH_TOKEN;
         // const apiUrl = `/api/content/${encodedPath}`;
         // 直接请求 GitHub API

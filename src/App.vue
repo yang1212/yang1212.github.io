@@ -50,7 +50,6 @@ export default {
   created() {
     // Share categoryGroups with all child components
     this.$root.$data.categoryGroups = this.categoryGroups;
-    console.log(1111, process.env.VUE_APP_GH_TOKEN);
   }
 }
 </script>
