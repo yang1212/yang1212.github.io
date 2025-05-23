@@ -1,4 +1,4 @@
-name: Deploy Vue App
+name: Build and Deploy
 
 on:
   push:
@@ -6,22 +6,25 @@ on:
       - master
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm install
 
-      - name: Build Project
+      - name: Inject token to env
+        run: echo "VUE_APP_GH_TOKEN=${{ secrets.GH_TOKEN }}" >> .env.production
+
+      - name: Build
         run: npm run build
 
       - name: Deploy to GitHub Pages
