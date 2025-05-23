@@ -291,22 +291,3 @@ export function parseMarkdownMetadata(content) {
   };
 }
 
-// 获取文章分类信息
-export async function getCategoryStructure() {
-  try {
-    const files = await getMarkdownFiles();
-    const categories = new Map();
-
-    for (const file of files) {
-      if (file.type === 'dir') {
-        const categoryFiles = await getMarkdownFiles(file.path);
-        categories.set(file.name, categoryFiles.filter(f => f.type === 'file'));
-      }
-    }
-
-    return categories;
-  } catch (error) {
-    console.error('Error getting category structure:', error);
-    return new Map();
-  }
-} 

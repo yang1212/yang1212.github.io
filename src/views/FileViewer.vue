@@ -169,10 +169,19 @@ export default {
           .split('/')
           .map(part => encodeURIComponent(part))
           .join('/');
-          
-        const apiUrl = `/api/content/${encodedPath}`;
+
+        const token = process.env.VUE_APP_GH_TOKEN;
+        // const apiUrl = `/api/content/${encodedPath}`;
+        // 直接请求 GitHub API
+        const apiUrl = `https://api.github.com/repos/yang1212/collection-about/contents/${encodedPath}`;
         
-        const response = await fetch(apiUrl);
+        // const response = await fetch(apiUrl);
+        const response = await fetch(apiUrl, {
+          headers: {
+            Accept: 'application/vnd.github.v3+json',
+            Authorization: `token ${token}` // 替换成你的 GitHub Token
+          }
+        });
         
         // 添加详细的错误处理
         if (!response.ok) {
