@@ -21,15 +21,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Output GH_TOKEN value
-        run: echo "GH_TOKEN value: ${{ secrets.GH_TOKEN }}"
-
-      - name: Inject token to env
-        run: echo "VUE_APP_GH_TOKEN=${{ secrets.GH_TOKEN }}" > .env.production
-
-      - name: Check .env.production file
-        run: cat .env.production
-
       - name: Clean cache
         run: |
           rm -rf dist || true
