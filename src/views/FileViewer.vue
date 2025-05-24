@@ -160,6 +160,12 @@ export default {
     }
   },
   methods: {
+    async fetchMarkdownFromCDN(path) {
+      const cdnUrl = `https://cdn.jsdelivr.net/gh/yang1212/collection-about@master/${path}`;
+      const res = await fetch(cdnUrl);
+      if (!res.ok) throw new Error('加载失败');
+      return await res.text();
+    },
     async loadFile() {
       this.loading = true;
       this.error = null;
@@ -169,53 +175,20 @@ export default {
           .split('/')
           .map(part => encodeURIComponent(part))
           .join('/');
-        const token = process.env.VUE_APP_GH_TOKEN;
-        // const apiUrl = `/api/content/${encodedPath}`;
-        // 直接请求 GitHub API
-        const apiUrl = `https://api.github.com/repos/yang1212/collection-about/contents/${encodedPath}`;
+      
         
-        // const response = await fetch(apiUrl);
-        const response = await fetch(apiUrl, {
-          headers: {
-            Accept: 'application/vnd.github.v3+json',
-            Authorization: `token ${token}` // 替换成你的 GitHub Token
-          }
-        });
-        
-        // 添加详细的错误处理
-        if (!response.ok) {
-          const errorData = await response.json().catch(() => null);
-          console.error('GitHub API Response:', {
-            status: response.status,
-            statusText: response.statusText,
-            headers: Object.fromEntries(response.headers.entries()),
-            error: errorData
-          });
-          
-          // 检查是否是 rate limit 问题
-          const rateLimit = response.headers.get('x-ratelimit-remaining');
-          if (rateLimit === '0') {
-            throw new Error('GitHub API 请求次数已达上限，请稍后再试');
-          }
-          
-          throw new Error(`请求失败: ${response.status} ${response.statusText}`);
-        }
-        
-        const data = await response.json();
-        
-        if (this.isMarkdown || this.isImage) {
-          this.fileUrl = data.download_url;
-          
+        // 调用
+        this.fetchMarkdownFromCDN(`${encodedPath}`).then(content => {
           if (this.isMarkdown) {
-            const contentResponse = await fetch(this.fileUrl);
-            if (!contentResponse.ok) {
-              throw new Error('无法获取 Markdown 内容');
-            }
-            this.fileContent = await contentResponse.text();
+            this.fileContent = content;
+          } else if (this.isImage) {
+            // 如果是图片，直接设置 CDN 地址
+            this.fileUrl = `https://cdn.jsdelivr.net/gh/yang1212/collection-about@master/${encodedPath}`;
           }
-        }
-        
-        this.loading = false;
+          this.loading = false;
+        }).catch(err => {
+          console.error('拉取出错：', err);
+        });
       } catch (error) {
         console.error('文件加载错误:', error);
         this.error = error.message || '加载文件时发生错误';
