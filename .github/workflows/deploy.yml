@@ -27,5 +27,5 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          branch: temp         # 要部署到哪个分支
-          folder: dist           # 构建输出目录
+          branch: gh-pages         # 要部署到哪个分支
+          folder: docs         # 构建输出目录
