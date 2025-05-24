@@ -28,7 +28,8 @@ export default {
     };
   },
   created() {
-    console.log(11, this.$i18n.locale);
+    console.log(22, this.$i18n.locale);
+    console.log(1111, process.env.VUE_APP_GH_TOKEN);
   },
   methods: {
     changeLanguage() {

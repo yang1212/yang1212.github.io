@@ -5,13 +5,13 @@ const GITHUB_USERNAME = 'yang1212';  // 替换成你的 GitHub 用户名
 const REPO_NAME = 'collection-about';  // 替换成你的文章仓库名
 
 // GitHub Personal Access Token
-const GITHUB_TOKEN = process.env.VUE_APP_GITHUB_TOKEN;
+const GH_TOKEN = process.env.VUE_APP_GH_TOKEN;
 
 // 打印环境变量信息用于调试
 console.log('环境变量信息:', {
-  'VUE_APP_GITHUB_TOKEN 是否存在': !!process.env.VUE_APP_GITHUB_TOKEN,
-  'TOKEN 是否有效': !!GITHUB_TOKEN,
-  'TOKEN 长度': GITHUB_TOKEN ? GITHUB_TOKEN.length : 0,
+  'VUE_APP_GH_TOKEN 是否存在': !!process.env.VUE_APP_GH_TOKEN,
+  'TOKEN 是否有效': !!GH_TOKEN,
+  'TOKEN 长度': GH_TOKEN ? GH_TOKEN.length : 0,
   'process.env keys': Object.keys(process.env).filter(key => key.startsWith('VUE_APP_'))
 });
 
@@ -24,8 +24,8 @@ const BASE_HEADERS = {
 // 获取带认证的请求头
 function getAuthHeaders() {
   const headers = { ...BASE_HEADERS };
-  if (GITHUB_TOKEN) {
-    headers['Authorization'] = `token ${GITHUB_TOKEN}`;
+  if (GH_TOKEN) {
+    headers['Authorization'] = `token ${GH_TOKEN}`;
     console.log('使用认证请求');
   } else {
     console.warn('⚠️ 未配置 GitHub Token，将使用未认证请求（可能很快触及限制）');
@@ -112,7 +112,7 @@ async function fetchWithRetry(url, options = {}, retryCount = 0) {
 
     console.log('发送 GitHub API 请求:', {
       url,
-      认证状态: !!GITHUB_TOKEN,
+      认证状态: !!GH_TOKEN,
       重试次数: retryCount
     });
 
@@ -135,7 +135,7 @@ async function fetchWithRetry(url, options = {}, retryCount = 0) {
           - 剩余: ${rateLimit.remaining}
           - 重置时间: ${resetTimeStr}
           - 需等待: ${waitMinutes} 分钟
-          - Token状态: ${GITHUB_TOKEN ? '已配置' : '未配置'}
+          - Token状态: ${GH_TOKEN ? '已配置' : '未配置'}
           - 详细信息: ${errorBody}`);
       }
     }
@@ -150,7 +150,7 @@ async function fetchWithRetry(url, options = {}, retryCount = 0) {
       url,
       error: error.message,
       retryCount,
-      token状态: GITHUB_TOKEN ? '已配置' : '未配置'
+      token状态: GH_TOKEN ? '已配置' : '未配置'
     });
 
     if (retryCount < MAX_RETRIES) {
@@ -291,22 +291,3 @@ export function parseMarkdownMetadata(content) {
   };
 }
 
-// 获取文章分类信息
-export async function getCategoryStructure() {
-  try {
-    const files = await getMarkdownFiles();
-    const categories = new Map();
-
-    for (const file of files) {
-      if (file.type === 'dir') {
-        const categoryFiles = await getMarkdownFiles(file.path);
-        categories.set(file.name, categoryFiles.filter(f => f.type === 'file'));
-      }
-    }
-
-    return categories;
-  } catch (error) {
-    console.error('Error getting category structure:', error);
-    return new Map();
-  }
-} 

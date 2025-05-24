@@ -11,5 +11,6 @@ dist
 # src
 node_modules
 /.idea/
-env/
-**/.env
+*.env.local
+
+env
