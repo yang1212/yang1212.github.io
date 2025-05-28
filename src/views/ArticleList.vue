@@ -308,7 +308,21 @@ export default {
         this.toggleFileSelection(file);
       }
     },
-
+    waitForPrintWindowReady(printWindow, callback) {
+      const checkReady = () => {
+        try {
+          if (printWindow.document.readyState === 'complete') {
+            callback();
+          } else {
+            setTimeout(checkReady, 100);
+          }
+        } catch (e) {
+          // 如果 printWindow 已关闭或跨域，捕捉错误
+          console.error('打印窗口不可访问:', e);
+        }
+      };
+      checkReady();
+    },
     // 批量打印处理
     async handleBatchPrint() {
       if (this.selectedFiles.length === 0) {
@@ -317,6 +331,7 @@ export default {
       }
 
       const printWindow = window.open('', '_blank');
+      console.log('printWindow:', printWindow);
       
       // 写入HTML头部
       printWindow.document.write(`
@@ -334,16 +349,16 @@ export default {
                 }
                 body {
                   margin: 0;
-                  padding: 20px;
+                  padding: 10px 20px 0px 20px;
                   font-family: 'Times New Roman', serif !important;
                 }
                 .print-page {
                   page-break-after: always;
-                  margin-bottom: 30px;
+                  margin-bottom: 0px;
                 }
                 .print-title {
                   text-align: center;
-                  font-size: 24pt !important;
+                  font-size: 25pt !important;
                   font-weight: 900 !important;
                   margin-bottom: 15px !important;
                   color: rgb(0, 0, 0) !important;
@@ -354,6 +369,7 @@ export default {
                   width: 100%;
                   max-width: 100%;
                   padding: 0 20px !important;
+                  font-size: 35px;
                 }
                 .markdown-content {
                   font-family: 'Times New Roman', serif !important;
@@ -435,7 +451,7 @@ export default {
                   margin: 1em auto !important;
                 }
                 @page {
-                  margin: 1.5cm !important;
+                  margin: 0.5cm !important;
                 }
               }
             </style>
@@ -443,90 +459,65 @@ export default {
           <body>
       `);
 
-      // 处理每个文件
-      for (const file of this.selectedFiles) {
-        try {
-          const fileName = this.getDisplayName(file.name);
-          const fileExt = file.name.split('.').pop().toLowerCase();
-          const fileUrl = `/api/content/${file.path}`;
+      // 创建内容数组，存放所有文件的HTML
+      const contentList = await Promise.all(this.selectedFiles.map(async (file) => {
+        const fileName = this.getDisplayName(file.name);
+        const fileExt = file.name.split('.').pop().toLowerCase();
+        const fileUrl = `${file.path}`;
 
-          // const rawBaseUrl = 'https://raw.githubusercontent.com/yang1212/collection-about/master/';
-          // const fileUrl = `${rawBaseUrl}${file.path}`; // 注意：用 decodedPath，而不是 encodedPath
-
-          if (fileExt === 'md') {
-            const response = await fetch(fileUrl);
-            if (!response.ok) throw new Error('Failed to fetch markdown content');
-            const content = await response.text();
-            // 使用 markdown-it 渲染 Markdown
+        if (fileExt === 'md') {
+          try {
+            const content = await this.fetchMarkdownFromCDN(fileUrl);
             const renderedContent = this.md.render(content);
-            printWindow.document.write(`
+            return `
               <div class="print-page">
                 <div class="print-title">${fileName}</div>
                 <div class="print-content">
                   <div class="markdown-content">${renderedContent}</div>
                 </div>
               </div>
-            `);
-          } else if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(fileExt)) {
-            printWindow.document.write(`
-              <div class="print-page">
-                <div class="print-title">${fileName}</div>
-                <div class="print-content">
-                  <img src="${fileUrl}" alt="${fileName}">
-                </div>
-              </div>
-            `);
+            `;
+          } catch (err) {
+            console.error('拉取出错：', err);
+            return `<div class="print-page"><div class="print-title">${fileName}</div><p>加载失败</p></div>`;
           }
-        } catch (error) {
-          console.error(`Error processing file ${file.name}:`, error);
-          this.$message.error(`处理文件 ${file.name} 时发生错误`);
+        } else if (['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(fileExt)) {
+          return `
+            <div class="print-page">
+              <div class="print-title">${fileName}</div>
+              <div class="print-content">
+                <img src="${fileUrl}" alt="${fileName}">
+              </div>
+            </div>
+          `;
         }
-      }
+        return '';
+      }));
 
-      // 关闭文档并等待所有内容加载完成
+      // 写入所有内容
+      printWindow.document.write(contentList.join(''));
+
       printWindow.document.write('</body></html>');
       printWindow.document.close();
 
-      // 等待内容和样式加载完成
-      const checkReadyState = () => {
-        if (printWindow.document.readyState === 'complete') {
-          // 确保所有图片都加载完成
-          const images = printWindow.document.getElementsByTagName('img');
-          let loadedImages = 0;
-          const totalImages = images.length;
-
-          if (totalImages === 0) {
-            printWindow.print();
-          } else {
-            for (const img of images) {
-              if (img.complete) {
-                loadedImages++;
-                if (loadedImages === totalImages) {
-                  printWindow.print();
-                }
-              } else {
-                img.onload = () => {
-                  loadedImages++;
-                  if (loadedImages === totalImages) {
-                    printWindow.print();
-                  }
-                };
-                img.onerror = () => {
-                  loadedImages++;
-                  if (loadedImages === totalImages) {
-                    printWindow.print();
-                  }
-                };
-              }
-            }
-          }
-        } else {
-          setTimeout(checkReadyState, 100);
-        }
-      };
-
-      // 开始检查加载状态
-      setTimeout(checkReadyState, 100);
+      // 监听窗口加载完成，触发打印
+      this.waitForPrintWindowReady(printWindow, () => {
+        setTimeout(() => {
+          printWindow.focus();
+          printWindow.print();
+          printWindow.onafterprint = () => {
+            setTimeout(() => {
+              printWindow.close();
+            }, 500);
+          };
+        }, 300); // 小延迟，确保样式渲染完成
+      });
+    },
+    async fetchMarkdownFromCDN(path) {
+      const cdnUrl = `https://cdn.jsdelivr.net/gh/yang1212/collection-about@master/${path}`;
+      const res = await fetch(cdnUrl);
+      if (!res.ok) throw new Error('加载失败');
+      return await res.text();
     },
   },
   created() {

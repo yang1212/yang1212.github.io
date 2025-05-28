@@ -11,19 +11,19 @@
           <!-- <router-link to="/about" class="nav-link">{{ $t('nav.about') }}</router-link> -->
         </div>
 
-        <language-switcher />
+        <!-- <language-switcher /> -->
       </div>
     </div>
   </nav>
 </template>
 
 <script>
-import LanguageSwitcher from './LanguageSwitcher.vue'
+// import LanguageSwitcher from './LanguageSwitcher.vue'
 
 export default {
   name: 'NavBar',
   components: {
-    LanguageSwitcher
+    // LanguageSwitcher
   }
 }
 </script>
