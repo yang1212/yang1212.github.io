@@ -1,5 +1,5 @@
 <template>
-  <div class="home" @keydown="handleKeyPress" tabindex="0">
+  <div class="home" tabindex="0">
     <header class="hero">
       <div class="hero-content">
         <h1>个人知识库</h1>
@@ -17,43 +17,33 @@
       <section v-for="group in $root.$data.categoryGroups" :key="group.id" class="category-section">
         <h2 class="section-title">{{ group.name }}</h2>
         <div class="category-grid">
-          <router-link
-            v-for="category in group.categories"
-            :key="category.id"
-            :to="'/category/' + category.id"
-            class="category-card"
-          >
-            <div class="card-content">
-              <div class="card-icon">
-                <i :class="category.icon || 'fas fa-book'"></i>
+          <div  v-for="category in group.categories"
+            :key="category.id">
+            <a v-if="category.id === 'english'" class="category-card" href="https://tool.yangfu.asia/#/">
+              <div class="card-content">
+                <div class="card-icon">
+                  <i :class="category.icon || 'fas fa-book'"></i>
+                </div>
+                <h3>{{ category.name }}</h3>
               </div>
-              <h3>{{ category.name }}</h3>
-              <!-- <p>{{ category.description }}</p> -->
-            </div>
-          </router-link>
+            </a>
+            <router-link
+              v-else
+              :to="'/category/' + category.id"
+              class="category-card"
+            >
+              <div class="card-content">
+                <div class="card-icon">
+                  <i :class="category.icon || 'fas fa-book'"></i>
+                </div>
+                <h3>{{ category.name }}</h3>
+                <!-- <p>{{ category.description }}</p> -->
+              </div>
+            </router-link>
+          </div>
         </div>
       </section>
     </main>
-
-    <div v-if="showStats" class="stats-panel">
-      <div class="stats-content">
-        <h3>访问统计</h3>
-        <div class="stats-grid">
-          <div class="stats-item">
-            <div class="stats-value">{{ visitCount }}</div>
-            <div class="stats-label">总访问量</div>
-          </div>
-          <div class="stats-item">
-            <div class="stats-value">{{ todayVisits }}</div>
-            <div class="stats-label">今日访问</div>
-          </div>
-          <div class="stats-item">
-            <div class="stats-value">{{ averageTime }}分钟</div>
-            <div class="stats-label">平均访问时长</div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -63,14 +53,8 @@ export default {
   data() {
     return {
       searchQuery: '',
-      currentTime: {
-        hours: '00',
-        minutes: '00',
-        seconds: '00'
-      },
       timer: null,
       clickCount: 0,
-      clickTimer: null,
       showStats: false,
       visitCount: 0,
       todayVisits: 0,
@@ -80,25 +64,6 @@ export default {
     }
   },
   methods: {
-    updateTime() {
-      const now = new Date();
-      this.currentTime = {
-        hours: String(now.getHours()).padStart(2, '0'),
-        minutes: String(now.getMinutes()).padStart(2, '0'),
-        seconds: String(now.getSeconds()).padStart(2, '0')
-      };
-    },
-    handleKeyPress(event) {
-      this.keySequence += event.key;
-      if (this.keySequence.length > 5) {
-        this.keySequence = this.keySequence.substring(1);
-      }
-      // 当输入 'stats' 时显示统计面板
-      if (this.keySequence === 'stats') {
-        this.showStats = !this.showStats;
-        this.keySequence = '';
-      }
-    },
     updateStats() {
       const stats = JSON.parse(localStorage.getItem('siteStats') || '{}');
       const today = new Date().toLocaleDateString();
@@ -126,19 +91,11 @@ export default {
     }
   },
   created() {
-    this.updateTime();
-    this.timer = setInterval(this.updateTime, 1000);
     this.visitStartTime = Date.now();
     this.updateStats();
     window.addEventListener('beforeunload', this.updateStats);
   },
   beforeDestroy() {
-    if (this.timer) {
-      clearInterval(this.timer);
-    }
-    if (this.clickTimer) {
-      clearTimeout(this.clickTimer);
-    }
     this.updateStats();
     window.removeEventListener('beforeunload', this.updateStats);
   }
