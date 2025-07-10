@@ -12,6 +12,8 @@
         </div>
       </div>
     </header>
+    
+    <p class="email-box">📫  tibooyang@gmail.com</p>
 
     <main class="main-content">
       <section v-for="group in $root.$data.categoryGroups" :key="group.id" class="category-section">
@@ -107,7 +109,15 @@ export default {
   min-height: 100vh;
   background: #f5f7fa;
 }
-
+.email-box {
+  text-align: right;
+  color:#fff;
+  font-weight: bold;
+  position: relative;
+  top: -30px;
+  right: 15px;
+  font-size: 16px;
+}
 .hero {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 80px 20px;
