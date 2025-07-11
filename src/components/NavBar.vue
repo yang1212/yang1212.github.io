@@ -2,6 +2,7 @@
   <nav class="navbar">
     <div class="nav-content">
       <router-link to="/" class="logo">
+        <img src="@/assets/logo.png" alt="Logo" class="logo-img"/>
         <h1>个人知识库</h1>
       </router-link>
       
@@ -39,7 +40,7 @@ export default {
 }
 
 .nav-content {
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
   height: 64px;
   display: flex;
@@ -56,12 +57,22 @@ export default {
 .logo {
   text-decoration: none;
   color: inherit;
+  margin-left: 20px;
 }
 
 .logo h1 {
   font-size: 1.5em;
   color: #2c3e50;
   margin: 0;
+  display: inline-block;
+}
+.logo-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-left: 10px;
+  position: relative;
+  top: 8px;
 }
 
 .nav-links {
