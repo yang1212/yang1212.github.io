@@ -3,7 +3,7 @@
     <div class="nav-content">
       <router-link to="/" class="logo">
         <img src="@/assets/logo.png" alt="Logo" class="logo-img"/>
-        <h1>个人知识库</h1>
+        <h1>June</h1>
       </router-link>
       
       <div class="nav-right">
@@ -61,18 +61,19 @@ export default {
 }
 
 .logo h1 {
-  font-size: 1.5em;
+  font-size: 1.4em;
   color: #2c3e50;
   margin: 0;
   display: inline-block;
 }
 .logo-img {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   border-radius: 50%;
   margin-left: 10px;
+  margin-right: 1px;
   position: relative;
-  top: 8px;
+  top: 5px;
 }
 
 .nav-links {

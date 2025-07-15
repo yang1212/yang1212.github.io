@@ -8,7 +8,7 @@ import FileViewer from '../views/FileViewer.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'hash',
+  mode: 'history',
   routes: [
     {
       path: '/',
@@ -19,6 +19,11 @@ export default new Router({
       path: '/category/:categoryId*',
       name: 'ArticleList',
       component: ArticleList,
+      props: true
+    },
+    {
+      path: '/docs/:categoryId*',
+      name: 'docsList',
       props: true
     },
     {
