@@ -25,6 +25,7 @@ export default {
             { id: 'framework', name: '前端｜框架', description: '' },
             { id: 'engineering', name: '前端｜工程化', description: '' },
             { id: 'mix', name: '前端｜混合', description: '' },
+            { id: 'mod', name: '设计模式', description: ''  }
           ]
         },
         {
@@ -41,6 +42,7 @@ export default {
           isOpen: false,
           categories: [
             { id: 'english', name: '英语学习', description: '' },
+            { id: 'books', name: '书籍推荐', description: '' },
             { id: 'ai', name: 'AI 素材', description: '' }
           ]
         }

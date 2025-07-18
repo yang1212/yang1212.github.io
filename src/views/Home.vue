@@ -21,12 +21,30 @@
         <div class="category-grid">
           <div  v-for="category in group.categories"
             :key="category.id">
-            <a v-if="category.id === 'english'" class="category-card" href="https://tool.yangfu.asia/#/">
+            <a
+              v-if="category.id === 'english'"
+              class="category-card"
+              href="/english"
+              title="英语学习工具 - 提高单词记忆与语法能力"
+            >
               <div class="card-content">
                 <div class="card-icon">
                   <i :class="category.icon || 'fas fa-book'"></i>
                 </div>
-                <h3>{{ category.name }}</h3>
+                <h3>英语学习</h3>
+              </div>
+            </a>
+            <a
+              v-else-if="category.id === 'books'"
+              class="category-card"
+              href="/books"
+              title="书籍推荐 - 提高阅读能力与知识储备"
+            >
+              <div class="card-content">
+                <div class="card-icon">
+                  <i :class="category.icon || 'fas fa-book'"></i>
+                </div>
+                <h3>书籍推荐</h3>
               </div>
             </a>
             <router-link
