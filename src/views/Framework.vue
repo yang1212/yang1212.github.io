@@ -40,6 +40,7 @@ export default {
         currentType: 'react',
         types: [
             { value: 'react', label: 'React' },
+            { value: 'rn', label: 'React Native' },
             { value: 'vue2', label: 'Vue2' },
             { value: 'vue3', label: 'Vue3' },
             { value: 'css', label: 'CSS' },
@@ -48,6 +49,14 @@ export default {
         fileMap: {
             react: [
               { name: 'file1.md', title: '知识点归纳' },
+            ],
+            rn: [
+              { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file2.md', title: '对接海外Stripe支付' },
+              { name: 'file3.md', title: '路由导航' },
+              { name: 'file4.md', title: '缓存' },
+              { name: 'file5.md', title: 'Mac配置' },
+              { name: 'file6.md', title: 'android应用签名、打包发布google play ' }
             ],
             vue2: [
               { name: 'file1.md', title: '知识点归纳' },
