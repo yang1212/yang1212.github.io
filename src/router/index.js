@@ -57,6 +57,21 @@ export default new Router({
       path: '/framework',
       name: 'Framework',
       component: () => import('../views/Framework.vue')
+    },
+    {
+      path: '/engineering',
+      name: 'Engineering',
+      component: () => import('../views/Engineering.vue')
+    },
+    {
+      path: '/mix',
+      name: 'Mix',
+      component: () => import('../views/Mix.vue')
+    },
+    {
+      path: '/tools',
+      name: 'Tools',
+      component: () => import('../views/Tools.vue')
     }
   ]
 })

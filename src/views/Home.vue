@@ -69,6 +69,30 @@
                 <h3>{{ category.name }}</h3>
               </div>
             </router-link>
+            <router-link v-else-if="category.id === 'engineering'"
+              :to="'/engineering'"
+              class="category-card"
+              title="工程化 - 探索前端工程化的最佳实践"
+            >
+              <div class="card-content">
+                <div class="card-icon">
+                  <i :class="category.icon || 'fas fa-tools'"></i>
+                </div>
+                <h3>{{ category.name }}</h3>
+              </div>
+            </router-link>
+            <router-link v-else-if="category.id === 'mix'"
+              :to="'/mix'"
+              class="category-card"
+              title="混合 - 探索前端混合开发的最佳实践"
+            >
+              <div class="card-content">
+                <div class="card-icon">
+                  <i :class="category.icon || 'fas fa-code-branch'"></i>
+                </div>
+                <h3>{{ category.name }}</h3>
+              </div>
+            </router-link>  
             <router-link v-else-if="category.id === 'psychology'"
               :to="'/psychology'"
               class="category-card"
@@ -77,6 +101,18 @@
               <div class="card-content">
                 <div class="card-icon">
                   <i :class="category.icon || 'fas fa-brain'"></i>
+                </div>
+                <h3>{{ category.name }}</h3>
+              </div>
+            </router-link>
+            <router-link v-else-if="category.id === 'tool'"
+              :to="'/tools'"
+              class="category-card"
+              title="工具 - 提高工作效率与生活质量"
+            >
+              <div class="card-content">
+                <div class="card-icon">
+                  <i :class="category.icon || 'fas fa-wrench'"></i>
                 </div>
                 <h3>{{ category.name }}</h3>
               </div>

@@ -25,7 +25,6 @@ export default {
             { id: 'framework', name: '前端｜框架', description: '', icon: "fas fa-layer-group" },
             { id: 'engineering', name: '前端｜工程化', description: '', icon: "fas fa-cogs"  },
             { id: 'mix', name: '前端｜混合', description: '', icon: "fas fa-mobile-alt"  },
-            { id: 'mod', name: '设计模式', description: '', icon: "fas fa-chess"   }
           ]
         },
         {
@@ -33,7 +32,7 @@ export default {
           name: '工具效率',
           isOpen: false,
           categories: [
-            { id: 'dev-tools', name: '开发工具', description: '', icon: "fas fa-tools" },
+            { id: 'tool', name: '开发工具', description: '', icon: "fas fa-tools" },
           ]
         },
         {

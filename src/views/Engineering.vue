@@ -34,31 +34,15 @@ import axios from 'axios';
 import { marked } from 'marked';
 
 export default {
-  name: 'LanguagePage',
+  name: 'EngineeringPage',
   data() {
     return {
-        currentType: 'js',
+        currentType: 'webpack',
         types: [
-            { value: 'js', label: 'JS' },
-            { value: 'es6', label: 'ES6' },
-            { value: 'ts', label: 'TS' },
-            { value: 'handwritten', label: '手写系列' },
-            { value: 'designPatterns', label: '设计模式' }
+            { value: 'webpack', label: 'Webpack' }
         ],
         fileMap: {
-            js: [
-              { name: 'file1.md', title: '知识点归纳' },
-            ],
-            es6: [
-              { name: 'file1.md', title: '知识点归纳' },
-            ],
-            ts: [
-              { name: 'file1.md', title: '知识点归纳' },
-            ],
-            handwritten: [
-              { name: 'file1.md', title: '知识点归纳' },
-            ],
-            designPatterns: [
+            webpack: [
               { name: 'file1.md', title: '知识点归纳' },
             ]
         },
@@ -81,7 +65,7 @@ export default {
     async loadFile(filename) {
         this.selectedFile = filename;
         try {
-            const res = await axios.get(`/language/${this.currentType}/${filename}`);
+            const res = await axios.get(`/engineering/${this.currentType}/${filename}`);
             this.renderedContent = marked(res.data);
         } catch (err) {
             this.renderedContent = `<p style="color:red;">无法加载文件：${filename}</p>`;

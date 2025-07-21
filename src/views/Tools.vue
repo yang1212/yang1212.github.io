@@ -34,33 +34,17 @@ import axios from 'axios';
 import { marked } from 'marked';
 
 export default {
-  name: 'LanguagePage',
+  name: 'ToolsPage',    
   data() {
     return {
-        currentType: 'js',
+        currentType: 'program',
         types: [
-            { value: 'js', label: 'JS' },
-            { value: 'es6', label: 'ES6' },
-            { value: 'ts', label: 'TS' },
-            { value: 'handwritten', label: '手写系列' },
-            { value: 'designPatterns', label: '设计模式' }
+            { value: 'program', label: '工具' },
         ],
         fileMap: {
-            js: [
-              { name: 'file1.md', title: '知识点归纳' },
+            program: [
+              { name: 'file1.md', title: '归纳' },
             ],
-            es6: [
-              { name: 'file1.md', title: '知识点归纳' },
-            ],
-            ts: [
-              { name: 'file1.md', title: '知识点归纳' },
-            ],
-            handwritten: [
-              { name: 'file1.md', title: '知识点归纳' },
-            ],
-            designPatterns: [
-              { name: 'file1.md', title: '知识点归纳' },
-            ]
         },
         files: [],
         selectedFile: '',
@@ -81,7 +65,7 @@ export default {
     async loadFile(filename) {
         this.selectedFile = filename;
         try {
-            const res = await axios.get(`/language/${this.currentType}/${filename}`);
+            const res = await axios.get(`/tools/${this.currentType}/${filename}`);
             this.renderedContent = marked(res.data);
         } catch (err) {
             this.renderedContent = `<p style="color:red;">无法加载文件：${filename}</p>`;
