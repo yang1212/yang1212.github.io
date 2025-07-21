@@ -2,14 +2,8 @@
   <div class="home" tabindex="0">
     <header class="hero">
       <div class="hero-content">
-        <h1>个人知识库</h1>
-        <p class="subtitle">记录学习，分享经验，持续成长</p>
-        <div class="search-box">
-          <input type="text" placeholder="搜索文章..." v-model="searchQuery">
-          <button class="search-btn">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
+        <h1 class="title float-in">个人知识库</h1>
+        <p class="subtitle float-in delay">记录学习，分享经验，持续成长</p>
       </div>
     </header>
     
@@ -214,113 +208,35 @@ export default {
 }
 
 .hero-content {
-  max-width: 800px;
-  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  margin: auto;
 }
 
-.hero h1 {
-  font-size: 3em;
-  margin-bottom: 20px;
-  font-weight: bold;
+.title {
+  font-size: 3.6rem;
+  font-weight: 900;
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  animation: fadeInUp 1s forwards;
 }
 
 .subtitle {
-  font-size: 1.2em;
-  margin-bottom: 30px;
-  opacity: 0.9;
+  font-size: 1.5rem;
+  opacity: 0;
+  animation: fadeInUp 1s 0.6s forwards;
 }
 
-.time-display {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 40px;
-  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-.time-unit {
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border-radius: 12px;
-  padding: 15px 20px;
-  min-width: 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: all 0.3s ease;
-}
-
-.time-unit:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
-
-.time-number {
-  font-size: 2.8em;
-  font-weight: 600;
-  line-height: 1;
-  margin-bottom: 5px;
-  color: white;
-}
-
-.time-label {
-  font-size: 0.9em;
-  opacity: 0.8;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.time-separator {
-  font-size: 2.8em;
-  font-weight: 300;
-  opacity: 0.5;
-  margin-top: -10px;
-}
-
-.search-box {
-  display: flex;
-  max-width: 500px;
-  margin: 0 auto;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  border-radius: 50px;
-  padding: 6px;
-  transition: all 0.3s ease;
-}
-
-.search-box:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.search-box input {
-  flex: 1;
-  border: none;
-  padding: 12px 20px;
-  font-size: 1.1em;
-  background: transparent;
-  outline: none;
-  color: white;
-}
-
-.search-box input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.search-btn {
-  background: white;
-  color: #667eea;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1.1em;
-}
-
-.search-btn:hover {
-  background: #f8f9fa;
-  transform: translateY(-1px);
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .main-content {
@@ -545,5 +461,30 @@ export default {
     opacity: 1;
     transform: translate(-50%, 0);
   }
+}
+
+/* 漂浮动画 */
+@keyframes floatUpDown {
+  0%, 100% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+/* 标题漂浮 */
+.floating-text {
+  animation: floatUpDown 3.5s ease-in-out infinite;
+  margin: 0;
+  color: white;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.floating-text.delay {
+  animation-delay: 1.5s;
+  font-weight: 400;
+  font-size: 1.3rem;
+  margin-top: 8px;
 }
 </style> 
