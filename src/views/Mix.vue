@@ -48,6 +48,9 @@ export default {
             ],
             other: [
               { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file2.md', title: '大模型' },
+              { name: 'file3.md', title: '前端渲染模式' },
+              { name: 'file4.md', title: '懒加载' },
             ]
         },
         files: [],

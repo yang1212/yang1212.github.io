@@ -44,6 +44,7 @@ export default {
         fileMap: {
             webpack: [
               { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file2.md', title: 'webpack5模块联邦' },
             ]
         },
         files: [],

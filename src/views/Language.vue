@@ -48,6 +48,10 @@ export default {
         fileMap: {
             js: [
               { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file2.md', title: '数组方法汇总' },
+              { name: 'file3.md', title: '常用原生方法' },
+              { name: 'file4.md', title: '精度丢失' },
+              { name: 'file5.md', title: '宏任务、微任务' }
             ],
             es6: [
               { name: 'file1.md', title: '知识点归纳' },
@@ -60,6 +64,7 @@ export default {
             ],
             designPatterns: [
               { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file2.md', title: '常见前端设计模式' },
             ]
         },
         files: [],
