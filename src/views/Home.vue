@@ -13,8 +13,6 @@
       </div>
     </header>
     
-    <p class="email-box">📫  tibooyang@gmail.com</p>
-
     <main class="main-content">
       <section v-for="group in $root.$data.categoryGroups" :key="group.id" class="category-section">
         <h2 class="section-title">{{ group.name }}</h2>

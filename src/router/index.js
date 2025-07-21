@@ -37,6 +37,16 @@ export default new Router({
       name: 'FileViewer',
       component: FileViewer,
       props: true
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: () => import('../views/About.vue')
+    },
+    {
+      path: '/psychology',
+      name: 'Psychology',
+      component: () => import('../views/Psychology.vue')
     }
   ]
 })

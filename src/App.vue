@@ -21,11 +21,11 @@ export default {
           name: '编程开发',
           isOpen: false,
           categories: [
-            { id: 'language', name: '前端｜语言', description: '' },
-            { id: 'framework', name: '前端｜框架', description: '' },
-            { id: 'engineering', name: '前端｜工程化', description: '' },
-            { id: 'mix', name: '前端｜混合', description: '' },
-            { id: 'mod', name: '设计模式', description: ''  }
+            { id: 'language', name: '前端｜语言', description: '', icon: "fas fa-code"  },
+            { id: 'framework', name: '前端｜框架', description: '', icon: "fas fa-layer-group" },
+            { id: 'engineering', name: '前端｜工程化', description: '', icon: "fas fa-cogs"  },
+            { id: 'mix', name: '前端｜混合', description: '', icon: "fas fa-mobile-alt"  },
+            { id: 'mod', name: '设计模式', description: '', icon: "fas fa-chess"   }
           ]
         },
         {
@@ -33,7 +33,7 @@ export default {
           name: '工具效率',
           isOpen: false,
           categories: [
-            { id: 'dev-tools', name: '开发工具', description: '' },
+            { id: 'dev-tools', name: '开发工具', description: '', icon: "fas fa-tools" },
           ]
         },
         {
@@ -41,9 +41,10 @@ export default {
           name: '学习成长',
           isOpen: false,
           categories: [
-            { id: 'english', name: '英语学习', description: '' },
-            { id: 'books', name: '书籍推荐', description: '' },
-            { id: 'ai', name: 'AI 素材', description: '' }
+            { id: 'english', name: '英语学习', description: '', icon: "fas fa-book-open"  },
+            { id: 'books', name: '书籍推荐', description: '', icon: "fas fa-book"  },
+            { id: 'ai', name: 'AI 素材', description: '', icon: "fas fa-robot"  },
+            { id: 'consider', name: '奇思妙想', description: '', icon: "fas fa-lightbulb"  }
           ]
         }
       ]

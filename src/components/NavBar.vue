@@ -9,7 +9,7 @@
       <div class="nav-right">
         <div class="nav-links">
           <!-- <router-link to="/category" class="nav-link">{{ $t('nav.categories') }}</router-link> -->
-          <!-- <router-link to="/about" class="nav-link">{{ $t('nav.about') }}</router-link> -->
+          <router-link to="/about" class="nav-link">{{ $t('nav.about') }}</router-link>
         </div>
 
         <!-- <language-switcher /> -->
