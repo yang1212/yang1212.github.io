@@ -52,6 +52,11 @@ export default new Router({
       path: '/language',
       name: 'Language',
       component: () => import('../views/Language.vue')
+    },
+    {
+      path: '/framework',
+      name: 'Framework',
+      component: () => import('../views/Framework.vue')
     }
   ]
 })

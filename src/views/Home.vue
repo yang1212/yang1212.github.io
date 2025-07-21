@@ -57,6 +57,18 @@
                 <h3>{{ category.name }}</h3>
               </div>
             </router-link>
+            <router-link v-else-if="category.id === 'framework'"
+              :to="'/framework'"
+              class="category-card"
+              title="前端框架 - 深入了解现代前端开发技术"
+            >
+              <div class="card-content">
+                <div class="card-icon">
+                  <i :class="category.icon || 'fas fa-cubes'"></i>
+                </div>
+                <h3>{{ category.name }}</h3>
+              </div>
+            </router-link>
             <router-link v-else-if="category.id === 'psychology'"
               :to="'/psychology'"
               class="category-card"
