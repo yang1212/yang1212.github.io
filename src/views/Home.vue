@@ -45,6 +45,18 @@
                 <h3>书籍推荐</h3>
               </div>
             </a>
+            <router-link v-else-if="category.id === 'psychology'"
+              :to="'/psychology'"
+              class="category-card"
+              title="心理学 - 探索人类思维与行为"
+            >
+              <div class="card-content">
+                <div class="card-icon">
+                  <i :class="category.icon || 'fas fa-brain'"></i>
+                </div>
+                <h3>{{ category.name }}</h3>
+              </div>
+            </router-link>
             <router-link
               v-else
               :to="'/category/' + category.id"

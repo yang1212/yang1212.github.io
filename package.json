@@ -11,7 +11,7 @@
   "dependencies": {
     "@tiptap/starter-kit": "^2.4.0",
     "@tiptap/vue-2": "^2.4.0",
-    "axios": "^1.9.0",
+    "axios": "^1.10.0",
     "core-js": "^3.8.3",
     "dom-to-image": "^2.6.0",
     "element-ui": "^2.15.4",
@@ -22,6 +22,7 @@
     "markdown-it-anchor": "^8.6.7",
     "markdown-it-prism": "^2.3.1",
     "markdown-it-toc-done-right": "^4.2.0",
+    "marked": "^16.1.1",
     "prismjs": "^1.30.0",
     "vue": "^2.6.14",
     "vue-i18n": "^8.28.2",

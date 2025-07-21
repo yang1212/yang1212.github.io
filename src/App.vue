@@ -44,7 +44,7 @@ export default {
             { id: 'english', name: '英语学习', description: '', icon: "fas fa-book-open"  },
             { id: 'books', name: '书籍推荐', description: '', icon: "fas fa-book"  },
             { id: 'ai', name: 'AI 素材', description: '', icon: "fas fa-robot"  },
-            { id: 'consider', name: '奇思妙想', description: '', icon: "fas fa-lightbulb"  }
+            { id: 'psychology', name: '奇思妙想', description: '', icon: "fas fa-lightbulb"  }
           ]
         }
       ]
