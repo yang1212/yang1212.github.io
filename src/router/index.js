@@ -47,6 +47,11 @@ export default new Router({
       path: '/psychology',
       name: 'Psychology',
       component: () => import('../views/Psychology.vue')
+    },
+    {
+      path: '/language',
+      name: 'Language',
+      component: () => import('../views/Language.vue')
     }
   ]
 })
