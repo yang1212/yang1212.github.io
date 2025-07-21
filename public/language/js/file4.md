@@ -1,9 +1,9 @@
-每次遇到计算出问题时，一般都是旧项目又出bug了。      
-急急忙忙只想找个第三方包解决问题，  
-一看文档迷迷糊糊, 如下图所示，  
-场面一度陷入混乱~   
+每次遇到计算出问题时，一般都是旧项目又出bug了。     
+急急忙忙只想找个第三方包解决问题，
+一看文档迷迷糊糊, 如下图所示，
+场面一度陷入混乱~
 
-![image.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/cf4b7979a9d54056b08c547857ea10b2~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1692&h=1106&s=204835&e=png&b=292929)
+<img width="692" height="506" alt="Image" src="https://github.com/user-attachments/assets/df471f88-0ca7-4fe5-8c08-a5e712200d20" />
 
 <br/>
 
