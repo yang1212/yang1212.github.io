@@ -1,5 +1,7 @@
 🌞 Webpack 的主要任务是把源代码（JS、CSS、TS、Vue 等）转换成浏览器可以运行的 bundle.js，这个过程本质上就是编译。
 
+<br/>
+
 ## 一、webpack
 
 **[1、Babel](https://my.oschina.net/vivotech/blog/4407304)**
@@ -109,6 +111,8 @@
 * 让他人使用你开发的库时，少安装一些不必要的依赖
 
 
+<br/>
+
 ## 二、实践过程
 1、[基于书籍实践分析webpack](https://www.cnblogs.com/Tiboo/p/12434287.html)
 
@@ -117,3 +121,4 @@
 3、[打包报错分析过程](https://www.cnblogs.com/Tiboo/p/13832912.html)
 
 
+<br/>
