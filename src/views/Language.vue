@@ -239,4 +239,55 @@ export default {
   margin-bottom: 1em;
 }
 
+
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px;
+  }
+
+  .sidebar ul {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+
+  .sidebar li {
+    flex-shrink: 0;
+    white-space: nowrap;
+    margin: 0 8px 0 0;
+    background: #fff;
+    border: 1px solid #ddd;
+  }
+
+  .sidebar li.active {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff;
+  }
+
+  .content {
+    padding: 16px;
+  }
+
+  .top-bar {
+    flex-wrap: wrap;
+  }
+
+  .top-bar button {
+    margin: 6px 4px;
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .markdown-body,
+  .content-img {
+    width: 100%;
+  }
+}
 </style>
