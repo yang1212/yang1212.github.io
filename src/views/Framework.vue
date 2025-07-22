@@ -24,7 +24,7 @@
         </button>
         </div>
       <!-- <img src="@/assets/bg1.png" alt="Psychology" class="content-img" /> -->
-      <main class="markdown-body" v-html="renderedContent"></main>
+     <MarkdownRender :html="renderedContent" class="markdown-body"/>
     </div>
   </div>
 </template>
@@ -32,9 +32,11 @@
 <script>
 import axios from 'axios';
 import { marked } from 'marked';
+import MarkdownRender from '@/components/MarkdownRender.vue';
 
 export default {
   name: 'PsychologyPage',
+  components: { MarkdownRender },
   data() {
     return {
         currentType: 'react',

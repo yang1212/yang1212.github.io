@@ -24,17 +24,19 @@
         </button>
         </div>
       <!-- <img src="@/assets/bg1.png" alt="Psychology" class="content-img" /> -->
-      <main class="markdown-body" v-html="renderedContent"></main>
+      <MarkdownRender :html="renderedContent" class="markdown-body"/>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import MarkdownRender from '@/components/MarkdownRender.vue';
 import { marked } from 'marked';
 
 export default {
-  name: 'ToolsPage',    
+  name: 'ToolsPage', 
+  components: { MarkdownRender },   
   data() {
     return {
         currentType: 'program',
@@ -74,7 +76,6 @@ export default {
         try {
             const res = await axios.get(`/tools/${this.currentType}/${filename}`);
             this.renderedContent = marked(res.data);
-            console.log(this.renderedContent);
         } catch (err) {
             this.renderedContent = `<p style="color:red;">无法加载文件：${filename}</p>`;
         }
@@ -271,13 +272,5 @@ export default {
   }
 }
 
-.markdown-body pre {
-  display: block;
-  padding: 1em;
-  background: #282c34;  /* 深色背景 */
-  color: #abb2bf;        /* 默认代码颜色 */
-  border-radius: 6px;
-  overflow-x: auto;
-}
 
 </style>

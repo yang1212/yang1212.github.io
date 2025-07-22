@@ -24,17 +24,19 @@
         </button>
         </div>
       <!-- <img src="@/assets/bg1.png" alt="Psychology" class="content-img" /> -->
-      <main class="markdown-body" v-html="renderedContent"></main>
+      <MarkdownRender :html="renderedContent" class="markdown-body"/>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import MarkdownRender from '@/components/MarkdownRender.vue';
 import { marked } from 'marked';
 
 export default {
   name: 'MixPage',
+  components: { MarkdownRender },
   data() {
     return {
         currentType: 'network',

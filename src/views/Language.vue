@@ -12,6 +12,7 @@
         </li>
       </ul>
     </aside>
+
     <div class="content">
         <div class="top-bar">
         <button
@@ -23,18 +24,21 @@
             {{ type.label }}
         </button>
         </div>
+        
       <!-- <img src="@/assets/bg1.png" alt="Psychology" class="content-img" /> -->
-      <main class="markdown-body" v-html="renderedContent"></main>
+      <MarkdownRender :html="renderedContent" class="markdown-body"/>
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import MarkdownRender from '@/components/MarkdownRender.vue';
 import { marked } from 'marked';
 
 export default {
   name: 'LanguagePage',
+  components: { MarkdownRender },
   data() {
     return {
         currentType: 'js',
@@ -86,10 +90,10 @@ export default {
     async loadFile(filename) {
         this.selectedFile = filename;
         try {
-            const res = await axios.get(`/language/${this.currentType}/${filename}`);
-            this.renderedContent = marked(res.data);
+          const res = await axios.get(`/language/${this.currentType}/${filename}`);
+          this.renderedContent = marked(res.data)
         } catch (err) {
-            this.renderedContent = `<p style="color:red;">无法加载文件：${filename}</p>`;
+          this.renderedContent = `<p style="color:red;">无法加载文件：${filename}</p>`;
         }
     }
   }
@@ -139,6 +143,7 @@ export default {
   box-sizing: border-box;
   line-height: 1.7;
   color: #444;
+  padding: 16px;
 }
 
 .markdown-body h1,
@@ -160,22 +165,6 @@ export default {
   margin-bottom: 1.5em;
   padding-left: 1.8em;
   color: #444;
-}
-
-.markdown-body blockquote {
-  margin: 1.5em 0;
-  padding-left: 1em;
-  border-left: 4px solid #ddd;
-  color: #666;
-  font-style: italic;
-}
-
-.markdown-body pre {
-  margin: 1.5em 0;
-  background: #f6f8fa;
-  padding: 1em;
-  border-radius: 6px;
-  overflow-x: auto;
 }
 
 .container {

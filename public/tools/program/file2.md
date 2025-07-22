@@ -14,7 +14,7 @@
 ## [命令行](https://juejin.cn/post/6844904000525959182#heading-4)
 
 * **查找文件路径**：
-    ```
+    ```javascript
     Mac: command + p (输入 :行数 可定位到对应行)
     Windows: Ctrl + p 
     ```
