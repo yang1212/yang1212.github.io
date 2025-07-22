@@ -39,17 +39,24 @@ export default {
     return {
         currentType: 'program',
         types: [
-            { value: 'program', label: '工具' },
+          { value: 'program', label: '工具' },
         ],
         fileMap: {
-            program: [
-              { name: 'file1.md', title: '归纳' },
-            ],
+          program: [
+            { name: 'file1.md', title: '浏览器插件' },
+            { name: 'file2.md', title: 'vscode插件/命令行' },
+            { name: 'file3.md', title: '在线转换' },
+            { name: 'file4.md', title: '编程工具' },
+            { name: 'file5.md', title: '文档图文相关' },
+            { name: 'file6.md', title: 'UI相关' },
+          ],
         },
         files: [],
         selectedFile: '',
         renderedContent: ''
     };
+  },
+  created() {
   },
   mounted() {
     this.switchType(this.currentType);
@@ -67,6 +74,7 @@ export default {
         try {
             const res = await axios.get(`/tools/${this.currentType}/${filename}`);
             this.renderedContent = marked(res.data);
+            console.log(this.renderedContent);
         } catch (err) {
             this.renderedContent = `<p style="color:red;">无法加载文件：${filename}</p>`;
         }
@@ -149,13 +157,6 @@ export default {
   font-style: italic;
 }
 
-.markdown-body pre {
-  margin: 1.5em 0;
-  background: #f6f8fa;
-  padding: 1em;
-  border-radius: 6px;
-  overflow-x: auto;
-}
 
 .container {
   display: flex;
@@ -268,6 +269,15 @@ export default {
   .content-img {
     width: 100%;
   }
+}
+
+.markdown-body pre {
+  display: block;
+  padding: 1em;
+  background: #282c34;  /* 深色背景 */
+  color: #abb2bf;        /* 默认代码颜色 */
+  border-radius: 6px;
+  overflow-x: auto;
 }
 
 </style>

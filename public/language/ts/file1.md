@@ -1,4 +1,6 @@
-🌞 TypeScript 在运行前需要先编译为 JavaScript，在编译阶段就会进行类型检查，所以 TypeScript 是静态类型
+🌞 TypeScript 在运行前需要先编译为 JavaScript，在编译阶段就会进行类型检查，所以 TypeScript 是静态类型。
+
+<br/>
 
 ## 目录
 
@@ -50,6 +52,8 @@ tempFn().then((res) => {
   state.detail = res.detail
 })
 ````
+<br/>
+
 ## 常见报错
 
 1、[不能将类型“HTMLElement | null”分配给类型“HTMLElement” 错误](https://www.cnblogs.com/wangyang0210/p/15693372.html)

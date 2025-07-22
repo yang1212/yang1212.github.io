@@ -3,7 +3,7 @@
     <div class="nav-content">
       <router-link to="/" class="logo">
         <img src="@/assets/logo.png" alt="Logo" class="logo-img" />
-        <h1 class="logo-text">June</h1>
+        <h2 class="logo-text">June</h2>
       </router-link>
 
       <button class="hamburger" @click="toggleMobileMenu">
@@ -77,13 +77,14 @@ export default {
   border-radius: 50%;
   position: relative;
   top: 2px;
+  left: 10px;
 }
 .logo-text {
   font-weight: bold;
   color: #2c3e50;
   position: relative;
-  top: 6px;
-  left: -10px;
+  top: 7px;
+  left: 10px;
 }
 
 .nav-right {

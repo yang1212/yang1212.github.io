@@ -32,7 +32,7 @@ export default {
           name: '工具效率',
           isOpen: false,
           categories: [
-            { id: 'tool', name: '开发工具', description: '', icon: "fas fa-tools" },
+            { id: 'tool', name: '工具', description: '', icon: "fas fa-tools" },
           ]
         },
         {
