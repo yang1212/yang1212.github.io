@@ -42,11 +42,18 @@ export default {
         currentType: 'network',
         types: [
             { value: 'network', label: '网络' },
+            { value: 'seo', label: 'SEO' },
             { value: 'other', label: '其他' },
         ],
         fileMap: {
             network: [
               { name: 'file1.md', title: '知识点归纳' },
+            ],
+            seo: [
+              { name: 'file1.md', title: 'SEO工具' },
+              { name: 'file2.md', title: '挖掘需求' },
+              { name: 'file3.md', title: 'SEO优化' },
+              { name: 'file4.md', title: '申请开通Adsense账号' },
             ],
             other: [
               { name: 'file1.md', title: '知识点归纳' },
@@ -113,7 +120,7 @@ export default {
 
 .content-img {
   display: block;
-  width: 85%;       /* 宽度 60% */
+  width: 80%;       /* 宽度 60% */
   /* 最大宽度限制 */
   height: auto;
   margin: 0 auto 24px auto; /* 居中，底部留间距 */
@@ -122,8 +129,8 @@ export default {
 }
 
 .markdown-body {
-  width: 85%;         /* 文字宽度和图片宽度一致 */
-  margin: 0 auto;     /* 居中 */
+  width: 80%;         /* 文字宽度和图片宽度一致 */
+  margin: 0 auto 0 15px;
   box-sizing: border-box;
   line-height: 1.7;
   color: #444;

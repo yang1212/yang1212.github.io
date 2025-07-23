@@ -113,7 +113,7 @@ export default {
 
 .content-img {
   display: block;
-  width: 85%;       /* 宽度 60% */
+  width: 80%;       /* 宽度 60% */
   /* 最大宽度限制 */
   height: auto;
   margin: 0 auto 24px auto; /* 居中，底部留间距 */
@@ -122,8 +122,8 @@ export default {
 }
 
 .markdown-body {
-  width: 85%;         /* 文字宽度和图片宽度一致 */
-  margin: 0 auto;     /* 居中 */
+  width: 80%;         /* 文字宽度和图片宽度一致 */
+  margin: 0 auto 0 15px;
   box-sizing: border-box;
   line-height: 1.7;
   color: #444;

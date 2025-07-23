@@ -1,0 +1,24 @@
+## 挖掘出第一个需求
+https://mp.weixin.qq.com/s?__biz=MjM5OTIzMzYyMA==&mid=2650080669&idx=1&sn=baf814d85976df09a85c44d9a45a943b&chksm=bf3f34a68848bdb065889163a3b58f10566b937769d679fa50b25768351d55ea4ef24271cae4&scene=21#wechat_redirect
+
+
+## 新手建议
+新手村里积累经验，做几个KD小于29的搜索量10K左右的关键词，
+一个关键词就注册一个域名，然后举全站之力来优化这个关键词。
+
+
+## 衡量是否可做
+一个公式，kdroi= volumn * cpc / kd ，指标是 kdroi ，也就是优化难度回报率，
+volumn：搜索量，
+cpc：点击单价，
+kd：优化难度。
+
+通过计算每一个关键词的 kdroi ，
+
+再对关键词按照 kdroi 从高到低排序，
+
+就得到了最值得做的关键词列表。
+
+我们实际举个例子，我打开 Semrush ，输入关键词中的“Calculator”这个词，
+设置筛选框搜索量600+，kd 为 0～29，cpc大于0.1，
+排除“near me”关键词，就得到了下面截图所示的总共357个关键词。

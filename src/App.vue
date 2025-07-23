@@ -72,6 +72,12 @@ export default {
   box-sizing: border-box;
 }
 
+a {
+  word-break: break-all;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
 @media print {
   #app {
     background: white;
