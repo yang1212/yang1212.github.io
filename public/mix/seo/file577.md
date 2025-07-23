@@ -23,19 +23,3 @@
 ## sitemap
 
 
-## canonical
-✅ 1. 防止重复内容被搜索引擎处罚      
-
-比如有两个内容几乎一样的页面：
-
-https://yangfu.asia/books
-
-https://books.yangfu.asia/
-
-如果两边内容雷同，Google 会认为是重复页面，不知道该收录哪一个，甚至两个都不给权重。
-
-👉 加上 canonical 后就告诉搜索引擎：“别搞错，我希望你只看 books.yangfu.asia 那个，这个只是副本。”   
-
-✅ 2. 集中权重     
-
-假如有人链接的是 /books，有人链接的是 books.yangfu.asia，你通过 canonical 可以把所有“链接价值”集中到你真正想要的页面。
