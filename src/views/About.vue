@@ -3,7 +3,7 @@
     <transition name="fade-slide" appear>
       <div class="content">
         <p>
-          欢迎来到 <strong>yangfu.asia</strong> —— 一个持续更新的个人知识库。
+          欢迎来到 <strong>www.yangfu.asia</strong> —— 一个持续更新的个人知识库。
         </p>
 
         <p>

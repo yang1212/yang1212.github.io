@@ -38,19 +38,19 @@ https://example.com/page-copy.html（拷贝页面）
 
 假设有两个页面内容完全相同：    
 
-https://yangfu.asia/books（主站）
+https://www.yangfu.asia/books（主站）
 
 https://books.yangfu.asia/（子域名）
 
 你希望主站 /books 得权重，那就应该在子域名页面的 <head> 中加：
 
 ````javascript
-<link rel="canonical" href="https://yangfu.asia/books" />
+<link rel="canonical" href="https://www.yangfu.asia/books" />
 
 ````
 这句话的意思就是：
 
-“虽然这是 books.yangfu.asia，但真正权威版本是 yangfu.asia/books，
+“虽然这是 books.yangfu.asia，但真正权威版本是 www.yangfu.asia/books，
 
 请你收录和排名它。”
 
