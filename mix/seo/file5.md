@@ -1,21 +1,56 @@
-## 流程
-1、建站基础，如何快速做一个网站；
+## 🧭 什么是 canonical？
 
-2、SEO基础，如何优化网站；
+<link rel="canonical" href="https://example.com/page">
 
-3、推广基础，如何宣传推广网站；
+这是 HTML <head> 标签里的一个声明，告诉搜索引擎：
 
-4、运营基础，如何运营好一个网站；
-
-5、Adsense基础，如何靠谷歌Adsense赚广告费；
-
-6、一些工具使用经验分享，如Semrush分析别的网站流量和出入站链接，Similarweb如何看流量；
-
-7、基于Semrush、Similarweb等工具，如何去发掘新需求，发现新网站；
-
-8、实战经验，如何去抓住新词热词做网站，从搜索引擎获取流量。
+“这个页面的权威版本（也就是我希望你收录和排名的那个页面）是 https://example.com/page。”
 
 
+## 💡 它解决什么问题？
 
-## 词语
-长尾词页面
+在网站中，同一内容可能出现在多个不同链接，比如：
+
+https://example.com/page
+
+https://example.com/page?ref=ad
+
+https://m.example.com/page
+
+https://books.example.com/page（子域名）
+
+https://example.com/page-copy.html（拷贝页面）
+
+搜索引擎会认为这些是重复内容，就会分散权重、影响排名。
+
+## ✅ canonical 的作用就是：
+聚合权重    
+多个重复页面的外链、权重、排名都归到你指定的 canonical 页面。
+
+避免内容重复惩罚      
+明确告诉搜索引擎“我不是在作弊，是有副本，这才是正主”。
+
+提升 SEO 效果    
+避免分散收录，让一个权威链接集中曝光。
+
+
+## 📍举例说明：
+
+假设有两个页面内容完全相同：    
+
+https://yangfu.asia/books（主站）
+
+https://books.yangfu.asia/（子域名）
+
+你希望主站 /books 得权重，那就应该在子域名页面的 <head> 中加：
+
+````javascript
+<link rel="canonical" href="https://yangfu.asia/books" />
+
+````
+这句话的意思就是：
+
+“虽然这是 books.yangfu.asia，但真正权威版本是 yangfu.asia/books，
+
+请你收录和排名它。”
+
