@@ -54,6 +54,7 @@ export default {
               { name: 'file2.md', title: '挖掘需求' },
               { name: 'file3.md', title: 'SEO优化' },
               { name: 'file4.md', title: '申请开通Adsense账号' },
+              { name: 'file5.md', title: '什么是 canonical？' },
             ],
             other: [
               { name: 'file1.md', title: '知识点归纳' },
