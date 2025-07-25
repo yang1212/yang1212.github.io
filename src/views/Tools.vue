@@ -13,7 +13,8 @@
       </ul>
     </aside>
     <div class="content">
-        <div class="top-bar">
+      <h1>工具</h1>
+      <div class="top-bar">
         <button
             v-for="type in types"
             :key="type.value"
@@ -22,7 +23,7 @@
         >
             {{ type.label }}
         </button>
-        </div>
+      </div>
       <!-- <img src="@/assets/bg1.png" alt="Psychology" class="content-img" /> -->
       <MarkdownRender :html="renderedContent" class="markdown-body"/>
     </div>
@@ -87,7 +88,7 @@ export default {
 <style scoped>
 .top-bar {
   margin-bottom: 20px;
-  text-align: center;
+  text-align: left;
 }
 
 .top-bar button {
@@ -203,7 +204,7 @@ export default {
 
 .content {
   flex: 1;
-  padding: 30px;
+  padding: 0 30px 30px 30px;
   overflow-y: auto;
   line-height: 2;
 }
@@ -214,7 +215,10 @@ export default {
   color: #333;
   margin-top: 1.2em;
 }
-
+.content h1 {
+  text-align: center;
+  margin-top: 0.2em;
+}
 .content p {
   color: #555;
   margin-bottom: 1em;

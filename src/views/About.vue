@@ -2,6 +2,7 @@
   <div class="about-page">
     <transition name="fade-slide" appear>
       <div class="content">
+        <h1>关于我们</h1>
         <p>
           欢迎来到 <strong>www.yangfu.asia</strong> —— 一个持续更新的个人知识库。
         </p>
