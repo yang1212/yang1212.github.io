@@ -52,12 +52,6 @@
 
       <!-- 显示文章和其他文件 -->
       <div class="articles-grid" v-if="files.length > 0">
-        <div class="batch-actions" v-if="selectedFiles.length > 0">
-          <button @click="handleBatchPrint" class="batch-print-btn">
-            <i class="fas fa-print"></i>
-            批量打印 ({{ selectedFiles.length }})
-          </button>
-        </div>
         <div 
           v-for="file in files" 
           :key="file.path"
@@ -691,8 +685,11 @@ export default {
 }
 
 .articles-grid {
-  display: grid;
-  gap: 20px;
+  /* display: grid;
+  gap: 20px; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 /* 添加面包屑导航样式 */
@@ -727,6 +724,8 @@ export default {
   transition: transform 0.2s, box-shadow 0.2s;
   overflow: hidden;
   cursor: pointer;
+  width: 31%;
+  margin: 5px 10px;
 }
 
 .file-card:hover {
@@ -791,6 +790,10 @@ export default {
 @media (max-width: 768px) {
   .articles-grid {
     grid-template-columns: 1fr;
+    justify-content: center;
+  }
+  .file-card {
+    width: 43%;
   }
 }
 

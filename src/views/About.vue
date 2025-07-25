@@ -4,7 +4,7 @@
       <div class="content">
         <h1>关于我们</h1>
         <p>
-          欢迎来到 <strong>www.yangfu.asia</strong> —— 一个持续更新的个人知识库。
+          欢迎来到 <strong>yangfu.asia</strong> —— 一个持续更新的个人知识库。
         </p>
 
         <p>
@@ -12,8 +12,8 @@
         </p>
 
         <ul>
-          <li>📚 阅读摘录与书籍分类</li>
           <li>🌐 网站开发与技术笔记</li>
+          <li>📚 阅读摘录与书籍分类</li>
           <li>✍️ 写作灵感与表达练习</li>
           <li>🎯 自我管理与价值探索</li>
         </ul>
