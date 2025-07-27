@@ -111,9 +111,9 @@
                 <h3>{{ category.name }}</h3>
               </div>
             </router-link>
-            <router-link
+            <a
               v-else
-              :to="'/category/' + category.id"
+              href="https://ai-yu.org/"
               class="category-card"
             >
               <div class="card-content">
@@ -123,7 +123,7 @@
                 <h3>{{ category.name }}</h3>
                 <!-- <p>{{ category.description }}</p> -->
               </div>
-            </router-link>
+            </a>
           </div>
         </div>
       </section>
