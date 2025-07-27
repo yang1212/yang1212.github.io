@@ -11,14 +11,6 @@
         <span :class="{ 'open': mobileMenuOpen }"></span>
         <span :class="{ 'open': mobileMenuOpen }"></span>
       </button>
-
-      <div class="nav-right" :class="{ open: mobileMenuOpen }">
-        <div class="nav-links">
-          <router-link to="/about" class="nav-link" @click.native="closeMobileMenu">
-            {{ $t('nav.about') }}
-          </router-link>
-        </div>
-      </div>
     </div>
   </nav>
 </template>

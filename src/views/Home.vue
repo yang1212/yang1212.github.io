@@ -127,6 +127,32 @@
           </div>
         </div>
       </section>
+      <section class="about" style="background: #fff;max-width: 1160px; margin: 0 auto; color: #444;padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <h1 style="font-weight: 700; font-size: 2rem; margin-bottom: 0.5em;">🪴 关于我们</h1>
+        <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1em;">
+          欢迎来到 <strong style="color: #333;">yangfu.asia</strong> —— 一个持续更新的知识库。系统整理思考、阅读、学习与项目实践，内容涵盖：
+        </p>
+        <ul style="list-style: none; padding-left: 0; margin-bottom: 1.5em;">
+          <li style="margin-bottom: 0.5em;">🌐 网站开发与技术笔记</li>
+          <li style="margin-bottom: 0.5em;">📚 阅读摘录与书籍分类</li>
+          <li style="margin-bottom: 0.5em;">✍️ 写作灵感与表达练习</li>
+          <li style="margin-bottom: 0.5em;">🎯 自我管理与价值探索</li>
+        </ul>
+
+        <h2 style="font-weight: 600; font-size: 1.5rem; margin-bottom: 0.4em;margin-top:2em">💖 为什么创建这个网站？</h2>
+        <p style="font-weight: 600; margin-bottom: 1em;margin-top:1em">写下的，才是自己的。</p>
+        <p style="margin-bottom: 1em;">
+          碎片的信息，不如结构的积累。将日常所见所思，逐步整理成一个清晰的知识网络 ——  
+        </p>
+        <p style="margin-bottom: 1em;">既是留给自己的长期记忆，也希望能为同样在路上的你提供启发。</p>
+        <p style="margin-bottom: 1em;">
+          本站大部分内容为原创笔记、分类整理或经验总结。部分引用内容均注明出处，若有遗漏，欢迎指正。
+        </p>
+
+        <p>
+          如需交流、建议或合作，可发送邮件至：<strong style="color: #1a73e8;">tibooyang@gmail.com</strong>
+        </p>
+      </section>
     </main>
   </div>
 </template>
