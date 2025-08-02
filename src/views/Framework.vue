@@ -36,11 +36,12 @@ import { marked } from 'marked';
 import MarkdownRender from '@/components/MarkdownRender.vue';
 
 export default {
-  name: 'PsychologyPage',
+  name: 'FrameworkPage',
   components: { MarkdownRender },
+  props: ['type', 'file'],
   data() {
     return {
-        currentType: 'react',
+        currentType: '',
         types: [
             { value: 'react', label: 'React' },
             { value: 'rn', label: 'React Native' },
@@ -51,27 +52,27 @@ export default {
         ],
         fileMap: {
             react: [
-              { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file1', title: '知识点归纳' },
             ],
             rn: [
-              { name: 'file1.md', title: '知识点归纳' },
-              { name: 'file2.md', title: '对接海外Stripe支付' },
-              { name: 'file3.md', title: '路由导航' },
-              { name: 'file4.md', title: '缓存' },
-              { name: 'file5.md', title: 'Mac配置' },
-              { name: 'file6.md', title: 'android应用签名、打包发布google play ' }
+              { name: 'file1', title: '知识点归纳' },
+              { name: 'file2', title: '对接海外Stripe支付' },
+              { name: 'file3', title: '路由导航' },
+              { name: 'file4', title: '缓存' },
+              { name: 'file5', title: 'Mac配置' },
+              { name: 'file6', title: 'android应用签名、打包发布google play ' }
             ],
             vue2: [
-              { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file1', title: '知识点归纳' },
             ],
             vue3: [
-              { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file1', title: '知识点归纳' },
             ],
             css: [
-              { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file1', title: '知识点归纳' },
             ],
             program: [
-              { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file1', title: '知识点归纳' },
             ]
         },
         files: [],
@@ -79,25 +80,89 @@ export default {
         renderedContent: ''
     };
   },
+  watch: {
+    '$route.params.type': function(newType) {
+      if (newType) {
+        this.currentType = newType;
+        this.switchType(newType);
+      } else if (!this.currentType) {
+        // 如果没有类型参数且currentType为空，默认显示react
+        this.currentType = 'react';
+        this.switchType('react');
+      }
+    },
+    '$route.params.file': function(newFile) {
+      if (newFile && this.files.length > 0) {
+        this.loadFile(newFile);
+      } else if (this.files.length > 0 && !this.selectedFile) {
+        // 如果文件参数为空且没有选中的文件，加载第一个文件
+        this.loadFile(this.files[0].name);
+      }
+    }
+  },
   mounted() {
-    this.switchType(this.currentType);
+    // 初始化时从路由参数获取类型和文件
+    const type = this.$route.params.type;
+    const file = this.$route.params.file;
+
+    if (type) {
+      this.currentType = type;
+      this.switchType(type);
+      if (file) {
+        // 直接加载文件
+        this.loadFile(file);
+      }
+    } else {
+      // 默认显示react
+      this.currentType = 'react';
+      this.switchType('react');
+    }
   },
   methods: {
     switchType(type) {
-        this.currentType = type;
-        this.files = this.fileMap[type];
-        if (this.files.length > 0) {
-            this.loadFile(this.files[0].name);
-        }
+      // 保存旧类型用于比较
+      const oldType = this.currentType;
+      this.currentType = type;
+    
+      // 更新文件列表
+      this.files = this.fileMap[type] || [];
+    
+      // 只有当类型实际变化时才更新路由
+      if (oldType !== type) {
+        // 切换类型时，默认加载第一个文件
+        const firstFile = this.files.length > 0 ? this.files[0].name : '';
+        this.$router.push({
+          name: 'Framework',
+          params: { type, file: firstFile }
+        });
+      } else if (this.files.length > 0 && !this.selectedFile) {
+        // 如果类型没变但没有选中的文件，加载第一个文件
+        this.loadFile(this.files[0].name);
+      }
     },
     async loadFile(filename) {
-        this.selectedFile = filename;
-        try {
-            const res = await axios.get(`/framework/${this.currentType}/${filename}`);
-            this.renderedContent = marked(res.data);
-        } catch (err) {
-            this.renderedContent = `<p style="color:red;">无法加载文件：${filename}</p>`;
-        }
+      // 保存当前选中的文件
+      this.selectedFile = filename;
+    
+      // 检查当前路由是否已经是目标路由
+      const currentRoute = this.$route;
+      if (currentRoute.params.type !== this.currentType || currentRoute.params.file !== filename) {
+        // 只有当路由不同时才导航
+        this.$router.push({
+          name: 'Framework',
+          params: { type: this.currentType, file: filename },
+          replace: true
+        });
+      }
+    
+      // 无论文件是否变化，都重新加载内容
+      try {
+        // 请求文件时添加 .md 后缀
+        const res = await axios.get(`/framework/${this.currentType}/${filename}.md`);
+        this.renderedContent = marked(res.data);
+      } catch (err) {
+        this.renderedContent = `<p style="color:red;">无法加载文件：${filename}.md</p>`;
+      }
     }
   }
 };
@@ -135,7 +200,7 @@ export default {
   width: 80%;       /* 宽度 60% */
   /* 最大宽度限制 */
   height: auto;
-  margin: 0 auto 24px auto; /* 居中，底部留间距 */
+  margin: 0 auto 24px 20px; /* 居中，底部留间距 */
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }

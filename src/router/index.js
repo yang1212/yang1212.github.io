@@ -55,9 +55,10 @@ export default new Router({
       props: true
     },
     {
-      path: '/framework',
+      path: '/framework/:type?/:file?',
       name: 'Framework',
-      component: () => import('../views/Framework.vue')
+      component: () => import('../views/Framework.vue'),
+      props: true
     },
     {
       path: '/engineering',
