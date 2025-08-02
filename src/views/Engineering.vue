@@ -38,6 +38,10 @@ import { marked } from 'marked';
 export default {
   name: 'EngineeringPage',
   components: { MarkdownRender },
+  props: {
+    type: String,
+    file: String
+  },
   data() {
     return {
         currentType: 'webpack',
@@ -46,8 +50,8 @@ export default {
         ],
         fileMap: {
             webpack: [
-              { name: 'file1.md', title: '知识点归纳' },
-              { name: 'file2.md', title: 'webpack5模块联邦' },
+              { name: 'file1', title: '知识点归纳' },
+              { name: 'file2', title: 'webpack5模块联邦' },
             ]
         },
         files: [],
@@ -55,24 +59,56 @@ export default {
         renderedContent: ''
     };
   },
+  watch: {
+    '$route.params': {
+      handler(newParams) {
+        if (newParams.type && newParams.type !== this.currentType) {
+          this.switchType(newParams.type);
+        } else if (newParams.file && newParams.file !== this.selectedFile) {
+          this.loadFile(newParams.file);
+        }
+      },
+      immediate: true
+    }
+  },
   mounted() {
-    this.switchType(this.currentType);
+    // 如果路由参数中有type，则使用路由参数，否则使用默认值
+    const type = this.$route.params.type || this.currentType;
+    this.switchType(type);
   },
   methods: {
     switchType(type) {
         this.currentType = type;
-        this.files = this.fileMap[type];
+        this.files = this.fileMap[type] || [];
         if (this.files.length > 0) {
-            this.loadFile(this.files[0].name);
+            // 如果路由参数中有file且存在于当前类型的文件列表中，则加载该文件
+            // 否则加载第一个文件
+            const file = this.$route.params.file;
+            if (file && this.files.some(f => f.name === file)) {
+                this.loadFile(file);
+            } else {
+                this.loadFile(this.files[0].name);
+            }
         }
     },
     async loadFile(filename) {
         this.selectedFile = filename;
+        // 只有当路由参数与当前文件不同时才导航
+        if (this.$route.params.file !== filename || this.$route.params.type !== this.currentType) {
+            this.$router.push({
+                name: 'Engineering',
+                params: {
+                    type: this.currentType,
+                    file: filename
+                }
+            }, () => {});
+        }
         try {
-            const res = await axios.get(`/engineering/${this.currentType}/${filename}`);
+            // 请求时添加.md后缀
+            const res = await axios.get(`/engineering/${this.currentType}/${filename}.md`);
             this.renderedContent = marked(res.data);
         } catch (err) {
-            this.renderedContent = `<p style="color:red;">无法加载文件：${filename}</p>`;
+            this.renderedContent = `<p style="color:red;">无法加载文件：${filename}.md</p>`;
         }
     }
   }

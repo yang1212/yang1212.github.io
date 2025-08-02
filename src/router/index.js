@@ -61,19 +61,22 @@ export default new Router({
       props: true
     },
     {
-      path: '/engineering',
+      path: '/engineering/:type?/:file?',
       name: 'Engineering',
-      component: () => import('../views/Engineering.vue')
+      component: () => import('../views/Engineering.vue'),
+      props: true
     },
     {
-      path: '/mix',
+      path: '/mix/:type?/:file?',
       name: 'Mix',
-      component: () => import('../views/Mix.vue')
+      component: () => import('../views/Mix.vue'),
+      props: true
     },
     {
-      path: '/tools',
+      path: '/tools/:type?/:file?',
       name: 'Tools',
-      component: () => import('../views/Tools.vue')
+      component: () => import('../views/Tools.vue'),
+      props: true
     },
     {
       path: '/privacy-policy',

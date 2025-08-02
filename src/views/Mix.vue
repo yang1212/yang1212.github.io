@@ -38,6 +38,10 @@ import { marked } from 'marked';
 export default {
   name: 'MixPage',
   components: { MarkdownRender },
+  props: {
+    type: String,
+    file: String
+  },
   data() {
     return {
         currentType: 'network',
@@ -48,20 +52,21 @@ export default {
         ],
         fileMap: {
             network: [
-              { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file1', title: '知识点归纳' },
             ],
             seo: [
-              { name: 'file1.md', title: 'SEO工具' },
-              { name: 'file2.md', title: '挖掘需求' },
-              { name: 'file3.md', title: 'SEO优化' },
-              { name: 'file4.md', title: '申请开通Adsense账号' },
-              { name: 'file5.md', title: '什么是 canonical？' },
+              { name: 'file1', title: 'SEO工具' },
+              { name: 'file2', title: '挖掘需求' },
+              { name: 'file3', title: 'SEO优化' },
+              { name: 'file4', title: '申请开通Adsense账号' },
+              { name: 'file5', title: '什么是 canonical？' },
+              { name: 'file577', title: 'file577' },
             ],
             other: [
-              { name: 'file1.md', title: '知识点归纳' },
-              { name: 'file2.md', title: '大模型' },
-              { name: 'file3.md', title: '前端渲染模式' },
-              { name: 'file4.md', title: '懒加载' },
+              { name: 'file1', title: '知识点归纳' },
+              { name: 'file2', title: '大模型' },
+              { name: 'file3', title: '前端渲染模式' },
+              { name: 'file4', title: '懒加载' },
             ]
         },
         files: [],
@@ -69,24 +74,56 @@ export default {
         renderedContent: ''
     };
   },
+  watch: {
+    '$route.params': {
+      handler(newParams) {
+        if (newParams.type && newParams.type !== this.currentType) {
+          this.switchType(newParams.type);
+        } else if (newParams.file && newParams.file !== this.selectedFile) {
+          this.loadFile(newParams.file);
+        }
+      },
+      immediate: true
+    }
+  },
   mounted() {
-    this.switchType(this.currentType);
+    // 如果路由参数中有type，则使用路由参数，否则使用默认值
+    const type = this.$route.params.type || this.currentType;
+    this.switchType(type);
   },
   methods: {
     switchType(type) {
         this.currentType = type;
-        this.files = this.fileMap[type];
+        this.files = this.fileMap[type] || [];
         if (this.files.length > 0) {
-            this.loadFile(this.files[0].name);
+            // 如果路由参数中有file且存在于当前类型的文件列表中，则加载该文件
+            // 否则加载第一个文件
+            const file = this.$route.params.file;
+            if (file && this.files.some(f => f.name === file)) {
+                this.loadFile(file);
+            } else {
+                this.loadFile(this.files[0].name);
+            }
         }
     },
     async loadFile(filename) {
         this.selectedFile = filename;
+        // 只有当路由参数与当前文件不同时才导航
+        if (this.$route.params.file !== filename || this.$route.params.type !== this.currentType) {
+            this.$router.push({
+                name: 'Mix',
+                params: {
+                    type: this.currentType,
+                    file: filename
+                }
+            }, () => {});
+        }
         try {
-            const res = await axios.get(`/mix/${this.currentType}/${filename}`);
+            // 请求时添加.md后缀
+            const res = await axios.get(`/mix/${this.currentType}/${filename}.md`);
             this.renderedContent = marked(res.data);
         } catch (err) {
-            this.renderedContent = `<p style="color:red;">无法加载文件：${filename}</p>`;
+            this.renderedContent = `<p style="color:red;">无法加载文件：${filename}.md</p>`;
         }
     }
   }
