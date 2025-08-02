@@ -154,6 +154,17 @@
         </p>
       </section>
     </main>
+    
+    <footer class="site-footer">
+      <div class="footer-content">
+        <p>&copy; {{ new Date().getFullYear() }} 个人知识库. 保留所有权利.</p>
+        <div class="footer-links">
+          <router-link to="/privacy-policy" class="footer-link">隐私政策</router-link>
+          <span class="separator">|</span>
+          <router-link to="/terms-of-service" class="footer-link">服务条款</router-link>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -513,4 +524,40 @@ export default {
   font-size: 1.3rem;
   margin-top: 8px;
 }
-</style> 
+.site-footer {
+  background-color: #2c3e50;
+  color: white;
+  padding: 2rem 0;
+  margin-top: 3rem;
+}
+
+.footer-content {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.footer-links {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-link {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-link:hover {
+  color: #667eea;
+}
+
+.separator {
+  color: rgba(255, 255, 255, 0.5);
+}
+</style>

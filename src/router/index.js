@@ -72,6 +72,16 @@ export default new Router({
       path: '/tools',
       name: 'Tools',
       component: () => import('../views/Tools.vue')
+    },
+    {
+      path: '/privacy-policy',
+      name: 'PrivacyPolicy',
+      component: () => import('../views/PrivacyPolicy.vue')
+    },
+    {
+      path: '/terms-of-service',
+      name: 'TermsOfService',
+      component: () => import('../views/TermsOfService.vue')
     }
   ]
 })
