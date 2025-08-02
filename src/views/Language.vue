@@ -25,8 +25,7 @@
           {{ type.label }}
         </button>
       </div>
-        
-      <!-- <img src="@/assets/bg1.png" alt="Psychology" class="content-img" /> -->
+
       <MarkdownRender :html="renderedContent" class="markdown-body"/>
     </div>
   </div>
@@ -40,9 +39,10 @@ import { marked } from 'marked';
 export default {
   name: 'LanguagePage',
   components: { MarkdownRender },
+  props: ['type'],
   data() {
     return {
-        currentType: 'js',
+        currentType: '',
         types: [
             { value: 'js', label: 'JS' },
             { value: 'es6', label: 'ES6' },
@@ -77,13 +77,44 @@ export default {
         renderedContent: ''
     };
   },
+  watch: {
+    '$route.params.type': function(newType) {
+      if (newType) {
+        this.currentType = newType;
+        this.switchType(newType);
+      } else {
+        // 如果没有类型参数，默认显示js
+        this.currentType = 'js';
+        this.switchType('js');
+      }
+    }
+  },
   mounted() {
-    this.switchType(this.currentType);
+    // 初始化时从路由参数获取类型
+    const type = this.$route.params.type;
+    console.log(233, type)
+    if (type) {
+      this.currentType = type;
+      this.switchType(type);
+    } else {
+      // 默认显示js
+      this.currentType = 'js';
+      this.switchType('js');
+    }
   },
   methods: {
     switchType(type) {
+        // 保存旧类型用于比较
+        const oldType = this.currentType;
         this.currentType = type;
-        this.files = this.fileMap[type];
+        
+        // 只有当类型实际变化时才更新路由
+        if (oldType !== type) {
+            this.$router.push({ name: 'Language', params: { type } });
+        }
+        
+        // 无论类型是否变化，都更新文件列表并加载默认文件
+        this.files = this.fileMap[type] || [];
         if (this.files.length > 0) {
             this.loadFile(this.files[0].name);
         }
@@ -92,7 +123,7 @@ export default {
         this.selectedFile = filename;
         try {
           const res = await axios.get(`/language/${this.currentType}/${filename}`);
-          this.renderedContent = marked(res.data)
+          this.renderedContent = marked(res.data);
         } catch (err) {
           this.renderedContent = `<p style="color:red;">无法加载文件：${filename}</p>`;
         }
