@@ -39,10 +39,11 @@ import { marked } from 'marked';
 export default {
   name: 'LanguagePage',
   components: { MarkdownRender },
-  props: ['type'],
+  props: ['type', 'file'],
   data() {
     return {
         currentType: '',
+        currentFile: '',
         types: [
             { value: 'js', label: 'JS' },
             { value: 'es6', label: 'ES6' },
@@ -52,24 +53,24 @@ export default {
         ],
         fileMap: {
             js: [
-              { name: 'file1.md', title: '知识点归纳' },
-              { name: 'file2.md', title: '数组方法汇总' },
-              { name: 'file3.md', title: '常用原生方法' },
-              { name: 'file4.md', title: '精度丢失' },
-              { name: 'file5.md', title: '宏任务、微任务' }
+              { name: 'file1', title: '知识点归纳' },
+              { name: 'file2', title: '数组方法汇总' },
+              { name: 'file3', title: '常用原生方法' },
+              { name: 'file4', title: '精度丢失' },
+              { name: 'file5', title: '宏任务、微任务' }
             ],
             es6: [
-              { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file1', title: '知识点归纳' },
             ],
             ts: [
-              { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file1', title: '知识点归纳' },
             ],
             handwritten: [
-              { name: 'file1.md', title: '知识点归纳' },
+              { name: 'file1', title: '知识点归纳' },
             ],
             designPatterns: [
-              { name: 'file1.md', title: '知识点归纳' },
-              { name: 'file2.md', title: '常见前端设计模式' },
+              { name: 'file1', title: '知识点归纳' },
+              { name: 'file2', title: '常见前端设计模式' },
             ]
         },
         files: [],
@@ -77,6 +78,7 @@ export default {
         renderedContent: ''
     };
   },
+  // 修改watch中的$route.params.file监听
   watch: {
     '$route.params.type': function(newType) {
       if (newType) {
@@ -87,15 +89,38 @@ export default {
         this.currentType = 'js';
         this.switchType('js');
       }
+    },
+    '$route.params.file': function(newFile) {
+      if (newFile && this.files.length > 0) {
+        // 直接加载文件，无需检查文件是否存在（路由已保证有效性）
+        this.loadFile(newFile);
+      } else if (this.files.length > 0) {
+        // 如果文件参数为空，加载第一个文件
+        this.loadFile(this.files[0].name);
+      }
     }
   },
+  // 修改mounted钩子，移除setTimeout，直接加载文件
   mounted() {
-    // 初始化时从路由参数获取类型
+    // 初始化时从路由参数获取类型和文件
     const type = this.$route.params.type;
-    console.log(233, type)
+    const file = this.$route.params.file;
+    console.log('路由参数type:', type);
+    console.log('路由参数file:', file);
+
     if (type) {
       this.currentType = type;
       this.switchType(type);
+      if (file) {
+        this.currentFile = file;
+        // 直接加载文件，不需要延迟
+        this.loadFile(file);
+      } else {
+        // 如果没有文件参数，加载第一个文件
+        if (this.files.length > 0) {
+          this.loadFile(this.files[0].name);
+        }
+      }
     } else {
       // 默认显示js
       this.currentType = 'js';
@@ -104,29 +129,50 @@ export default {
   },
   methods: {
     switchType(type) {
-        // 保存旧类型用于比较
-        const oldType = this.currentType;
-        this.currentType = type;
-        
-        // 只有当类型实际变化时才更新路由
-        if (oldType !== type) {
-            this.$router.push({ name: 'Language', params: { type } });
-        }
-        
-        // 无论类型是否变化，都更新文件列表并加载默认文件
-        this.files = this.fileMap[type] || [];
-        if (this.files.length > 0) {
-            this.loadFile(this.files[0].name);
-        }
+      // 保存旧类型用于比较
+      const oldType = this.currentType;
+      this.currentType = type;
+    
+      // 更新文件列表
+      this.files = this.fileMap[type] || [];
+    
+      // 只有当类型实际变化时才更新路由
+      if (oldType !== type) {
+        // 切换类型时，默认加载第一个文件
+        const firstFile = this.files.length > 0 ? this.files[0].name : '';
+        this.$router.push({
+          name: 'Language',
+          params: { type, file: firstFile }
+        });
+      } else if (this.files.length > 0 && !this.selectedFile) {
+        // 如果类型没变但没有选中的文件，加载第一个文件
+        this.loadFile(this.files[0].name);
+      }
     },
     async loadFile(filename) {
-        this.selectedFile = filename;
-        try {
-          const res = await axios.get(`/language/${this.currentType}/${filename}`);
-          this.renderedContent = marked(res.data);
-        } catch (err) {
-          this.renderedContent = `<p style="color:red;">无法加载文件：${filename}</p>`;
-        }
+      // 保存当前选中的文件
+      this.selectedFile = filename;
+      this.currentFile = filename;
+    
+      // 检查当前路由是否已经是目标路由
+      const currentRoute = this.$route;
+      if (currentRoute.params.type !== this.currentType || currentRoute.params.file !== filename) {
+        // 只有当路由不同时才导航
+        this.$router.push({
+          name: 'Language',
+          params: { type: this.currentType, file: filename },
+          replace: true
+        });
+      }
+    
+      // 无论文件是否变化，都重新加载内容
+      try {
+        // 请求文件时添加 .md 后缀
+        const res = await axios.get(`/language/${this.currentType}/${filename}.md`);
+        this.renderedContent = marked(res.data);
+      } catch (err) {
+        this.renderedContent = `<p style="color:red;">无法加载文件：${filename}.md</p>`;
+      }
     }
   }
 };

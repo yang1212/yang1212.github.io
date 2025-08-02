@@ -40,17 +40,18 @@
               </div>
             </a>
             <router-link v-else-if="category.id === 'language'"
-              :to="'/language'"
+              :to="'/language/js'"
               class="category-card"
               title="编程语言 - 探索多种编程语言的魅力"
             >
               <div class="card-content">
-                <div class="card-icon">           
+                <div class="card-icon">            
                   <i :class="category.icon || 'fas fa-code'"></i>
                 </div>
                 <h3>{{ category.name }}</h3>
               </div>
             </router-link>
+
             <router-link v-else-if="category.id === 'framework'"
               :to="'/framework'"
               class="category-card"

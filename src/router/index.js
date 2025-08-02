@@ -49,7 +49,7 @@ export default new Router({
       component: () => import('../views/Psychology.vue')
     },
     {
-      path: '/language/:type?',
+      path: '/language/:type/:file?',
       name: 'Language',
       component: () => import('../views/Language.vue'),
       props: true
