@@ -53,6 +53,8 @@ export default {
         fileMap: {
             react: [
               { name: 'file1', title: '知识点归纳' },
+              { name: 'file2', title: '今天只学一个知识点：hooks' },
+              { name: 'file3', title: '常用Hooks' },
             ],
             rn: [
               { name: 'file1', title: '知识点归纳' },
@@ -81,23 +83,30 @@ export default {
     };
   },
   watch: {
-    '$route.params.type': function(newType) {
-      if (newType) {
-        this.currentType = newType;
-        this.switchType(newType);
-      } else if (!this.currentType) {
-        // 如果没有类型参数且currentType为空，默认显示react
-        this.currentType = 'react';
-        this.switchType('react');
-      }
-    },
-    '$route.params.file': function(newFile) {
-      if (newFile && this.files.length > 0) {
-        this.loadFile(newFile);
-      } else if (this.files.length > 0 && !this.selectedFile) {
-        // 如果文件参数为空且没有选中的文件，加载第一个文件
-        this.loadFile(this.files[0].name);
-      }
+    '$route.params': {  // 修改为深度监听整个params对象
+      handler(newParams) {
+        console.log('路由参数变化:', newParams);
+        const newType = newParams.type;
+        const newFile = newParams.file;
+
+        if (newType) {
+          if (this.currentType !== newType) {
+            this.currentType = newType;
+            this.switchType(newType, false);  // 传入参数跳过路由推送
+          }
+          if (newFile) {
+            this.loadFile(newFile, false);  // 传入参数跳过路由推送
+          } else if (this.files.length > 0 && (!this.selectedFile || newType !== this.currentType)) {
+            // 如果没有文件参数或类型已变化，加载第一个文件
+            this.loadFile(this.files[0].name, false);
+          }
+        } else if (!this.currentType) {
+          // 如果没有类型参数且currentType为空，默认显示react
+          this.currentType = 'react';
+          this.switchType('react', false);
+        }
+      },
+      deep: true  // 启用深度监听
     }
   },
   mounted() {
@@ -119,49 +128,42 @@ export default {
     }
   },
   methods: {
-    switchType(type) {
-      // 保存旧类型用于比较
+    switchType(type, pushRoute = true) {  // 添加参数控制是否推送路由
       const oldType = this.currentType;
       this.currentType = type;
-    
-      // 更新文件列表
       this.files = this.fileMap[type] || [];
-    
-      // 只有当类型实际变化时才更新路由
-      if (oldType !== type) {
-        // 切换类型时，默认加载第一个文件
+
+      if (oldType !== type && pushRoute) {
         const firstFile = this.files.length > 0 ? this.files[0].name : '';
         this.$router.push({
           name: 'Framework',
           params: { type, file: firstFile }
         });
       } else if (this.files.length > 0 && !this.selectedFile) {
-        // 如果类型没变但没有选中的文件，加载第一个文件
-        this.loadFile(this.files[0].name);
+        this.loadFile(this.files[0].name, false);
       }
     },
-    async loadFile(filename) {
-      // 保存当前选中的文件
+    async loadFile(filename, pushRoute = true) {  // 添加参数控制是否推送路由
       this.selectedFile = filename;
-    
-      // 检查当前路由是否已经是目标路由
-      const currentRoute = this.$route;
-      if (currentRoute.params.type !== this.currentType || currentRoute.params.file !== filename) {
-        // 只有当路由不同时才导航
-        this.$router.push({
-          name: 'Framework',
-          params: { type: this.currentType, file: filename },
-          replace: true
-        });
+
+      if (pushRoute) {
+        const currentRoute = this.$route;
+        if (currentRoute.params.type !== this.currentType || currentRoute.params.file !== filename) {
+          this.$router.push({
+            name: 'Framework',
+            params: { type: this.currentType, file: filename },
+            replace: true
+          });
+        }
       }
-    
-      // 无论文件是否变化，都重新加载内容
+
       try {
-        // 请求文件时添加 .md 后缀
         const res = await axios.get(`/framework/${this.currentType}/${filename}.md`);
         this.renderedContent = marked(res.data);
+        console.log('文件加载成功:', filename);
       } catch (err) {
         this.renderedContent = `<p style="color:red;">无法加载文件：${filename}.md</p>`;
+        console.error('文件加载失败:', err);
       }
     }
   }
