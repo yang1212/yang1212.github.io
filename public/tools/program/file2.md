@@ -1,54 +1,56 @@
-## 插件
+✅ 第 1 步：准备工作
+访问 SSRDOG 的注册地址
 
-* **Code Translate**: 滑词翻译软件
-* **Image preview**: hover预览图片
-* **Git History**: 查看当前文件的提交记录
-* **GitLens**: 可查看具体一行文件的提交记录
-* **Polacode-2020**: 将代码片段转换为好看的图片
-* **path-alias**: 一个可以解决路径别名提示，跳转的vscode插件
-* **vscode-pdf**: 支持阅读pdf文件
-* **Browser Preview**: vscode内打开浏览器     
+https://st1.hosbb.com/#/register?code=amniQ65y
+
 
 <br/>
 
-## [命令行](https://juejin.cn/post/6844904000525959182#heading-4)
+✅ 第 2 步：注册 SSRDOG 账户
 
-* **查找文件路径**：
-    ```javascript
-    Mac: command + p (输入 :行数 可定位到对应行)
-    Windows: Ctrl + p 
-    ```
-* **缩进**： 
-    ```
-    Mac: command + tab
-    Windows: Ctrl + tab
-    ```
+![示例图片](/images/vpn1.png)
 
-* **选中区块**：
-    ```
-    Mac: Shift + ↑/↓（选中当前行: 鼠标点3次）
-    Windows: Ctrl + Shift + ↑/↓ 
-    ```
-* **复制代码向上/向下**：
-    ```
-    Mac: Shift + option + ↑/↓ 
-    Windows: Shift + Alt + ↑/↓ 
-    ```
-* **向上/向下添加光标**：
-    ```
-    Mac: command + option + ↑/↓ (配合command + → 整词移动更好用)
-    Windows: ctrl + Alt + ↑/↓ 
-    ```
+填写邮箱, 密码等数据, 完成【注册】     
 
-* **选中相同的词**： 
-    ```
-    Mac: command + d（点击多次）
-    Windows: Ctrl + d 
-    ```
-* **打开关闭侧边栏**：
-    ```
-    Mac: command + b
-    Windows: Ctrl + b 
-    ```
-    
+📩 有时候验证码邮件会在「垃圾邮箱」里，记得检查！
+
 <br/>
+
+✅ 第 3 步：下载客户端
+根据设备下载适合的, 安装好：
+![示例图片](/images/vpn2.png)
+
+   
+
+<br/>
+
+✅ 第 4 步：点击菜单栏【商店】,选择套餐，开通服务
+
+轻量套餐 ¥25/月（150G/月）（选最便宜的，非常够用）
+
+标准套餐 ¥35/月（300G/月）  
+
+![示例图片](/images/vpn3.png)
+
+<br/>
+
+✅ 第 5 步：获取订阅链接并导入    
+
+![示例图片](/images/vpn4.png)
+
+
+<br/>
+
+✅ 第 6 步：开启代理功能
+
+在 Clash 客户端中开启代理：
+
+![示例图片](/images/vpn5.png)
+
+
+代理开启后，访问 Google / YouTube / ChatGPT 检查效果。
+
+
+
+**其他vpn平台：**   
+https://aijichang.com/jichang-daquan/

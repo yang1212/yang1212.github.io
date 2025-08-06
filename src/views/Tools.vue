@@ -51,11 +51,12 @@ export default {
         fileMap: {
           program: [
             { name: 'file1', title: '浏览器插件' },
-            { name: 'file2', title: 'vscode插件/命令行' },
+            { name: 'file2', title: 'VPN: 科学上网' },
             { name: 'file3', title: '在线转换' },
             { name: 'file4', title: '编程工具' },
             { name: 'file5', title: '文档图文相关' },
             { name: 'file6', title: 'UI相关' },
+            { name: 'file7', title: 'vscode插件/命令行'}
           ],
         },
         files: [],
