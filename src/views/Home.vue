@@ -129,7 +129,7 @@
         </div>
       </section>
       <section class="about" style="background: #fff;max-width: 1160px; margin: 0 auto; color: #444;padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-        <h1 style="font-weight: 700; font-size: 2rem; margin-bottom: 0.5em;">🪴 关于我们</h1>
+        <h2 style="font-weight: 700; font-size: 2rem; margin-bottom: 0.5em;">🪴 关于我们</h2>
         <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1em;">
           欢迎来到 <strong style="color: #333;">yangfu.asia</strong> —— 一个持续更新的知识库。系统整理思考、阅读、学习与项目实践，内容涵盖：
         </p>
