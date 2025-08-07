@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <nav-bar />
+    <!-- 只在非首页显示navbar -->
+    <nav-bar v-if="$route.name !== 'Home'"/>
     <router-view/>
   </div>
 </template>

@@ -1,11 +1,22 @@
 <template>
   <div class="home" tabindex="0">
     <header class="hero">
+      <!-- 添加背景渐变和图案 -->
+      <div class="hero-bg"></div>
       <div class="hero-content">
-        <!-- 确保唯一的 H1 标签 -->
+        <!-- 优化的logo设计 -->
+        <div class="logo-container">
+          <div class="logo-icon">
+            <img src="@/assets/logo.png" alt="个人知识库Logo" class="logo-img" />
+          </div>
+        </div>
+        <!-- 主标题和副标题 -->
         <h1 class="title float-in">个人知识库</h1>
         <p class="subtitle float-in delay">记录学习，分享经验，持续成长</p>
+        <div  class="cta-button float-in delay-2" @click="scrollToMainContent">开始探索</div>
       </div>
+      <!-- 添加底部波浪效果 -->
+      <div class="hero-wave"></div>
     </header>
 
     <main class="main-content">
@@ -232,6 +243,16 @@ export default {
       });
 
       observer.observe(aboutSection);
+    },
+    scrollToMainContent(e) {
+      e.preventDefault();
+      const mainContent = document.querySelector('.main-content');
+      if (mainContent) {
+        mainContent.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
     }
   },
 }
@@ -252,31 +273,128 @@ export default {
   font-size: 16px;
 }
 .hero {
+  position: relative;
+  overflow: hidden;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 80px 20px;
+  padding: 80px 20px 80px;
   color: white;
   text-align: center;
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.05)"/></svg>');
+  background-size: cover;
+  z-index: 1;
 }
 
 .hero-content {
   position: relative;
   z-index: 2;
-  max-width: 700px;
-  margin: auto;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.logo-container {
+  margin-bottom: 30px;
+  animation: fadeInUp 1s forwards;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-icon {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+  margin-bottom: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.logo-icon:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.logo-img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.logo-text {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
 }
 
 .title {
-  font-size: 3.6rem;
+  font-size: 3.5rem;
   font-weight: 900;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
   opacity: 0;
-  animation: fadeInUp 1s forwards;
+  animation: fadeInUp 1s 0.3s forwards;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .subtitle {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  margin-bottom: 2.5rem;
   opacity: 0;
   animation: fadeInUp 1s 0.6s forwards;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-button {
+  display: inline-block;
+  background: white;
+  color: #667eea;
+  font-weight: 600;
+  padding: 12px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  opacity: 0;
+  animation: fadeInUp 1s 1.2s forwards;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  background: #f8f9fa;
+}
+
+.hero-wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 60"><path fill="%23f5f7fa" fill-opacity="1" d="M0,32L80,26.7C160,21,320,11,480,16C640,21,800,43,960,42.7C1120,43,1280,21,1360,10.7L1440,0L1440,100L1360,100C1280,100,1120,100,960,100C800,100,640,100,480,100C320,100,160,100,80,100L0,100Z"></path></svg>');
+  background-size: cover;
+  background-position: bottom;
+  z-index: 2;
 }
 
 @keyframes fadeInUp {
@@ -287,6 +405,45 @@ export default {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .hero {
+    padding: 100px 20px 60px;
+    min-height: 50vh;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.3rem;
+  }
+
+  .logo-icon {
+    font-size: 3rem;
+  }
+
+  .cta-button {
+    padding: 10px 25px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .hero-wave {
+    height: 40px;
   }
 }
 
