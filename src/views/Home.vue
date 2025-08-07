@@ -2,12 +2,14 @@
   <div class="home" tabindex="0">
     <header class="hero">
       <div class="hero-content">
+        <!-- 确保唯一的 H1 标签 -->
         <h1 class="title float-in">个人知识库</h1>
         <p class="subtitle float-in delay">记录学习，分享经验，持续成长</p>
       </div>
     </header>
-    
+
     <main class="main-content">
+      <!-- 分类部分保持不变，但添加 SEO 友好的描述 -->
       <section v-for="group in $root.$data.categoryGroups" :key="group.id" class="category-section">
         <h2 class="section-title">{{ group.name }}</h2>
         <div class="category-grid">
@@ -42,11 +44,12 @@
             <router-link v-else-if="category.id === 'language'"
               :to="'/language/js'"
               class="category-card"
-              title="编程语言 - 探索多种编程语言的魅力"
+              :title="category.description || '编程语言 - 探索多种编程语言的魅力'"
             >
               <div class="card-content">
-                <div class="card-icon">            
-                  <i :class="category.icon || 'fas fa-code'"></i>
+                <div class="card-icon">
+                  <i :class="category.icon || 'fas fa-code'"
+                     :aria-label="category.name + ' 图标'"></i>
                 </div>
                 <h3>{{ category.name }}</h3>
               </div>
@@ -128,31 +131,48 @@
           </div>
         </div>
       </section>
-      <section class="about" style="background: #fff;max-width: 1160px; margin: 0 auto; color: #444;padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-        <h2 style="font-weight: 700; font-size: 2rem; margin-bottom: 0.5em;">🪴 关于我们</h2>
-        <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1em;">
-          欢迎来到 <strong style="color: #333;">yangfu.asia</strong> —— 一个持续更新的知识库。系统整理思考、阅读、学习与项目实践，内容涵盖：
-        </p>
-        <ul style="list-style: none; padding-left: 0; margin-bottom: 1.5em;">
-          <li style="margin-bottom: 0.5em;">🌐 网站开发与技术笔记</li>
-          <li style="margin-bottom: 0.5em;">📚 阅读摘录与书籍分类</li>
-          <li style="margin-bottom: 0.5em;">✍️ 写作灵感与表达练习</li>
-          <li style="margin-bottom: 0.5em;">🎯 自我管理与价值探索</li>
-        </ul>
+      <section class="about-section">
+        <div class="about-card">
+          <div class="about-header">
+            <div class="about-icon">🪴</div>
+            <h2 class="about-title">关于我们</h2>
+          </div>
+          <div class="about-content">
+            <p class="about-intro">
+              欢迎来到 <strong style="color: #333;">yangfu.asia</strong> —— 一个持续更新的知识库。系统整理思考、阅读、学习与项目实践，内容涵盖：
+            </p>
+            <ul class="about-topics">
+              <li class="topic-item"><i class="fas fa-globe"></i> 网站开发与技术笔记</li>
+              <li class="topic-item"><i class="fas fa-book"></i> 阅读摘录与书籍分类</li>
+              <li class="topic-item"><i class="fas fa-pencil-alt"></i> 写作灵感与表达练习</li>
+              <li class="topic-item"><i class="fas fa-bullseye"></i> 自我管理与价值探索</li>
+            </ul>
+          </div>
+        </div>
 
-        <h2 style="font-weight: 600; font-size: 1.5rem; margin-bottom: 0.4em;margin-top:2em">💖 为什么创建这个网站？</h2>
-        <p style="font-weight: 600; margin-bottom: 1em;margin-top:1em">写下的，才是自己的。</p>
-        <p style="margin-bottom: 1em;">
-          碎片的信息，不如结构的积累。将日常所见所思，逐步整理成一个清晰的知识网络 ——  
-        </p>
-        <p style="margin-bottom: 1em;">既是留给自己的长期记忆，也希望能为同样在路上的你提供启发。</p>
-        <p style="margin-bottom: 1em;">
-          本站大部分内容为原创笔记、分类整理或经验总结。部分引用内容均注明出处，若有遗漏，欢迎指正。
-        </p>
+        <div class="about-card">
+          <div class="about-content">
+            <blockquote class="quote">写下的，才是自己的。</blockquote>
+            <p class="about-text">
+              碎片的信息，不如结构的积累。将日常所见所思，逐步整理成一个清晰的知识网络 ——
+            </p>
+            <p class="about-text">
+              既是留给自己的长期记忆，也希望能为同样在路上的你提供启发。
+            </p>
+            <p class="about-text">
+              本站大部分内容为原创笔记、分类整理或经验总结。部分引用内容均注明出处，若有遗漏，欢迎指正。
+            </p>
+          </div>
+        </div>
 
-        <p>
-          如需交流、建议或合作，可发送邮件至：<strong style="color: #1a73e8;">tibooyang@gmail.com</strong>
-        </p>
+        <div class="contact-card">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <div class="contact-content">
+            <h3 class="contact-title">联系我们</h3>
+            <p class="contact-text">如需交流、建议或合作，可发送邮件至：</p>
+            <a href="mailto:tibooyang@gmail.com" class="email-link">tibooyang@gmail.com</a>
+          </div>
+        </div>
       </section>
     </main>
     
@@ -185,42 +205,35 @@ export default {
       keySequence: '',
     }
   },
+  // 延迟加载非关键功能
+  mounted() {
+    this.animateAboutSection();
+  },
   methods: {
-    updateStats() {
-      const stats = JSON.parse(localStorage.getItem('siteStats') || '{}');
-      const today = new Date().toLocaleDateString();
-      
-      if (!stats.firstVisit) {
-        stats.firstVisit = Date.now();
-        stats.totalVisits = 0;
-        stats.dailyVisits = {};
-        stats.totalTime = 0;
-      }
-      
-      stats.totalVisits++;
-      stats.dailyVisits[today] = (stats.dailyVisits[today] || 0) + 1;
-      
-      if (this.visitStartTime) {
-        const visitDuration = (Date.now() - this.visitStartTime) / 1000 / 60;
-        stats.totalTime += visitDuration;
-      }
-      
-      this.visitCount = stats.totalVisits;
-      this.todayVisits = stats.dailyVisits[today] || 0;
-      this.averageTime = Math.round(stats.totalTime / stats.totalVisits * 10) / 10;
-      
-      localStorage.setItem('siteStats', JSON.stringify(stats));
+    animateAboutSection() {
+      const aboutSection = document.querySelector('.about-section');
+      if (!aboutSection) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const cards = aboutSection.querySelectorAll('.about-card, .contact-card');
+            cards.forEach((card, index) => {
+              setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+              }, index * 200);
+            });
+            observer.unobserve(aboutSection);
+          }
+        });
+      }, {
+        threshold: 0.1
+      });
+
+      observer.observe(aboutSection);
     }
   },
-  created() {
-    this.visitStartTime = Date.now();
-    this.updateStats();
-    window.addEventListener('beforeunload', this.updateStats);
-  },
-  beforeDestroy() {
-    this.updateStats();
-    window.removeEventListener('beforeunload', this.updateStats);
-  }
 }
 </script>
 
@@ -533,13 +546,172 @@ export default {
 }
 
 .footer-content {
+  /* 关于我们部分样式 */
   max-width: 1160px;
-  margin: 0 auto;
+  margin: 4rem auto;
   padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  }
+  
+  .about-card {
+  background: white;
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  }
+  
+  .about-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  .about-header {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+  }
+  
+  .about-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  }
+  
+  .about-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin: 0;
+  }
+  
+  .about-content {
+  color: #444;
+  }
+  
+  .about-intro {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  }
+  
+  .about-topics {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  }
+  
+  .topic-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #555;
+  transition: transform 0.2s ease, color 0.2s ease;
+  }
+  
+  .topic-item:hover {
+  transform: translateX(5px);
+  color: #667eea;
+  }
+  
+  .topic-item i {
+  margin-right: 1rem;
+  color: #667eea;
+  font-size: 1.2rem;
+  }
+  
+  .quote {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin: 0 0 1.5rem 0;
+  padding-left: 1rem;
+  border-left: 4px solid #667eea;
+  }
+  
+  .about-text {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+  }
+  
+  .contact-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  box-shadow: 0 10px 25px rgba(118, 75, 162, 0.2);
+  }
+  
+  .contact-icon {
+  font-size: 2.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
+  
+  .contact-content {
+  flex: 1;
+  }
+  
+  .contact-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  }
+  
+  .contact-text {
+  margin: 0 0 1rem 0;
+  opacity: 0.9;
+  }
+  
+  .email-link {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 2px;
+  transition: border-bottom 0.3s ease;
+  }
+  
+  .email-link:hover {
+  border-bottom: 2px solid white;
+  }
+  
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+  /* .about-section {
+  padding: 0 1.5rem;
+  } */
+  
+  .about-card {
+  padding: 1.8rem;
+  }
+  
+  .about-title {
+  font-size: 1.5rem;
+  }
+  
+  .contact-card {
+  flex-direction: column;
   text-align: center;
+  padding: 2rem 1.5rem;
+  }
+  
+  .contact-icon {
+     margin-bottom: 1rem;
+  }
 }
 
 .footer-links {
@@ -560,5 +732,11 @@ export default {
 
 .separator {
   color: rgba(255, 255, 255, 0.5);
+}
+/* 添加初始动画状态 */
+.about-card, .contact-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
 </style>
